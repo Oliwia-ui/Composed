@@ -1,0 +1,1555 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Composed — the portfolio of Oliwia Jasionek, digital design student. Design & development: research, ux/ui and code.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect x=%223%22 y=%223%22 width=%2210%22 height=%2210%22 fill=%22%231238ff%22/%3E%3C/svg%3E">
+<title>Composed · Oliwia Jasionek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&family=Instrument+Serif:ital@0;1&family=Bodoni+Moda:ital,wght@1,900&family=Archivo:wdth,wght@62..125,800..900&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: asymmetric. One fixed hairline at 29vw splits the page into a narrow and a wide column; every scene leans off it, never centred. Black and white, blue only as a detail. */
+:root{
+  --paper:#fafaf9;      /* white */
+  --bgc:var(--paper);   /* current ground, used for inverted letters */
+  --ghost:#d3d3d1;      /* blurred grey type */
+  --ink:#0b0b0b;        /* black */
+  --blue:var(--ink);    /* display colour (kept as a name so the deep can flip it) */
+  --dot:#1238ff;        /* the detail colour: used small and rarely */
+  --deep:#0b0b0b;       /* below the thermocline: the page inverts */
+  --glow:#5b78ff;       /* detail colour on black */
+  --line:var(--ink);
+  --display:"Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --cross:29vw;
+  --gut:max(16px, env(safe-area-inset-left, 0px));
+  --gutR:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{background:var(--paper);transition:background-color .6s ease}
+html:has(body.deep){background:var(--deep)}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+/* body is its own layer with a real background, so the inverted text has something to blend with (Safari ignores the page background for blending) */
+body{position:relative;z-index:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:var(--display);overflow-x:hidden;transition:background .6s ease,color .6s ease;-webkit-font-smoothing:antialiased}
+body.deep{background:var(--deep);--bgc:var(--deep);--line:#fafaf9;--blue:#fafaf9;--ghost:#262626;--ink:#bdbdbb;--dot:var(--glow)}
+a{color:inherit}
+::selection{background:var(--dot);color:#fff}
+
+/* ---------- fixed chrome ---------- */
+.hdr{position:fixed;inset:0 0 auto;z-index:50;display:grid;grid-template-columns:var(--cross) 1fr auto;align-items:center;
+  padding:calc(14px + env(safe-area-inset-top,0px)) var(--gutR) 14px var(--gut);font-weight:700;letter-spacing:-.04em;font-size:15px;color:var(--ghost);pointer-events:none}
+.hdr a{pointer-events:auto;text-decoration:none;transition:color .2s}
+.hdr a:hover,.hdr a:focus-visible{color:var(--ink)}
+.hdr .sq{position:absolute;left:calc(var(--cross) - 22px);width:11px;height:11px;background:var(--dot);transition:background .6s}
+.hdr nav{display:flex;gap:14px}
+.depth{position:fixed;right:var(--gutR);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:50;font:500 11px/1 var(--mono);color:var(--dot);letter-spacing:.02em;transition:color .6s}
+
+/* ---------- shared type ---------- */
+.ghost{color:var(--ghost);font-weight:800;letter-spacing:-.075em;line-height:.86;text-transform:uppercase;transition:color .6s;user-select:none}
+.ghost .gw{display:inline-block;filter:blur(1.2px);transition:background-color .18s,color .18s,filter .18s}
+/* type that won't sit still: letters cycle bold → hairline → bold → serif italic → bold → mono */
+.l{display:inline-block;transition:background-color .18s,color .18s}
+.slt{display:inline-block;position:relative}
+.slt > .gh{visibility:hidden}
+.slt > .l{position:absolute;left:50%;top:50%;translate:-50% -50%;white-space:nowrap;text-align:center}
+.l.f1{font-weight:100}
+.l.f2{font-family:"Instrument Serif",Georgia,"Times New Roman",serif;font-style:italic;font-weight:400;letter-spacing:-.02em;font-size:1.06em}
+.l.f3{font-family:var(--mono);font-weight:500;letter-spacing:-.06em;font-size:.74em;text-transform:lowercase}
+.l.f4{font-family:"Bodoni Moda",Didot,"Bodoni 72",Georgia,serif;font-style:italic;font-weight:900;letter-spacing:-.04em}
+.l.f5{font-family:"Archivo","Arial Narrow",sans-serif;font-stretch:62%;font-weight:800;letter-spacing:-.03em;font-size:1.08em}
+.l.f6{font-family:"Archivo",Arial,sans-serif;font-stretch:125%;font-weight:900;letter-spacing:-.05em;font-size:.66em}
+.l.c1{color:var(--dot)}
+.l.c2{color:transparent;-webkit-text-stroke:1.3px var(--blue)}
+.l.c3{color:var(--ghost)}
+.l.inv,.gw.inv{background:var(--blue);color:var(--bgc)!important;-webkit-text-stroke:0;filter:none}
+.blue{color:var(--blue);transition:color .6s}
+.tag{font-weight:700;letter-spacing:-.045em;font-size:clamp(13px,1.15vw,17px);line-height:1.05;color:var(--blue)}
+.micro{font-weight:700;letter-spacing:-.03em;font-size:11px;line-height:1.15;color:var(--blue)}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.02em}
+.hline{position:absolute;left:var(--gut);right:var(--gutR);height:1px;background:var(--line);transform-origin:left;transition:background .6s}
+
+section{position:relative}
+.pin{position:relative;height:100vh;height:100svh;overflow:hidden}
+
+/* ---------- 1. hero ---------- */
+#hero .hline{top:20%;left:var(--cross)}
+#hero .t1{position:absolute;left:calc(var(--cross) + 14px);top:calc(20% + 14px)}
+#hero .t2{position:absolute;left:var(--gut);bottom:calc(var(--wordH) + 4vh);width:calc(var(--cross) - 40px)}
+#hero .ghostblock{position:absolute;left:var(--gut);right:var(--gutR);bottom:6vh;font-size:clamp(30px,6vw,116px)}
+#hero .ghostblock > span:first-child{padding-left:calc(var(--cross) - 16px)}
+#hero .ghostblock > span:last-child{padding-left:4vw}
+#hero .ghostblock > span{display:block;white-space:nowrap}
+#hero .ghostblock .r{text-align:right}
+.word{position:absolute;left:calc(var(--cross) - 10vw);right:var(--gutR);bottom:calc(6vh + .02em);display:flex;align-items:baseline;justify-content:space-between;font-weight:800;letter-spacing:-.075em;line-height:.76;color:var(--blue);white-space:nowrap}
+.word span{display:inline-block;transition:color .6s}
+.refl{bottom:auto;top:calc(100% - 6vh + .04em);transform:scaleY(-1);transform-origin:top;opacity:.38;filter:url(#ripple) blur(1.5px)}
+.waterline{position:absolute;left:0;right:0;bottom:6vh;height:1px;background:var(--line);opacity:.5}
+
+/* ---------- 2. about ---------- */
+#about .hline.a{top:14%;right:calc(100% - var(--cross) - 24vw)}
+#about .list{position:absolute;right:var(--gutR);top:12%;text-align:right;font-size:clamp(28px,5.2vw,96px)}
+#about .list div:nth-child(3n){padding-right:2.2em}
+#about .say{position:absolute;left:var(--gut);top:22%;width:min(56vw,900px);text-align:left;font-weight:800;letter-spacing:-.07em;line-height:.88;font-size:clamp(30px,4.2vw,80px);color:var(--blue)}
+#about .say > span{display:inline-block;margin-right:.22em}
+#about .note{position:absolute;left:calc(var(--cross) + 14px);top:58%;width:150px}
+#about .mask{position:absolute;left:calc(var(--cross) - clamp(110px,12vw,200px) - 14px);bottom:20vh;width:clamp(110px,12vw,200px);height:auto;color:var(--dot);transition:color .6s}
+#about .row{position:absolute;left:var(--gut);right:var(--gutR);bottom:4vh;display:flex;align-items:baseline;justify-content:space-between;font-weight:800;letter-spacing:-.07em;font-size:clamp(40px,8vw,150px);line-height:.8}
+#about #deeper{color:var(--blue)}
+#about .row .e{color:var(--ghost);filter:blur(1px);transition:color .25s,filter .25s}
+#about .row .e.on{color:var(--blue);filter:none}
+#about .hline.b{bottom:2vh;left:var(--cross)}
+
+/* ---------- 3. vision: chaos composes into one sentence, then three beliefs ---------- */
+#vision .pin{overflow:hidden}
+#vision .vlab{position:absolute;left:calc(var(--cross) + 14px);top:14vh;margin:0}
+#vision .vhint{position:absolute;right:var(--gutR);bottom:5vh;margin:0;text-align:right}
+.vsent{position:absolute;left:calc(var(--cross) - 6vw);right:var(--gutR);top:50%;transform:translateY(-50%);margin:0;font-weight:800;letter-spacing:-.07em;line-height:.9;font-size:clamp(40px,6.2vw,120px);color:var(--ink);text-wrap:balance}
+.vsent .vw{display:inline-block;will-change:transform;margin-right:.22em}
+.vsent .vw.key{color:var(--dot)}
+.vnoise span{position:absolute;white-space:nowrap;color:var(--ghost);font-weight:800;letter-spacing:-.05em;will-change:transform,opacity;pointer-events:none;user-select:none}
+.beliefs{list-style:none;margin:0;padding:6vh var(--gutR) 18vh var(--gut)}
+.beliefs li{display:grid;grid-template-columns:calc(var(--cross) - var(--gut)) minmax(0,1fr);gap:24px;padding:5vh 0;border-top:1px solid var(--line)}
+.beliefs li:last-child{border-bottom:1px solid var(--line)}
+.beliefs em{font:500 11px/1.4 var(--mono);font-style:normal;color:var(--dot)}
+.beliefs b{display:block;font-weight:800;letter-spacing:-.07em;line-height:.88;font-size:clamp(44px,7vw,130px)}
+.beliefs span{display:block;margin-top:2.4vh;max-width:46ch;font-size:clamp(16px,1.3vw,20px);line-height:1.45;font-weight:500}
+@media (max-width:720px){ .vsent{left:var(--gut)} .beliefs li{grid-template-columns:1fr;gap:10px} #vision .vlab{left:var(--gut)} }
+
+/* ---------- 4. work: a typographic list ---------- */
+#work{padding-block:16vh 12vh}
+#work .wwrap{position:relative;padding-left:var(--gut);padding-right:var(--gutR)}
+#work .ghost.wh{font-size:clamp(30px,5.2vw,100px);max-width:62vw}
+#work .help{margin:5vh 0 0;font-weight:800;letter-spacing:-.075em;line-height:.86;font-size:clamp(32px,5vw,96px);max-width:46vw;color:var(--blue)}
+#work .help > span{display:inline-block;margin-right:.2em}
+.wlist{list-style:none;margin:12vh 0 0 calc(var(--cross) - var(--gut));padding:0;border-top:1px solid var(--line)}
+.wlist li{border-bottom:1px solid var(--line)}
+.wlist a{display:grid;grid-template-columns:3.2em minmax(0,1fr) auto;align-items:baseline;gap:16px;padding:20px 0 16px;text-decoration:none;color:var(--ink)}
+.wlist .wn{font:500 11px/1 var(--mono);color:var(--dot)}
+.wlist .wt{color:#fff;mix-blend-mode:difference;font-weight:800;letter-spacing:-.065em;line-height:.88;font-size:clamp(44px,7.4vw,140px);transition:transform .6s cubic-bezier(.2,.7,.1,1)}
+.wlist .wm{font:500 11px/1.4 var(--mono);text-align:right;max-width:32ch}
+.wlist .wm i{display:block;margin-top:6px;font-style:normal;opacity:.6}
+#work .wintro{margin:2vh 0 0;max-width:42ch}
+.plg .pintro{max-width:52ch;margin:0}
+.wlist a:hover .wt,.wlist a:focus-visible .wt{transform:translateX(2.4vw)}
+.wthumb,.wthumb.vis{position:fixed;left:0;top:0;width:min(24vw,340px);aspect-ratio:4/3;z-index:30;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.85) rotate(-3deg);transition:opacity .25s,transform .45s cubic-bezier(.2,.7,.1,1)}
+.wthumb.on{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}
+.plg{margin:10vh 0 0 calc(var(--cross) - var(--gut));display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.plg ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 28px}
+.plg a,.plg div{display:flex;flex-direction:column;gap:4px;text-decoration:none;color:var(--ink);font-weight:800;letter-spacing:-.05em;font-size:clamp(22px,2.2vw,38px);line-height:1}
+.plg a:hover{color:var(--dot)}
+.plg span{font:500 10px/1.3 var(--mono);letter-spacing:0}
+@media (max-width:720px){ .plg{margin-left:0} .wlist{margin-left:0} .wlist .wm{display:none} #work .help{max-width:none} .wthumb{display:none} }
+
+/* project visuals, CSS stand-ins until screenshots go in */
+.vis{position:relative;overflow:hidden;background:#e4e4e2}
+.vis.v-garmin{background:radial-gradient(circle at 50% 50%,#0b0b0b 0 31%,transparent 31.5%),conic-gradient(from 200deg at 50% 50%,#1238ff 0 14%,#fafaf9 14% 62%,#3a3a3a 62% 100%),#0b0b0b}
+.vis.v-garmin::after{content:"72";position:absolute;inset:0;display:grid;place-items:center;font:800 clamp(24px,3.4vw,64px)/1 var(--display);letter-spacing:-.06em;color:#eef1f6}
+.vis.v-moodie{background:radial-gradient(60% 70% at 30% 35%,#bdbdbb 0,transparent 60%),radial-gradient(50% 60% at 70% 70%,#0b0b0b 0,transparent 65%),#eeeeec}
+.vis.v-moodie::after{content:"";position:absolute;left:12%;right:12%;bottom:14%;height:8px;border-radius:4px;background:linear-gradient(90deg,#1238ff 0 64%,rgba(255,255,255,.75) 64%)}
+.vis.v-pieter{background:repeating-linear-gradient(0deg,#fafaf9 0 12px,#0b0b0b 12px 13px),#fafaf9}
+.vis.v-pieter::before{content:"";position:absolute;right:9%;top:12%;width:14px;height:14px;background:#1238ff}
+.vis.v-medimate{background:radial-gradient(circle at 30% 60%,#3fe6c8 0 18%,transparent 18.5%),radial-gradient(circle at 46% 60%,transparent 0 17%,#3fe6c8 17.5% 19%,transparent 19.5%),#16213a}
+.vis.v-medimate::after{content:"take it easy.";position:absolute;right:8%;bottom:10%;font:800 clamp(16px,1.8vw,30px)/1 var(--display);letter-spacing:-.05em;color:#eef6f5}
+.vis.v-lingo{background:#0b0b0b}
+.vis.v-lingo::after{content:"and I ____ you";position:absolute;left:8%;right:8%;top:50%;transform:translateY(-50%);font:800 clamp(20px,2.6vw,46px)/1 var(--display);letter-spacing:-.05em;color:#fafaf9}
+.vis.v-lingo::before{content:"";position:absolute;left:8%;bottom:14%;width:46%;height:6px;background:linear-gradient(90deg,#1238ff 0 40%,#3a3a3a 40%)}
+.vis.v-pieter::after{content:"P.";position:absolute;left:6%;bottom:2%;font:900 clamp(48px,8vw,150px)/.8 var(--display);letter-spacing:-.08em;color:#0b0b0b}
+
+/* the dive-in case view */
+.case{position:fixed;inset:0;z-index:70;background:var(--paper);overflow:auto;overscroll-behavior:contain;visibility:hidden;
+  padding:calc(70px + env(safe-area-inset-top,0px)) var(--gutR) calc(40px + env(safe-area-inset-bottom,0px)) var(--gut)}
+.case.on{visibility:visible}
+.case .close{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));left:var(--gut);z-index:2;background:var(--paper)!important;padding:6px 10px!important;margin-left:-10px;font:700 15px/1 var(--display);letter-spacing:-.04em;color:var(--blue);background:none;border:0;padding:6px 0;cursor:pointer}
+.case .close:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.case .cnum{position:fixed;top:calc(18px + env(safe-area-inset-top,0px));right:var(--gutR);font:500 11px/1 var(--mono);color:var(--dot)}
+.case .ctitle{font-weight:800;letter-spacing:-.075em;line-height:.8;font-size:clamp(44px,8.6vw,170px);color:var(--blue);white-space:nowrap;margin-left:calc(var(--cross) - var(--gut) - .06em)}
+@media (max-width:720px){ .case .ctitle{margin-left:0;font-size:12vw} }
+.case .ctitle span{display:inline-block}
+.case .cgrid{display:grid;grid-template-columns:var(--cross) 1fr;gap:24px;margin-top:4vh;border-top:1px solid var(--blue);padding-top:16px}
+.case dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 18px}
+.case dt{font:500 11px/1.4 var(--mono);color:var(--dot)}
+.case dd{margin:0;font-weight:700;letter-spacing:-.03em;font-size:15px}
+.case .lead{font-weight:800;letter-spacing:-.06em;line-height:.95;font-size:clamp(26px,3vw,52px);color:var(--ink);max-width:22ch;margin:0}
+.case .cvis{margin-top:5vh;margin-left:calc(var(--cross) - var(--gut));aspect-ratio:16/8;max-width:100%}
+.case .todo{font:400 11px/1.5 var(--mono);color:var(--ink);opacity:.6;margin-top:12px}
+.case .todo:empty{display:none}
+/* ---------- long case study ---------- */
+.cs{display:grid;grid-template-columns:calc(var(--cross) - var(--gut)) minmax(0,1fr);gap:24px;margin-top:14vh}
+.cs > *{min-width:0}
+.cs > aside{display:flex;flex-direction:column;gap:14px;min-width:0}
+.cs .lab{font:500 11px/1.4 var(--mono);color:var(--dot);margin:0}
+.cs .hn{font:400 12px/1.55 var(--mono);color:var(--ink);opacity:.72;max-width:30ch;margin:0}
+.cs .hn::before{content:"// ";color:var(--dot)}
+.cs h3{font-weight:800;letter-spacing:-.06em;line-height:.92;font-size:clamp(30px,3.8vw,66px);margin:0 0 4vh;max-width:17ch;text-wrap:balance}
+.cs p{max-width:58ch;font-size:clamp(16px,1.25vw,19px);line-height:1.5;font-weight:500;letter-spacing:-.01em;margin:0 0 1em}
+.cs .big{font-weight:800;letter-spacing:-.065em;line-height:.92;font-size:clamp(36px,5.4vw,100px);max-width:16ch;margin:6vh 0 0;text-wrap:balance}
+.cs .big em{font-style:normal;color:var(--dot)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2.4vw,40px);margin-top:2vh}
+.stat b{display:block;font-weight:800;letter-spacing:-.07em;line-height:.85;font-size:clamp(52px,6.6vw,124px);font-variant-numeric:tabular-nums}
+.stat b small{font-size:.4em;letter-spacing:-.02em}
+.stat i{display:block;height:4px;background:#e2e2df;margin:14px 0 12px;position:relative;overflow:hidden}
+.stat i::after{content:"";position:absolute;inset:0;width:var(--v);background:var(--ink)}
+.stat.key i::after{background:var(--dot)}
+.stat span{display:block;font-size:14px;line-height:1.35;font-weight:500;max-width:22ch}
+.cs .src{font:400 11px/1.5 var(--mono);opacity:.6;margin-top:3vh}
+.flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--ink)}
+.flow li{padding:16px 14px 26px 0;border-right:1px solid #d3d3d1;display:flex;flex-direction:column;gap:30px;min-height:200px}
+.flow li + li{padding-left:14px}
+.flow li:last-child{border-right:0}
+.flow em{font:500 11px/1 var(--mono);font-style:normal;color:var(--dot)}
+.flow b{font-weight:800;letter-spacing:-.05em;font-size:clamp(20px,1.8vw,30px);line-height:.95}
+.flow span{font-size:14px;line-height:1.4;font-weight:500}
+.breathe{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(24px,5vw,90px);align-items:center;padding:6vh 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.orb{position:relative;width:clamp(180px,24vw,360px);aspect-ratio:1;display:grid;place-items:center}
+.orb i{position:absolute;inset:0;border-radius:50%;background:#0b0b0b;transform:scale(.55)}
+.orb i.r{background:none;border:1px solid #0b0b0b;transform:scale(1)}
+.orb span{position:relative;font:500 11px/1 var(--mono);color:#fafaf9}
+.cs .bword{max-width:none;font-weight:800;letter-spacing:-.07em;line-height:.85;font-size:clamp(56px,8vw,150px);margin:0;min-height:1.7em}
+.bbar{height:4px;background:#e2e2df;margin:3vh 0 2vh;max-width:420px;position:relative;overflow:hidden}
+.bbar i{position:absolute;inset:0;background:var(--dot);transform-origin:left;transform:scaleX(0)}
+.tree{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.tree h4{margin:0 0 6px;font:500 11px/1 var(--mono);letter-spacing:.04em;background:#0b0b0b;color:#fafaf9;padding:12px 10px}
+.tree ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.tree li{font-size:14px;font-weight:600;padding:9px 10px;background:#ececea}
+.tree li.p{background:none;outline:1px dashed #9a9a98}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tile{aspect-ratio:4/3;background:#ececea;display:flex;flex-direction:column;justify-content:space-between;padding:12px}
+.tile b{font-weight:800;letter-spacing:-.05em;font-size:clamp(18px,1.6vw,26px);line-height:1}
+.tile span{font:400 10px/1.4 var(--mono);opacity:.6}
+.phones{display:flex;gap:14px;overflow-x:auto;padding:4vh 0 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.phones figure{margin:0;flex:0 0 auto;scroll-snap-align:start;display:flex;flex-direction:column;gap:10px}
+.phones img,.shot2 img{display:block;width:clamp(150px,14.5vw,230px);height:auto;border-radius:24px;background:#000;box-shadow:0 0 0 1px #0b0b0b}
+.phones figcaption{font:400 10px/1.3 var(--mono);opacity:.65;max-width:20ch}
+.shot2{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4vw;align-items:start}
+.shot2 img{width:clamp(170px,17vw,260px)}
+.sysimg{display:block;width:100%;max-width:640px;height:auto;margin-top:3vh;box-shadow:0 0 0 1px #d3d3d1}
+.beats{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.beats li{display:grid;grid-template-columns:9em minmax(0,1fr);gap:16px;padding:16px 0;border-bottom:1px solid #d3d3d1}
+.beats em{font:500 11px/1.4 var(--mono);font-style:normal;color:var(--dot)}
+.beats span{font-size:clamp(16px,1.3vw,20px);line-height:1.4;font-weight:500;max-width:52ch}
+.beats q{font-weight:800;letter-spacing:-.03em}
+.quote-end{font-weight:800;letter-spacing:-.06em;line-height:.95;font-size:clamp(30px,4.2vw,76px);max-width:20ch;margin:0;text-wrap:balance}
+.quote-end + p{font:400 11px/1.4 var(--mono);opacity:.6;margin-top:2vh}
+.arch{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;align-items:stretch;border:1px solid var(--ink)}
+.arch div{padding:16px 14px 20px;border-right:1px solid var(--ink);display:flex;flex-direction:column;gap:22px;min-height:170px}
+.arch div:last-child{border-right:0}
+.arch div.mine{background:#0b0b0b;color:#fafaf9}
+.arch em{font:500 11px/1.3 var(--mono);font-style:normal;color:var(--dot)}
+.arch div.mine em{color:#7f95ff}
+.arch b{font-weight:800;letter-spacing:-.05em;font-size:clamp(20px,1.8vw,30px);line-height:.95}
+.arch span{font-size:14px;line-height:1.4;font-weight:500}
+.arch-db{margin-top:10px;padding:12px 14px;border:1px dashed var(--ink);font-size:14px;font-weight:600;max-width:calc(50% - 5px);margin-left:50%}
+.code{margin:0;padding:22px 24px;background:#0b0b0b;color:#e8e8e6;font:400 13px/1.65 var(--mono);overflow-x:auto;border-radius:0;max-width:100%}
+.code .c{color:#7d7d7a}.code .k{color:#7f95ff}.code .s{color:#edc700}
+.demo{border:1px solid var(--ink);padding:clamp(20px,3vw,40px);display:flex;flex-direction:column;gap:22px}
+.demo .line{font-weight:800;letter-spacing:-.05em;line-height:1;font-size:clamp(28px,3.6vw,60px);margin:0}
+.demo .gap{display:inline-block;min-width:3.4em;border-bottom:4px solid var(--dot);text-align:center;color:var(--dot)}
+.demo .opts{display:flex;gap:10px;flex-wrap:wrap}
+.demo button{font:700 16px/1 var(--display);letter-spacing:-.02em;padding:14px 22px;border:1px solid var(--ink);background:none;color:var(--ink);cursor:pointer;transition:background .2s,color .2s}
+.demo button:hover{background:#0b0b0b;color:#fafaf9}
+.demo button.ok{background:var(--dot);border-color:var(--dot);color:#fff}
+.demo button.no{background:#ececea;color:#9a9a98;text-decoration:line-through}
+.demo small{font:400 11px/1.4 var(--mono);opacity:.65}
+.logos{display:block;width:100%;height:auto;max-width:900px;margin-top:2vh;box-shadow:0 0 0 1px #d3d3d1}
+.cnext{display:block;margin-top:16vh;padding:6vh 0 8vh;border-top:1px solid var(--ink);text-decoration:none;color:var(--ink)}
+.cnext em{font:500 11px/1 var(--mono);font-style:normal;color:var(--dot)}
+.cnext b{display:block;margin-top:2vh;font-weight:800;letter-spacing:-.075em;line-height:.85;font-size:clamp(56px,10vw,190px);transition:transform .6s cubic-bezier(.2,.7,.1,1)}
+.cnext:hover b{transform:translateX(2.4vw)}
+@media (max-width:720px){
+  .arch{grid-template-columns:1fr 1fr}.arch div{border-bottom:1px solid var(--ink)}.arch-db{max-width:none;margin-left:0}.beats li{grid-template-columns:1fr;gap:4px}
+  .cs{grid-template-columns:minmax(0,1fr);margin-top:9vh}
+  .shot2{grid-template-columns:minmax(0,1fr)}
+  .demo .line{font-size:8vw}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .flow{grid-template-columns:1fr}.flow li{min-height:0;gap:10px;border-right:0;border-bottom:1px solid #d3d3d1;padding-left:0!important}
+  .breathe{grid-template-columns:1fr;justify-items:start}
+  .tree{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* ---------- 5. deep ---------- */
+#deep{height:170vh}
+#deep .inner{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+#deep .c1{position:absolute;left:calc(var(--cross) + 14px);top:30%;width:min(230px,40vw)}
+#deep .c2{position:absolute;left:var(--gut);top:calc(58% + 10px);max-width:min(40ch,40vw)}
+#deep .c3{position:absolute;right:var(--gutR);top:calc(72% + 10px)}
+#deep .hline.a{top:58%;right:38vw}
+#deep .hline.b{top:72%;left:var(--cross)}
+#deep .quiet{position:absolute;left:calc(var(--cross) - 6vw);right:var(--gutR);bottom:5vh;font-weight:800;letter-spacing:-.075em;line-height:.82;font-size:clamp(44px,9vw,170px);color:var(--ghost)}
+#deep .quiet .lit{color:var(--blue)}
+#deep .quiet .lit:last-child .slt:last-child .l{color:var(--dot)}
+.snow{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity .8s}
+body.deep .snow{opacity:1}
+
+/* ---------- 6. contact ---------- */
+#contact{min-height:100vh;min-height:100svh;padding-block:12vh 4vh;display:flex;flex-direction:column;justify-content:space-between}
+#contact .top{position:relative}
+#contact .ghost{font-size:clamp(44px,9vw,170px);padding-right:var(--gutR);text-align:right}
+#contact .over{position:absolute;left:var(--gut);top:1.1em;max-width:calc(var(--cross) + 18vw);font-size:clamp(30px,4.2vw,80px);font-weight:800;letter-spacing:-.07em;line-height:.86;color:var(--blue)}
+#contact .links{margin-top:2.4vh;padding-left:calc(var(--cross) + 14px);display:flex;flex-direction:column;gap:2px}
+#contact .links .micro{margin-bottom:10px}
+#contact .links a{font-weight:800;letter-spacing:-.06em;font-size:clamp(30px,3.6vw,64px);line-height:.95;color:var(--ghost);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.08em;width:max-content;transition:color .2s}
+#contact .links a:hover,#contact .links a:focus-visible{color:var(--ink);text-decoration-color:var(--dot)}
+#contact .foot{display:flex;justify-content:space-between;padding-left:calc(var(--cross) - 14vw)!important;align-items:flex-end;gap:16px;padding-inline:var(--gut) var(--gutR);flex-wrap:wrap}
+#contact .made{font-weight:800;letter-spacing:-.06em;font-size:clamp(24px,2.8vw,52px);line-height:.92;color:var(--ghost);max-width:24ch;margin:0}
+#contact .fin{margin:0 0 2vh;max-width:46ch}
+#contact .made .swap{color:var(--ink)}
+#contact .made .swap .slt:last-child .l{color:var(--dot)}
+#contact .why{margin-top:8px;max-width:380px}
+#contact .copy{font-weight:800;letter-spacing:-.05em;font-size:clamp(18px,1.8vw,32px);line-height:1;color:var(--ink);text-align:right;margin:0}
+#contact .copy span{display:block;margin-top:6px;font:500 11px/1.3 var(--mono);letter-spacing:0;color:var(--ghost)}
+
+a:focus-visible{outline:2px solid var(--dot);outline-offset:3px}
+
+@media (max-width:720px){
+  :root{--cross:34vw}
+  .word{left:var(--gut)}
+  #hero .t2{display:none}
+  .case .ctitle,.case .cvis{margin-left:0}
+  #contact .foot{padding-left:var(--gut)!important}
+  #deep .quiet{left:var(--gut)}
+  .hdr{grid-template-columns:1fr auto;font-size:13px}
+  .hdr .mid{display:none}
+  #about .say{width:auto;left:var(--gut);right:var(--gutR);top:auto;bottom:13vh;text-align:left;font-size:clamp(22px,6.4vw,36px);z-index:2}
+  #about .list{top:16%}
+  #about .say > span{margin:0 .22em 0 0}
+  #about .note{display:none}
+  #about .mask{bottom:auto;top:64%;left:auto;right:var(--gutR)}
+  #hero .ghostblock > span:first-child{padding-left:0}
+  #work .head .ghost{width:auto;right:var(--gutR)}
+  #work .head .blue{top:30vh}
+  #deep .c2{display:none}
+  :root{--s:58vw}
+  #work .ghost.wh{width:auto;right:var(--gutR);font-size:9vw}
+  #work .help{top:auto;bottom:20vh;left:var(--gut);right:auto;text-align:left;max-width:none;font-size:8vw;display:none}
+  .stage{top:56%;left:54vw}
+  .ccap{left:var(--gut)}
+  .hint{right:var(--gutR)}
+  .ccap{max-width:none;bottom:7vh}
+  .ccap .ttl{font-size:12vw}
+  .hint{bottom:auto;top:31vh;width:140px}
+  .case .cgrid{grid-template-columns:1fr}
+  #contact .over,#contact .links{left:var(--gut);padding-left:var(--gut)}
+  #contact .over{position:relative;left:0;top:0;margin-top:3vh}
+}
+/* ---------- the background cube: the site's navigation ---------- */
+main{position:relative;pointer-events:none}
+.photo{filter:grayscale(1) contrast(1.06);transition:filter .6s ease}
+.photo:hover{filter:none}
+
+main img.photo{pointer-events:auto}
+.pics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:820px;margin:0}
+.pics figure{margin:0;display:flex;flex-direction:column;gap:8px}
+.pics img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
+.pics figcaption{font:400 11px/1.4 var(--mono);opacity:.75}
+main a,main button,main .cube,main .l,main .gw,main .stage,main canvas{pointer-events:auto}
+.bg3d{position:fixed;left:0;top:0;width:0;height:0;perspective:1800px;z-index:-1;transition:opacity .6s}
+.bg3d.away{opacity:0;pointer-events:none}
+.bcube{--b:min(50vh,36vw);position:absolute;left:calc(var(--b) / -2);top:calc(var(--b) / -2);width:var(--b);height:var(--b);transform-style:preserve-3d}
+.bface{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:calc(var(--b) * .06);margin:0;border:0;text-align:left;cursor:pointer;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;outline:1px solid #0b0b0b;outline-offset:0;font-family:var(--display);transition:filter .3s}
+.bface .inv{position:absolute;inset:0;padding:inherit;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;clip-path:circle(0px at 50% 50%)}
+.bf0 .inv,.bf2 .inv{background:#0b0b0b;color:#fafaf9}
+.bf1 .inv,.bf3 .inv{background:#fafaf9;color:#0b0b0b}
+.bf4 .inv,.bf5 .inv{background:#edc700;color:#000}
+html.overface,html.overface *{cursor:pointer}
+.bface:focus-visible{outline:3px solid var(--dot);outline-offset:-3px}
+.bface .n{display:flex;justify-content:space-between;font:500 11px/1 var(--mono)}
+.bface .t{font-weight:800;letter-spacing:-.065em;line-height:.84;font-size:calc(var(--b) * .19)}
+.bface .s{display:block;margin-top:10px;font-weight:700;letter-spacing:-.03em;font-size:calc(var(--b) * .042);line-height:1.1;max-width:20ch}
+.bf0,.bf2{background:#fafaf9;color:#0b0b0b}
+.bf1,.bf3{background:#0b0b0b;color:#fafaf9}
+.bf4,.bf5{background:#1238ff;color:#fff}
+.bf0{transform:translateZ(calc(var(--b) / 2))}
+.bf1{transform:rotateY(90deg) translateZ(calc(var(--b) / 2))}
+.bf2{transform:rotateY(180deg) translateZ(calc(var(--b) / 2))}
+.bf3{transform:rotateY(-90deg) translateZ(calc(var(--b) / 2))}
+.bf4{transform:rotateX(90deg) translateZ(calc(var(--b) / 2))}
+.bf5{transform:rotateX(-90deg) translateZ(calc(var(--b) / 2))}
+body.deep .bface{outline-color:#fafaf9}
+html.spin,html.spin *{cursor:grabbing!important}
+.bhint{position:fixed;z-index:50;right:var(--gutR);top:calc(18px + env(safe-area-inset-top,0px));font:500 10px/1.4 var(--mono);color:var(--ink);text-align:right;pointer-events:none;transition:color .6s}
+.bhint b{font-weight:500;color:var(--dot)}
+/* type over the cube inverts, like the cursor lens: main is drawn in inverse colours and blended with "difference",
+   so on white it reads black, on the black sides white, on the blue sides yellow */
+html:not(.noblend) main{mix-blend-mode:difference}
+html:not(.noblend) body:not(.deep) main{--ink:#f4f4f4;--blue:#f4f4f4;--ghost:#2c2c2e;--dot:#edc700;--line:#f4f4f4;--bgc:#050506}
+html:not(.noblend) body:not(.deep) main .wthumb{filter:invert(1)}
+/* Safari / iPhone can't blend this page reliably: keep the text plain and quiet the cube behind it once you scroll past the start */
+html.noblend.past .bg3d:not(.away){opacity:.2}
+html.noblend .wlist .wt{mix-blend-mode:normal;color:var(--ink)}
+/* touch: let sideways swipes reach the cube while up/down still scrolls the page */
+html:not(:has(.case.on,.bpage.on)) body{touch-action:pan-y}
+.bface{touch-action:none;-webkit-tap-highlight-color:transparent}
+
+/* a side, opened into its own page */
+.bpage{position:fixed;inset:0;z-index:65;overflow:auto;overscroll-behavior:contain;visibility:hidden;background:var(--pbg,#fafaf9);color:var(--pfg,#0b0b0b);
+  padding:calc(78px + env(safe-area-inset-top,0px)) var(--gutR) calc(56px + env(safe-area-inset-bottom,0px)) var(--gut)}
+.bpage.on{visibility:visible}
+.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:820px;margin:5vh 0 0 calc(var(--cross) - var(--gut))}
+.mode{display:flex;flex-direction:column;gap:10px;padding:0;margin:0;border:0;background:none;color:inherit;text-align:left;cursor:pointer;font:inherit}
+.mode img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;outline:1px solid transparent;outline-offset:4px;transition:filter .6s ease,outline-color .4s,opacity .4s}
+.mode:not(.on) img{opacity:.55}
+.mode:hover img,.mode:focus-visible img{opacity:1}
+.mode.on img{outline-color:currentColor;filter:none}
+.mode span{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.mode b{font-weight:800;letter-spacing:-.05em;font-size:clamp(22px,2.4vw,40px);line-height:1}
+.mode i{font:400 11px/1 var(--mono);font-style:normal;opacity:.7}
+.mode:focus-visible{outline:2px solid var(--dot);outline-offset:6px}
+.goal{margin-top:3vh;max-width:520px}
+.gbar{height:6px;background:rgba(127,149,255,.2);position:relative;overflow:hidden}
+.gbar i{position:absolute;inset:0;background:linear-gradient(90deg,#1238ff,#5b78ff);transform-origin:left;animation:gfill 2.4s cubic-bezier(.2,.7,.1,1) both}
+@keyframes gfill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.goal p{font-size:15px;line-height:1.4;font-weight:500;margin:10px 0 0}
+.bpage .pt .l{color:inherit!important;-webkit-text-stroke:0!important}
+@media (max-width:720px){ .modes{margin-left:0} }
+.bpage article{display:none}.bpage article.on{display:block}
+.bpage .pclose{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));left:var(--gut);z-index:2;font:700 15px/1 var(--display);letter-spacing:-.04em;color:inherit;background:none;border:0;padding:6px 0;cursor:pointer}
+.bpage .pnum{position:fixed;top:calc(18px + env(safe-area-inset-top,0px));right:var(--gutR);font:500 11px/1 var(--mono)}
+.bpage .pt{margin:0 0 0 calc(var(--cross) - var(--gut) - .05em);font-weight:800;letter-spacing:-.075em;line-height:.8;font-size:clamp(64px,15vw,280px);white-space:nowrap}
+.bpage article[data-p="play"] .pt{font-size:clamp(56px,12vw,230px)}
+.pgrid{display:grid;grid-template-columns:calc(var(--cross) - var(--gut)) minmax(0,1fr);gap:24px;margin-top:5vh;border-top:1px solid currentColor;padding-top:16px}
+.pgrid + .pgrid{margin-top:7vh}
+.pgrid .k{font:500 11px/1.5 var(--mono);margin:0}
+.bpage .lead{margin:0 0 3vh;font-weight:800;letter-spacing:-.06em;line-height:.92;font-size:clamp(30px,3.8vw,68px);max-width:18ch}
+.bpage .body p{margin:0 0 1em;max-width:56ch;font-size:clamp(16px,1.25vw,19px);line-height:1.45;font-weight:500;letter-spacing:-.01em}
+.plist{list-style:none;margin:0;padding:0}
+.plist li{border-bottom:1px solid currentColor}
+.plist a,.plist div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;text-decoration:none;font-weight:800;letter-spacing:-.06em;font-size:clamp(34px,5.4vw,100px);line-height:.9;transition:padding .4s cubic-bezier(.2,.7,.1,1),opacity .2s}
+.plist a:hover,.plist a:focus-visible{padding-left:2vw;opacity:.7}
+.plist span{font:500 11px/1.3 var(--mono);letter-spacing:0;text-align:right;max-width:44ch}
+.plist span i{display:block;margin-top:6px;font-style:normal;opacity:.65}
+.bpage .hl{margin:4vh 0 0;max-width:30ch;font-weight:800;letter-spacing:-.045em;line-height:1;font-size:clamp(22px,2vw,34px)}
+.bpage .body p.hl{font-weight:800;font-size:clamp(22px,2vw,34px);line-height:1;letter-spacing:-.045em}
+.bpage .pnote{font:500 11px/1.5 var(--mono);margin:0 0 3vh;max-width:56ch}
+.bpage .cta a{display:inline-block;margin-top:4vh;font-weight:800;letter-spacing:-.05em;font-size:clamp(24px,2.6vw,44px);color:inherit;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.1em}
+.bpage .cta a:hover{color:var(--dot)}
+.bpage .sign{margin:3vh 0 0;font-style:italic;font-weight:400;font-size:clamp(28px,3vw,52px)}
+.bpage .todo{font:400 11px/1.5 var(--mono);opacity:.6}
+.bpage .pvis{margin-top:5vh;aspect-ratio:16/8;max-width:100%}
+@media (max-width:720px){ .bcube{--b:min(62vw,40vh)} .bpage .pt{margin-left:0;font-size:18vw} .bpage article[data-p="play"] .pt{font-size:14vw} .pgrid{grid-template-columns:1fr} .bhint{top:calc(40px + env(safe-area-inset-top,0px));font-size:9px} .bhint .mo{display:none} .bhint .to{display:inline} }
+.bhint .to{display:none}
+@media (prefers-reduced-motion:reduce){
+  .refl{filter:blur(2px)}
+}
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="ripple" x="-5%" y="-10%" width="110%" height="130%">
+    <feTurbulence id="turb" type="fractalNoise" baseFrequency="0.004 0.06" numOctaves="2" seed="4" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="26" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<header class="hdr">
+  <a href="#hero">composed</a>
+  <span class="sq" aria-hidden="true"></span>
+</header>
+<div class="depth" id="depth" aria-hidden="true">0.0 m</div>
+<p class="bhint" id="bhint" aria-hidden="true"><span class="mo">drag to explore<br>pick a side. see what's inside.</span><span class="to">swipe the cube to turn it<br>tap a side to open it</span> · facing <b id="bface">home</b></p>
+<div class="bg3d" id="bg3d">
+  <div class="bcube" id="bcube" role="navigation" aria-label="Site cube: each side is a page">
+    <button class="bface bf0" data-p="home" type="button"><span class="n"><span>01</span><span>home</span></span><span><span class="t">composed</span><span class="s">make it make sense.</span></span></button>
+    <button class="bface bf1" data-p="about" type="button"><span class="n"><span>02</span><span>about</span></span><span><span class="t">about me</span><span class="s">a lot going on up here.</span></span></button>
+    <button class="bface bf2" data-p="work" type="button"><span class="n"><span>03</span><span>work</span></span><span><span class="t">selected<br>work</span><span class="s">ideas turned into something real.</span></span></button>
+    <button class="bface bf3" data-p="process" type="button"><span class="n"><span>04</span><span>process</span></span><span><span class="t">my<br>process</span><span class="s">question everything. then make it work.</span></span></button>
+    <button class="bface bf4" data-p="play" type="button"><span class="n"><span>05</span><span>playground</span></span><span><span class="t">play<br>ground</span><span class="s">smaller things, just to see where they go.</span></span></button>
+    <button class="bface bf5" data-p="hello" type="button"><span class="n"><span>06</span><span>contact</span></span><span><span class="t">hello.</span><span class="s">looking for my next challenge.</span></span></button>
+  </div>
+</div>
+
+<main>
+  <!-- 1 -->
+  <section id="hero" data-depth="0">
+    <div class="pin">
+      <div class="hline" id="heroLine"></div>
+      <p class="tag t1" id="t1">make it make sense<span style="color:var(--dot)">.</span><br><span class="mono" style="font-weight:400;color:var(--ink)">digital design · development</span></p>
+      <div class="ghostblock ghost" aria-hidden="true">
+        <span>too many thoughts,</span>
+        <span class="r">too many ideas,</span>
+        <span>one clear direction.</span>
+      </div>
+      <p class="tag t2" id="t2">a busy mind behind the screen. a little further down, you'll see what I mean.</p>
+      <h1 class="word" id="word" aria-label="composed"></h1>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="about">
+    <div class="pin">
+      <div class="hline a"></div>
+      <div class="list ghost" aria-hidden="true">
+        <div>ux/ui</div><div>research</div><div>user flows</div><div>prototyping</div><div>development</div><div>diving</div><div>when I can</div>
+      </div>
+      <p class="say" id="say" aria-label="I have a lot going on in my head. I turn it into things that make sense to someone else."></p>
+      
+      <div class="row" aria-label="2026, deeper">
+        <span class="blue">’26</span><span class="blue">—</span><span id="deeper"></span>
+      </div>
+      <div class="hline b"></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="vision">
+    <div class="pin">
+      <p class="mono vlab">03 · inside my head</p>
+      <div class="vnoise" id="vnoise" aria-hidden="true"></div>
+      <h2 class="vsent" id="vsent">I don't always have a quiet mind. But I can create <span class="key">something clear</span> from it.</h2>
+      <p class="mono vhint" aria-hidden="true">keep scrolling. it starts making sense.</p>
+    </div>
+    <ol class="beliefs">
+      <li><em>01</em><div><b>make it make sense.</b><span>I don't like things that are complicated just because they can be. I ask questions, pull things apart and try again until the whole thing feels right. Not just to me. To the person using it.</span></div></li>
+      <li><em>02</em><div><b>people come first.</b><span>I think about the person on the other side of the screen. Their time, their feelings, their bad days and the things they might not know how to explain. Good design should make their life a little easier, not give them another thing to figure out.</span></div></li>
+      <li><em>03</em><div><b>pretty isn’t enough.</b><span>I love a good interface. But what happens when someone clicks it? Does it work? Does it make sense? Can I build it? I want to understand the whole thing, not just the part that looks good in a screenshot.</span></div></li>
+    </ol>
+  </section>
+
+  <!-- 4 -->
+  <section id="work">
+    <div class="wwrap">
+      <div class="ghost wh" aria-hidden="true">selected work</div>
+      <p class="help" id="help" aria-label="a few ideas I got a little too invested in."></p>
+      <p class="micro wintro">All built during one-semester school projects, mostly on my own. Every single one taught me something.</p>
+      <ol class="wlist">
+        <li><a href="#" data-case="garmin" data-vis="garmin"><span class="wn">01</span><span class="wt">Garmin Sense</span><span class="wm">solo school project<br>research · ux/ui · brand identity<br><i>a concept for making stress support feel more human.</i></span></a></li>
+        <li><a href="#" data-case="medimate" data-vis="medimate"><span class="wn">02</span><span class="wt">MediMate</span><span class="wm">solo school project<br>research · branding · ux/ui · business plan<br><i>medication reminders without the guilt trip.</i></span></a></li>
+        <li><a href="#" data-case="lingo" data-vis="lingo"><span class="wn">03</span><span class="wt">Spotify-Lingo</span><span class="wm">team of 4 · lead developer<br>react · node.js · supabase<br><i>learning languages, one missing word at a time.</i></span></a></li>
+        <li><a href="#" data-case="moodie" data-vis="moodie"><span class="wn">04</span><span class="wt">Moodie</span><span class="wm">solo school project<br>ux/ui · branding<br><i>making difficult conversations a little easier.</i></span></a></li>
+      </ol>
+      <div class="plg">
+        <p class="micro">playground · smaller things</p>
+        <p class="micro pintro">Not everything needs a whole case study. Sometimes I just want to build something and see where it goes.</p>
+        <ul>
+          <li><a href="https://klei-ceramics-studio.thomas-more-0656.chatgpt.site" target="_blank" rel="noopener">Klei ↗<span>ceramics studio · design to code<br>a school-provided design, brought to life in code.</span></a></li>
+          <li><a href="https://oliwia-ui.github.io/paw-talk/" target="_blank" rel="noopener">Paw-Talk ↗<span>my dogs, one home<br>vite · bootstrap · scss · live</span></a></li>
+          <li><a href="https://github.com/Oliwia-ui/dog-breeds-app" target="_blank" rel="noopener">Dog Breeds ↗<span>a little project about dogs<br>vue 3 · router · tanstack query</span></a></li>
+          <li><div>Taboo<span>my first website<br>research · design · illustration · animation<br>english · dutch · polish</span></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wthumb vis" id="wthumb" aria-hidden="true"></div>
+  </section>
+
+  <!-- 5 -->
+  <section id="deep">
+    <div class="inner">
+      <canvas class="snow" id="snow" aria-hidden="true"></canvas>
+      <p class="micro c1">I don't think good design starts with knowing all the answers. Mine usually starts with a question. Sometimes ten questions. Sometimes a completely different idea halfway through.</p>
+      <p class="micro c2">But somewhere between the research, the mistakes, the sketches and the code, things start to come together. That's the part I enjoy most.</p>
+      <p class="micro c3">honestly.</p>
+      <div class="hline a"></div>
+      <div class="hline b"></div>
+      <p class="quiet" id="quiet" aria-label="less noise. more meaning."></p>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="contact">
+    <div class="top">
+      <div class="ghost" aria-hidden="true">have an<br>idea?</div>
+      <p class="over" id="over" aria-label="let's talk."></p>
+      <div class="links">
+        <p class="micro">[open to design internships · 2026]</p>
+        <a href="#">email</a>
+        <a href="#">linkedin</a>
+      </div>
+    </div>
+    <div class="foot">
+      <div>
+        <p class="fin micro">you made it all the way down. thanks for taking a look inside my head. now let's make something.</p>
+        <p class="made">put together with curiosity, stubbornness and probably too many <span class="swap" id="swap">tabs</span>.</p>
+        <p class="micro why" id="why">because chaos isn't the opposite of structure. sometimes it's where it starts.</p>
+      </div>
+      <p class="copy">© 2026 · oliwia jasionek<br><span>design · development · curiosity</span></p>
+    </div>
+  </section>
+</main>
+
+
+<div class="bpage" id="bpage" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Page">
+  <button class="pclose" id="pclose" type="button">← back to the cube</button>
+  <p class="pnum" id="pnum"></p>
+
+  <article data-p="about">
+    <h2 class="pt">about me</h2>
+    <div class="modes" role="tablist" aria-label="Two sides of me">
+      <button class="mode on" type="button" role="tab" aria-selected="true" data-mode="office"><img class="photo" src="img/me-studio.jpg" alt="Portrait of Oliwia on a plain background" width="1000" height="1250"><span><b>office hours</b><i>the designer</i></span></button>
+      <button class="mode" type="button" role="tab" aria-selected="false" data-mode="after"><img class="photo" src="img/me-dive.jpg" alt="Oliwia in a wetsuit at night by the water, harbour lights behind her" width="900" height="1200"><span><b>after hours</b><i>the diver</i></span></button>
+    </div>
+
+    <div class="mpanel" data-mode="office" role="tabpanel">
+      <div class="pgrid"><p class="k">usually somewhere between figma and vs code</p><div>
+        <p class="lead">my head is busy. my work needs to make sense.</p>
+        <div class="body">
+          <p>I'm Oliwia, a digital design student at Thomas More, currently looking for a design internship. I like understanding how things work, why people behave the way they do and how a good idea can become something people actually use.</p>
+          <p>I'm a designer with a developer's curiosity. I enjoy the whole journey: asking questions, doing research, figuring out the structure, designing the screens and getting my hands into the code. I can spend far too long on one small detail, but I want that detail to have a reason.</p>
+          <p>My brain rarely works in a straight line. I question things, change direction, come back to old ideas and occasionally make things harder for myself than they need to be. But I like that about the way I work. I don't just accept the first answer. I want to understand it.</p>
+          <p class="hl">I don't design just to make things look good. I want to know who needs it, why they need it and whether it actually helps.</p>
+        </div></div></div>
+      <div class="pgrid"><p class="k">what I do</p>
+        <ul class="plist"><li><div>research<span>surveys · interviews · personas · understanding people</span></div></li><li><div>structure<span>sitemaps · information architecture · user flows</span></div></li><li><div>design<span>wireframes · ux/ui · prototyping · design systems</span></div></li><li><div>development<span>html · scss · javascript · react · vue · gsap</span></div></li></ul></div>
+      <div class="pgrid"><p class="k">right now</p>
+        <ul class="plist"><li><div>looking for<span>a design internship · 2026</span></div></li><li><div>studying<span>international digital experience design</span></div></li><li><div>3 languages<span>english · dutch · polish</span></div></li><li><div>always<span>learning something new</span></div></li></ul></div>
+    </div>
+
+    <div class="mpanel" data-mode="after" role="tabpanel" hidden>
+      <div class="pgrid"><p class="k">usually somewhere underwater</p><div>
+        <p class="lead">above water, a thousand thoughts. underwater, one breath at a time.</p>
+        <div class="body">
+          <p>When I'm not studying or working on something, there's a good chance I'm thinking about my next dive. I started diving even though I was genuinely scared of it. The deeper I got into it, the more I realised how much I loved being underwater.</p>
+          <p>There's something about diving that makes you slow down. You check your equipment, pay attention to your surroundings and control your breathing. You can't rush everything. You have to stay present and trust what you've learned.</p>
+          <p>I love exploring new places, seeing things I wouldn't normally get to see and getting comfortable with something that once scared me. Every dive gives me something new to learn. And yes, I already think about the next one before the previous one is over.</p>
+        </div></div></div>
+      <div class="pgrid"><p class="k">dive log</p>
+        <ul class="plist"><li><div>scuba diver<span>recreational scuba diving · always learning</span></div></li><li><div>my favourite part<span>the moment everything gets quiet beneath the surface.</span></div></li><li><div>next adventure<span>more places to explore, more dives to log.</span></div></li></ul></div>
+      <div class="pgrid"><p class="k">also found outside</p><div>
+        <ul class="plist"><li><div>motorcycles<span>I like being on two wheels. A little freedom, a little noise and a different way to explore.</span></div></li><li><div>dogs<span>my favourite distraction. usually nearby, occasionally responsible for breaking my focus.</span></div></li></ul>
+        <p class="hl">different world. same curious mind.</p></div></div>
+    </div>
+  </article>
+
+  <article data-p="work">
+    <h2 class="pt">work</h2>
+    <div class="pgrid"><p class="k">selected projects</p><div>
+      <p class="lead">Different problems. Different ideas. One thing in common: I wanted to make something that actually helps.</p>
+      <p class="pnote">All four are one-semester school projects. Three were solo. Spotify-Lingo was built with a team of four.</p>
+      <ul class="plist">
+        <li><a href="#" data-case="garmin">Garmin Sense<span>solo · one semester<br>research · ux/ui · brand identity<br><i>A smartwatch concept that notices early signs of stress and offers support before things become overwhelming.</i></span></a></li>
+        <li><a href="#" data-case="medimate">MediMate<span>solo · one semester<br>research · brand identity · ux/ui · business plan<br><i>A medication companion designed to make everyday routines feel a little less difficult.</i></span></a></li>
+        <li><a href="#" data-case="lingo">Spotify-Lingo<span>team of 4 · one semester<br>lead developer · frontend coordination · backend · game logic<br><i>A language-learning game that turns your favourite music into a guessing game.</i></span></a></li>
+        <li><a href="#" data-case="moodie">Moodie<span>solo · one semester<br>ux/ui · branding<br><i>A space where young people can express how they feel and communicate with the people they trust.</i></span></a></li>
+      </ul>
+      <p class="hl">not perfect. not finished learning. but always something I'm proud to have figured out.</p></div></div>
+  </article>
+
+  <article data-p="process">
+    <h2 class="pt">process</h2>
+    <div class="pgrid"><p class="k">how my brain works</p><div>
+      <p class="lead">chaotic at the start. structured by the end.</p>
+      <div class="body"><p>I don't always start with a neat plan. Sometimes I start with a question, sometimes with a problem that annoys me, and sometimes with too many ideas. But I do have a way of bringing it all together.</p></div>
+      <ul class="plist steps">
+        <li><div>the noise<span>01 · everything starts somewhere.<br><i>Questions, ideas, references, random thoughts and a lot of "what if?" I collect them first. I don't want to throw away a good idea just because I haven't figured it out yet.</i></span></div></li>
+        <li><div>research<span>02 · stop guessing. start asking.<br><i>I look at the problem, the people and what's already out there. Surveys, interviews and research help me understand what actually matters instead of designing around assumptions.</i></span></div></li>
+        <li><div>structure<span>03 · make the mess make sense.<br><i>Personas, sitemaps, information architecture and user flows. This is where I start connecting the dots. If the structure doesn't work, the pretty screens won't save it.</i></span></div></li>
+        <li><div>design<span>04 · now make it feel right.<br><i>Wireframes first, then interfaces, interactions and details. I want things to be clear, consistent and comfortable to use. I pay attention to the little things because they add up.</i></span></div></li>
+        <li><div>build<span>05 · out of figma. into reality.<br><i>HTML, SCSS, JavaScript, React, Vue and GSAP. I enjoy seeing a design become something functional. And when something doesn't work, well, that's another problem to solve.</i></span></div></li>
+        <li><div>question it again<span>06 · is it actually good?<br><i>I test, adjust, break things and improve them. I'm rarely completely satisfied with the first version. There is usually something I can make clearer, smoother or simpler.</i></span></div></li>
+      </ul>
+      <p class="hl">I don't follow a process just to tick boxes. I use it to make sure the final result has a reason to exist.</p></div></div>
+  </article>
+
+  <article data-p="play">
+    <h2 class="pt">playground</h2>
+    <div class="pgrid"><p class="k">smaller things</p><div>
+      <p class="lead">Not everything needs a whole case study.</p>
+      <div class="body"><p>Sometimes I just want to build something and see where it goes.</p></div>
+      <ul class="plist">
+        <li><a href="https://klei-ceramics-studio.thomas-more-0656.chatgpt.site" target="_blank" rel="noopener">Klei ↗<span>ceramics studio · design to code<br><i>a school-provided design, brought to life in code.</i></span></a></li>
+        <li><a href="https://oliwia-ui.github.io/paw-talk/" target="_blank" rel="noopener">Paw-Talk ↗<span>vite · bootstrap · scss · live<br><i>my dogs, one home.</i></span></a></li>
+        <li><a href="https://github.com/Oliwia-ui/dog-breeds-app" target="_blank" rel="noopener">Dog Breeds ↗<span>vue 3 · router · tanstack query<br><i>a little project about dogs.</i></span></a></li>
+        <li><div>Taboo<span>research · design · illustration · animation<br><i>my first website. english · dutch · polish.</i></span></div></li>
+      </ul></div></div>
+  </article>
+
+  <article data-p="hello">
+    <h2 class="pt">hello.</h2>
+    <div class="pgrid"><p class="k">open to design internships · 2026</p><div>
+      <p class="lead">I'm always up for a good question, an interesting challenge or a conversation about an idea.</p>
+      <div class="body"><p>Looking for an intern who likes both design and development? Someone who asks questions, gets involved and wants to understand the whole product? I'd love to hear from you.</p></div>
+      <ul class="plist"><li><a href="#">email<span>[add real email]</span></a></li><li><a href="#">linkedin<span>[add real profile link]</span></a></li></ul>
+      <p class="hl">let's make something that makes sense.</p>
+      <p class="sign">oliwia</p></div></div>
+  </article>
+</div>
+
+<template id="cs-garmin">
+  <section class="cs">
+    <aside><p class="lab">01 · the problem</p><p class="hn">I kept thinking about how different breathing feels underwater. You slow down because you have to. I wondered why we wait until we're overwhelmed to do the same thing on land.</p></aside>
+    <div>
+      <h3>Stress doesn't always announce itself.</h3>
+      <p>Sometimes it builds up quietly. Your heart rate changes, your breathing shifts and your body reacts before you really notice what's happening.</p>
+      <p>Smartwatches already collect useful information, but most of the time you see it afterwards as numbers, charts and statistics. Many mental health apps also depend on you recognising what you're feeling and actively asking for help.</p>
+      <p>But what if you're already too overwhelmed to do that?</p>
+      <p class="big">The goal wasn't to measure more. It was to make the information <em>useful</em> when someone needs it.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">02 · research</p><p class="hn">I expected people to like the idea of early detection. What I didn't expect was how little trust they had in the watch doing it.</p></aside>
+    <div>
+      <h3>22 people. A few important answers.</h3>
+      <div class="stats">
+        <div class="stat"><b>59<small>%</small></b><i style="--v:59%"></i><span>say anxiety and panic support is important or very important.</span></div>
+        <div class="stat"><b>64<small>%</small></b><i style="--v:64%"></i><span>would likely use early stress detection and support.</span></div>
+        <div class="stat"><b>50<small>%</small></b><i style="--v:50%"></i><span>expect the feature to fit easily into their everyday routine.</span></div>
+        <div class="stat key"><b>45<small>%</small></b><i style="--v:45%"></i><span>trust a smartwatch to detect their stress.</span></div>
+      </div>
+      <p class="src">Online survey · n = 22 · additional interviews.</p>
+      <p>These answers shaped the project. I couldn't just design a clever feature. I also had to make people feel comfortable using it.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">03 · the flow</p><p class="hn">Imagine trying to navigate five menus when you can barely focus on one thing. No. The watch needs to keep it simple.</p></aside>
+    <div>
+      <h3>From noticing to feeling better.</h3>
+      <ol class="flow">
+        <li><em>01</em><b>Detect</b><span>Heart rate, breathing and movement move away from your usual patterns.</span></li>
+        <li><em>02</em><b>Acknowledge</b><span>One simple button to say “I'm panicking”. Or let Sense start the support flow automatically.</span></li>
+        <li><em>03</em><b>Breathe</b><span>A slow visual orb and gentle vibrations guide you through breathing at 6.5 breaths per minute.</span></li>
+        <li><em>04</em><b>Ground</b><span>The 5-4-3-2-1 grounding technique, divided into five small steps.</span></li>
+        <li><em>05</em><b>Return</b><span>No grade. No pressure. Just the option to reflect afterwards.</span></li>
+      </ol>
+      <div class="phones">
+        <figure><img src="img/g-detect0.jpg" alt="Detection screen with heart rate, HRV, breathing and stress cards above a 20-second body reading dial" width="560" height="1214" loading="lazy"><figcaption>detect · something has changed</figcaption></figure>
+        <figure><img src="img/g-detect3.jpg" alt="Detection result: blood pressure 128/80 within a healthy range, your body is steady" width="560" height="1211" loading="lazy"><figcaption>reading · checking your signals</figcaption></figure>
+        <figure><img src="img/g-sense.jpg" alt="Sense menu with breathing, focus tasks, panic support, grounding and advanced meditation" width="560" height="1213" loading="lazy"><figcaption>sense · your tools in one place</figcaption></figure>
+        <figure><img src="img/g-breathe1.jpg" alt="Countdown screen showing a large 3 and the question Are you ready to be mindful?" width="560" height="1217" loading="lazy"><figcaption>breathe · follow the rhythm</figcaption></figure>
+        <figure><img src="img/g-breathe0.jpg" alt="Breathing exercise with heart rate 72 bpm, layered blue breathing orb, cycle 1 of 5 and a play button" width="560" height="1217" loading="lazy"><figcaption>breathe · one breath at a time</figcaption></figure>
+        <figure><img src="img/g-breathe3.jpg" alt="Completion screen: You completed your guided breathing session, breathing patterns are returning to baseline" width="560" height="1214" loading="lazy"><figcaption>back to calm · no score</figcaption></figure>
+      </div>
+      <p class="src">Actual screens from my Sense concept · scroll sideways →</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">04 · try it</p><p class="hn">This is the pace I had in mind. Nothing complicated. Just a moment to slow down.</p></aside>
+    <div class="breathe">
+      <div class="orb" aria-hidden="true"><i class="r"></i><i id="orb"></i><span id="orbt">in</span></div>
+      <div>
+        <p class="bword" id="bword" aria-live="off">breathe in</p>
+        <div class="bbar"><i id="bbar"></i></div>
+        <p>About 4.5 seconds in, followed by 4.5 seconds out. On the watch, each phase is also communicated through a gentle vibration, so you don't need to keep looking at the screen.</p>
+        <p>Give it a try before moving on.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">05 · the decision I'm proudest of</p><p class="hn">The more overwhelmed someone feels, the less I want to ask them to think.</p></aside>
+    <div>
+      <div class="shot2"><div>
+      <h3>One sense. One small step.</h3>
+      <p>The 5-4-3-2-1 grounding technique sounds simple. Name five things you can see, four you can touch, three you can hear and so on.</p>
+      <p>But when someone is panicking, even remembering all five steps can feel like too much.</p>
+      <p>So I broke the exercise into five individual cards. One sense, one small task, one action at a time. Complete it and move on.</p>
+      <p>No long instructions. No complicated choices. Just something simple to focus on while everything else settles.</p>
+      </div><img src="img/g-ground.jpg" alt="5-4-3-2-1 technique screen with five cards: things you can see, touch, hear, smell and taste, each with a completion counter" width="560" height="2003" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">06 · the structure</p><p class="hn">I had a lot of ideas for this one. The sitemap was where I finally stopped adding more and started connecting things.</p></aside>
+    <div>
+      <h3>Five sections. Every one has a purpose.</h3>
+      <div class="tree">
+        <div><h4>HOME</h4><ul><li>Today's overview</li><li>Recent alerts</li><li>Quick actions</li><li>Daily routine</li></ul></div>
+        <div><h4>DETECTION</h4><ul><li>Real-time sensing</li><li>Context detection</li><li>Early warnings</li><li>Settings</li></ul></div>
+        <div><h4>CRISIS</h4><ul><li>Crisis home</li><li>Breathing tools</li><li>Grounding</li><li>Dissociation mode</li><li>Emergency</li></ul></div>
+        <div><h4>INSIGHTS</h4><ul><li>Episode log</li><li>Basic summary</li><li>Weekly summary</li></ul></div>
+        <div><h4>PROFILE</h4><ul><li>User information</li><li>Health settings</li><li>Privacy and data</li><li>Subscription</li><li>Support</li></ul></div>
+      </div>
+      <p class="src">Free tier with essential support. Premium concept adds prediction, adaptive breathing and longer-term insights.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">07 · fitting into Garmin</p><p class="hn">I didn't want it to look like some random wellness app wearing a Garmin logo. It needed to belong there.</p></aside>
+    <div>
+      <h3>Garmin, but with a softer side.</h3>
+      <p>Before designing Sense, I studied Garmin's existing brand. The website, packaging, campaigns, social media and retail experience. I wanted to understand what made Garmin recognisable before changing anything.</p>
+      <p>The existing brand is clear, technical and performance-driven. I kept that foundation, including its typography and familiar blue tones, but explored what happens when you introduce more warmth.</p>
+      <p>Softer colours, gentler shapes, calmer motion and an interface that feels less demanding.</p>
+      <p>I also created a separate design system and icon set so the concept could grow while still feeling connected to the Garmin identity.</p>
+      <img class="sysimg" src="img/g-system.jpg" alt="Design system boards: what was kept from Garmin and what changed, the Garmin colour scale, the extended Garmin Sense colour palette and the type scale" width="984" height="1400" loading="lazy">
+      <p class="src">left · brand analysis and design decisions. middle · Sense colour palette. right · typography.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">08 · what I'd change</p><p class="hn">Funny how easy it is to forget your own rules when you start adding more features.</p></aside>
+    <div>
+      <h3>I would simplify the premium experience.</h3>
+      <p>One of the biggest things I learned from this project is that adding more information doesn't automatically make something more helpful.</p>
+      <p>My research showed that people didn't want extra pressure or scores. Yet my premium concept slowly started introducing things like severity indexes, health scores and forecasts.</p>
+      <p>Looking back, I would rethink that part. I would keep the difficult moments free from judgement and make deeper insights something people can explore later, when they actually want to.</p>
+      <p class="big">Sometimes the best feature is the one you decide <em>not</em> to add.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">09 · how it ended</p></aside>
+    <div><p>Passed, with positive feedback.</p>
+      <p>One semester. One concept. A lot of questions, research and decisions that changed how I think about designing for people.</p></div>
+  </section>
+
+  <a class="cnext" href="#" data-next="medimate"><em>next · 02 / 04</em><b>MediMate →</b></a>
+</template>
+
+<template id="cs-medimate">
+  <section class="cs">
+    <aside><p class="lab">01 · the problem</p><p class="hn">I didn't want to make another app that tells people what they're doing wrong. Sometimes remembering one small thing is already difficult enough.</p></aside>
+    <div>
+      <h3>Remembering isn't always that simple.</h3>
+      <p>Around half of people with chronic conditions don't take their medication as prescribed (WHO, 2023). People forget doses, miss routines or stop taking medication altogether.</p>
+      <p>Existing medication apps can be useful, but some feel more like medical dashboards than something you'd actually enjoy opening every day.</p>
+      <p>A notification telling you to take your medication isn't necessarily helpful if it makes you feel guilty for forgetting yesterday.</p>
+      <p>I wanted to approach the problem differently. Less pressure, more support.</p>
+      <p class="big">A <em>companion</em> that helps, instead of another app telling you off.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">02 · Lisa's morning</p><p class="hn">Before I designed a single screen, I wanted to understand who would actually open this app and why.</p></aside>
+    <div>
+      <h3>Meet Lisa. She's already running late.</h3>
+      <ol class="beats">
+        <li><em>8:12 am</em><span>Lisa's alarm goes off for the third time. She's late for class, her medication is somewhere in her bag and she can't remember whether she took it yesterday. She leaves without it. Again.</span></li>
+        <li><em>that night</em><span>While scrolling in bed, she comes across a video: <q>Ever forgotten your medication and felt guilty about it? I made something for you.</q> She stops scrolling.</span></li>
+        <li><em>setup</em><span>She scans her medication box. MediMate fills in the name and dosage. Then it asks her to choose a reminder time that fits her actual routine.</span></li>
+        <li><em>next morning</em><span>A gentle reminder appears while she's brushing her teeth: <q>Time for your meds, Lisa. You've got this.</q> This time, she takes them.</span></li>
+        <li><em>day five</em><span>A little five-day streak. A small message: <q>You're doing better than you think.</q> It feels encouraging, not demanding.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">03 · first impression</p><p class="hn">I wanted the first screen to feel welcoming. Not like Lisa had just walked into a hospital.</p></aside>
+    <div>
+      <h3>A friendly first step.</h3>
+      <p>The introduction explains what MediMate can do without throwing everything at the user at once.</p>
+      <p>Medication reminders, an easy way to find a pharmacy, access to doctors and a symptom checker. Each feature gets its own moment.</p>
+      <div class="phones"><figure><img src="img/m-welcome0.jpg" alt="Welcome to MediMate: your friendly digital nurse, here to track meds, check in on how you feel and keep things simple" loading="lazy"><figcaption>welcome</figcaption></figure><figure><img src="img/m-welcome1.jpg" alt="Onboarding: medication reminder and management" loading="lazy"><figcaption>reminders</figcaption></figure><figure><img src="img/m-welcome2.jpg" alt="Onboarding: e-pharma made intuitively easy" loading="lazy"><figcaption>e-pharma</figcaption></figure><figure><img src="img/m-welcome3.jpg" alt="Onboarding: hassle-free doctor consultation" loading="lazy"><figcaption>doctor</figcaption></figure><figure><img src="img/m-welcome4.jpg" alt="Onboarding: AI-powered symptom checker" loading="lazy"><figcaption>symptom checker</figcaption></figure></div>
+      <p class="src">Real screens from the MediMate design · scroll sideways →</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">04 · the core flow</p><p class="hn">If someone has to type everything manually, I've probably made the process harder than it needs to be.</p></aside>
+    <div>
+      <h3>Scan it. Check it. You're done.</h3>
+      <p>Adding medication should be straightforward. Scan the QR code on the box and MediMate fills in the available medication information.</p>
+      <p>The user checks the details, chooses a time and sets up a reminder that works for their day.</p>
+      <p>When the reminder arrives, they can mark it as taken, skip it or move it to another time.</p>
+      <p>No unnecessary steps. No guilt-filled messages.</p>
+      <div class="phones"><figure><img src="img/m-add.jpg" alt="Add medication: scan or add manually" loading="lazy"><figcaption>add</figcaption></figure><figure><img src="img/m-scan.jpg" alt="Scan medication QR code" loading="lazy"><figcaption>scan</figcaption></figure><figure><img src="img/m-analyse.jpg" alt="Analyzing medication" loading="lazy"><figcaption>analysing</figcaption></figure><figure><img src="img/m-result.jpg" alt="Tamesta successfully analysed: high risk, sedative, once daily" loading="lazy"><figcaption>result</figcaption></figure><figure><img src="img/m-form.jpg" alt="New medication form with dosage, frequency, duration, meal timing and reminder" loading="lazy"><figcaption>details</figcaption></figure><figure><img src="img/m-remind.jpg" alt="Set medication reminder time picker" loading="lazy"><figcaption>reminder</figcaption></figure><figure><img src="img/m-take.jpg" alt="Reminder card for Tamesta with skip, reschedule and take" loading="lazy"><figcaption>take · skip · move</figcaption></figure></div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">05 · more than reminders</p><p class="hn">Medication is only one part of someone's everyday health. I wanted the app to understand a little more than that.</p></aside>
+    <div>
+      <h3>A companion, not just an alarm.</h3>
+      <p>MediMate grew beyond medication reminders. Users can set personal goals, share relevant information and check in with how they're doing.</p>
+      <p>When they need professional help, they can also find a doctor nearby and book a consultation through the app.</p>
+      <div class="phones"><figure><img src="img/m-goal.jpg" alt="Health assessment: what is your primary goal for this app" loading="lazy"><figcaption>your goal</figcaption></figure><figure><img src="img/m-conditions.jpg" alt="Health assessment: do you have existing medical conditions" loading="lazy"><figcaption>conditions</figcaption></figure><figure><img src="img/m-sleep.jpg" alt="Health assessment: rate your sleep level" loading="lazy"><figcaption>sleep</figcaption></figure><figure><img src="img/m-score.jpg" alt="MediMate Score 88 after the health assessment" loading="lazy"><figcaption>your score</figcaption></figure><figure><img src="img/m-doctor.jpg" alt="Select a specialization before booking" loading="lazy"><figcaption>find a doctor</figcaption></figure><figure><img src="img/m-map.jpg" alt="Browse doctors by map" loading="lazy"><figcaption>near you</figcaption></figure><figure><img src="img/m-consult.jpg" alt="10:00 AM doctor consultation confirmed" loading="lazy"><figcaption>booked</figcaption></figure></div>
+      <p>I developed the brand identity around that idea of friendly support, including a light and dark mode, a design system and a custom icon set.</p>
+      <p>I also worked out the business side, with a free version and a MediMate Pro concept.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">06 · what I'd change</p><p class="hn">I was trying to make people feel better, then I gave them a number to judge themselves with.</p></aside>
+    <div>
+      <h3>I'd rethink the health score.</h3>
+      <p>After the health check, MediMate shows a score. On a good day, seeing 88 might feel encouraging. On a difficult day, it can feel like another thing you failed at.</p>
+      <p>The rest of the app was designed to be friendly and understanding, so the score doesn't completely fit that approach.</p>
+      <p>I'd replace it with something more personal and less judgemental. A little feedback, perhaps, but no grade for how well someone is doing.</p>
+      <p>I didn't fully realise how important that was until I worked on Garmin Sense.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">07 · how it ended</p></aside>
+    <div><p>Passed, with positive feedback.</p>
+      <p>From my concept brief:</p>
+      <p class="quote-end">"It's about creating a quiet kind of care. The kind I wish existed when I needed it most."</p></div>
+  </section>
+
+  <a class="cnext" href="#" data-next="lingo"><em>next · 03 / 04</em><b>Spotify-Lingo →</b></a>
+</template>
+
+<template id="cs-lingo">
+  <section class="cs">
+    <aside><p class="lab">01 · the idea</p><p class="hn">Music gets stuck in my head anyway. Might as well learn something from it.</p></aside>
+    <div>
+      <h3>Your favourite songs. A new way to learn.</h3>
+      <p>Spotify-Lingo turns music into a language-learning game. Search for a song, listen to a preview and follow along with the lyrics.</p>
+      <p>One word disappears. Three possible answers appear. Pick the right one and keep playing.</p>
+      <p>The idea is simple: you're not just memorising random vocabulary. You're learning words in a context you've already heard and enjoyed.</p>
+      <div class="demo" id="lingoDemo">
+        <small>try a round · fictional example, not real lyrics</small>
+        <p class="line">the city <span class="gap" id="lgap">____</span> when the lights go out</p>
+        <div class="opts"><button type="button" data-w="burns">burns</button><button type="button" data-w="sleeps" data-ok>sleeps</button><button type="button" data-w="window">window</button></div>
+        <small id="lmsg">pick a word</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">02 · how it's built</p><p class="hn">I like seeing the whole system, not just the screen. Especially when something breaks and I need to find out where.</p></aside>
+    <div>
+      <h3>Four parts. One working game.</h3>
+      <div class="arch">
+        <div><em>01 · browser</em><b>Browser</b><span>The player searches for music, listens to previews and plays the game.</span></div>
+        <div><em>02 · frontend</em><b>React + Vite</b><span>The interface, search experience, music player and game interactions.</span></div>
+        <div class="mine"><em>03 · backend · my part</em><b>Node + Express</b><span>Communicates with the music API, filters songs, handles the game logic and sends the relevant data back.</span></div>
+        <div><em>04 · music</em><b>Jamendo API</b><span>Provides the music and available previews and lyrics.</span></div>
+      </div>
+      <p class="arch-db">Behind the scenes: Supabase · database connected to the backend.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">03 · the logic</p><p class="hn">Random wrong answers make a boring game. I wanted the alternatives to actually make sense in the context of the song.</p></aside>
+    <div>
+      <h3>Building one round, step by step.</h3>
+      <ol class="beats">
+        <li><em>01 · find usable songs</em><span>The backend requests songs and checks whether lyrics are available. Songs without usable lyrics are filtered out. Users can also search by language.</span></li>
+        <li><em>02 · choose a line</em><span>A random line is selected, with at least four words so there's enough context to understand it.</span></li>
+        <li><em>03 · hide a word</em><span>One word longer than three letters is removed. I didn't want every answer to be something obvious like "the".</span></li>
+        <li><em>04 · make believable alternatives</em><span>Two incorrect answers are taken from the same song. This makes the options feel more connected to the actual lyrics.</span></li>
+        <li><em>05 · shuffle and play</em><span>All three answers are shuffled before the round is sent to the frontend.</span></li>
+      </ol>
+<pre class="code"><span class="c">// pick a line long enough to guess from</span>
+<span class="k">const</span> candidates = lines.filter(l =&gt; l.split(<span class="s">/\s+/</span>).length &gt;= <span class="s">4</span>);
+<span class="k">const</span> line = candidates[random(candidates.length)];
+
+<span class="c">// hide a word worth learning</span>
+<span class="k">const</span> learnable = words.filter(w =&gt; w.length &gt; <span class="s">3</span>);
+<span class="k">const</span> chosen = learnable[random(learnable.length)];
+
+<span class="c">// wrong answers come from the same song</span>
+<span class="k">const</span> options = [...wrongs, chosen].sort(() =&gt; Math.random() - <span class="s">0.5</span>);</pre>
+      <p class="src">a simplified piece of the actual game logic.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">04 · leading the team</p><p class="hn">Being the lead developer didn't mean doing everything myself. It meant making sure everything worked together.</p></aside>
+    <div>
+      <h3>Four people. Different tasks. One project.</h3>
+      <p>Spotify-Lingo was built by a team of four. One of my teammates created the design, while I took the lead on development.</p>
+      <p>I built the game logic and backend, oversaw the technical side and kept an eye on how everything connected.</p>
+      <p>Everyone had their own parts to build. I let the team work on those, checked what they had made and stepped in when something needed fixing or explaining.</p>
+      <p>A big part of my role was making sure we all understood how the data moved through the application. Because having four separate pieces of code isn't much use if they don't work together.</p>
+      <p class="big">Leading isn't about controlling every detail. It's about knowing when to <em>step in</em>, when to let people work and how to keep everyone moving in the same direction.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">05 · how it ended</p></aside>
+    <div><p>Passed, with positive feedback.</p>
+      <p>One of the projects where I got to focus on something I genuinely enjoy: taking an idea and figuring out how to make it work behind the scenes.</p></div>
+  </section>
+
+  <a class="cnext" href="#" data-next="moodie"><em>next · 04 / 04</em><b>Moodie →</b></a>
+</template>
+
+<template id="cs-moodie">
+  <section class="cs">
+    <aside><p class="lab">01 · the idea</p><p class="hn">Sometimes you know something is wrong. You just don't know how to explain it to someone sitting right in front of you.</p></aside>
+    <div>
+      <h3>Some feelings need another way out.</h3>
+      <p>Moodie is a concept for children and young people who struggle to communicate how they feel.</p>
+      <p>It gives them a space to check in, write things down and share what is happening with a trusted person, such as a parent or psychologist.</p>
+      <p>The same app has three different user experiences: one for the young person, one for their trusted person and one for the professional. Because everyone involved needs different information and different tools.</p>
+      <div class="phones"><figure><img src="img/o-mood.jpg" alt="How are you feeling today? Mood picker with an illustration and Set Mood button" loading="lazy"><figcaption>check in</figcaption></figure><figure><img src="img/o-home.jpg" alt="Kid home screen: how are you feeling today, with upcoming appointments" loading="lazy"><figcaption>home</figcaption></figure><figure><img src="img/o-chat.jpg" alt="Chat with Mom: a message tagged with the emotion anger and despair" loading="lazy"><figcaption>talk to mom</figcaption></figure></div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">02 · the screens</p><p class="hn">I wanted it to feel like something you'd actually want to open. Not something that reminds you of an appointment with a doctor.</p></aside>
+    <div>
+      <h3>A little space to understand yourself.</h3>
+      <p>Moodie includes a mood check-in, a personal journal and a weekly overview to help users see how their feelings change over time.</p>
+      <p>There is also an SOS button that connects the user to their trusted person or emergency services.</p>
+      <p>The aim is to make expressing emotions feel more approachable, while keeping support within reach when it matters.</p>
+      <div class="phones"><figure><img src="img/o-stats.jpg" alt="Mood stats over one week with mood history" loading="lazy"><figcaption>mood over time</figcaption></figure><figure><img src="img/o-journal.jpg" alt="Journal entry: Feeling bad again" loading="lazy"><figcaption>journal</figcaption></figure><figure><img src="img/o-sos.jpg" alt="SOS screen calling the trusted person, with 112 below" loading="lazy"><figcaption>sos</figcaption></figure></div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">03 · the name</p><p class="hn">I started with BridgeTalk. It sounded clever in my head. Then I realised it didn't actually tell anyone what the app was about.</p></aside>
+    <div>
+      <h3>From BridgeTalk to Moodie.</h3>
+      <p>The original concept was called BridgeTalk, with a small bridge as its logo. The idea was about connecting people, but the name felt too abstract.</p>
+      <p>I wanted something more approachable, something that immediately felt connected to emotions. That's how Moodie came along.</p>
+      <p>The identity evolved too. First a bridge, then four emoji faces, and finally four soft dots representing different moods. A much simpler direction, and one that made more sense for the product.</p>
+      <img class="logos" src="img/o-logos.jpg" alt="Logo evolution: BridgeTalk bridge icon, two versions of four emoji faces, and the final Moodie four-dot logo" loading="lazy">
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">04 · what I'd change</p><p class="hn">This is where I learned that making something fun isn't always the same as making it helpful.</p></aside>
+    <div>
+      <div class="shot2"><div>
+      <h3>I'd rethink the rewards.</h3>
+      <p>Moodie includes badges, streaks and a mascot to make emotional check-ins feel lighter and more engaging.</p>
+      <p>But the more I thought about it, the more I questioned the idea of rewarding people for checking in or having a good day.</p>
+      <p>What happens when someone has a difficult week? Does breaking a streak make them feel like they've failed? Does a badge turn something personal into another task to complete?</p>
+      <p>I'd remove or rethink those features. I want people to feel that every emotion is allowed, not that some days deserve more recognition than others.</p>
+      </div><img src="img/o-badges.jpg" alt="My Achievements screen with 81 badges unlocked and next achievements" loading="lazy"></div>
+      <p class="big">Just because a feature looks motivating doesn't mean it makes someone <em>feel better</em>.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">05 · how it ended</p></aside>
+    <div><p>Passed, with positive feedback.</p>
+      <p>A project that made me think more carefully about the emotional side of design, and about how small interface decisions can change the way someone feels.</p></div>
+  </section>
+
+  <a class="cnext" href="#" data-next="garmin"><em>back to the beginning · 01 / 04</em><b>Garmin Sense →</b></a>
+</template>
+<div class="case" id="case" data-lenis-prevent role="dialog" aria-modal="true" aria-labelledby="ctitle">
+  <button class="close" id="cclose" type="button">← back to the cube</button>
+  <p class="cnum" id="ccnum"></p>
+  <h2 class="ctitle" id="ctitle"></h2>
+  <div class="cgrid">
+    <dl id="cdl"></dl>
+    <div><p class="lead" id="clead"></p><p class="todo" id="ctodo"></p></div>
+  </div>
+  <div class="vis cvis" id="cvis"></div>
+  <div id="cextra"></div>
+</div>
+
+<script>
+(function(){var u=navigator.userAgent,ios=/iP(hone|ad|od)/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1),saf=/Safari/.test(u)&&!/Chrome|Chromium|Edg|OPR|Android/.test(u);
+if(ios||saf){var h=document.documentElement;h.classList.add('noblend');var f=function(){h.classList.toggle('past',scrollY>innerHeight*.6)};addEventListener('scroll',f,{passive:true});f();}})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(() => {
+  let lenisRef = () => null;
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = s => document.querySelector(s);
+  const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  let curCls = '';
+  // every changing letter sits on top of an invisible copy of itself in the base font,
+  // so the layout is fixed by the copy and the visible letter can change freely without moving anything
+  const slot = (c, cls) => { const w = document.createElement('span'); w.className = 'slt';
+    const g = document.createElement('span'); g.className = 'gh'; g.setAttribute('aria-hidden', 'true'); g.textContent = c;
+    const s = document.createElement('span'); s.className = 'l' + (cls ? ' ' + cls : ''); s.textContent = c; w.append(g, s); return [w, s]; };
+  const letters = (el, txt) => { el.innerHTML = ''; return [...txt].map(c => { const [w, s] = slot(c === ' ' ? '\u00a0' : c, curCls && c !== ' ' ? curCls : ''); el.appendChild(w); return s; }); };
+  const words = (el, txt) => { el.innerHTML = ''; return txt.split(' ').map(w => { const s = document.createElement('span'); s.textContent = w; el.appendChild(s); el.appendChild(document.createTextNode(' ')); return s; }); };
+
+  /* ---------- build text ---------- */
+  const W = 'composed';
+  const wordEl = $('#word'), reflEl = document.createElement('div'); // reflection removed; kept detached so the letter pairing code stays simple
+  const L = letters(wordEl, W), R = letters(reflEl, W);
+  const fit = () => {
+    const w = wordEl.clientWidth;
+    wordEl.style.fontSize = reflEl.style.fontSize = '100px';
+    const nat = [...wordEl.children].reduce((a, s) => a + s.getBoundingClientRect().width, 0);
+    const fs = Math.min(100 * w / nat * 0.985, innerHeight * 0.62);
+    wordEl.style.fontSize = reflEl.style.fontSize = fs + 'px';
+    $('#hero').style.setProperty('--wordH', (fs * 0.76) + 'px');
+  };
+  fit();
+  const sayW = words($('#say'), 'I have a lot going on in my head. I turn it into things that make sense to someone else.');
+  const helpW = words($('#help'), 'a few ideas I got a little too invested in.');
+  const quietW = words($('#quiet'), 'less noise. more meaning.');
+  const overW = words($('#over'), "let's talk.");
+  quietW.slice(3).forEach(w => w.classList.add('lit'));
+  const deeper = $('#deeper');
+  deeper.innerHTML = 'd<span class="e">e</span><span class="e">e</span><span class="e">e</span><span class="e">e</span><span class="e">e</span><span class="e">e</span>p<span class="e">e</span>r';
+  const Es = [...deeper.querySelectorAll('.e')];
+
+  /* ---------- playful type: split, cycle, invert on hover ---------- */
+  function splitText(el, mk) {
+    const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentElement.closest('.l,.gw,.slt') ? 2 : (n.nodeValue.trim() ? 1 : 2) });
+    const nodes = []; while (walk.nextNode()) nodes.push(walk.currentNode);
+    nodes.forEach(n => { const f = document.createDocumentFragment(); mk(n.nodeValue, f); n.replaceWith(f); });
+  }
+  const typeify = el => { if (!el.hasAttribute('aria-label') && !el.closest('[aria-hidden="true"]')) el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
+    splitText(el, (t, f) => [...t].forEach(c => { if (c === ' ' || c === '\n') { f.append(c); return; } const [w] = slot(c, curCls); f.append(w); })); };
+  const wordify = el => splitText(el, (t, f) => t.split(/(\s+)/).forEach(w => { if (!w.trim()) { f.append(w); return; } const s = document.createElement('span'); s.className = 'gw'; s.textContent = w; f.append(s); }));
+  document.querySelectorAll('.ghost').forEach(wordify);
+  ['#say', '#help', '#quiet', '#over', '#swap', '.face.txt .big', '#about .row', '#cttl'].forEach(q => document.querySelectorAll(q).forEach(typeify));
+  // only a few pieces of type are restless; the rest stays still so these stand out
+  [wordEl, $('#about .row'), $('#cttl'), $('#swap'), $('#ctitle')].forEach(el => el && (el.dataset.ty = ''));
+
+  /* face × colour. Faces: f1 hairline, f2 serif italic, f3 mono, f4 didone italic, f5 condensed, f6 expanded.
+     Colours: c1 blue, c2 outline, c3 grey. A phase is either one look for the whole word or a per-letter mix. */
+  const FACES = ['', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6'], COLS = ['', '', 'c1', 'c2', 'c3'];
+  const ALL = ['f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'c1', 'c2', 'c3'];
+  const pick = a => a[(Math.random() * a.length) | 0];
+  const rnd = () => (pick(FACES) + ' ' + pick(COLS)).trim();
+  const SEQ = ['', 'f1 c1', '', 'mix', 'f2', 'f5 c2', '', 'f4 c1', 'mix', 'f3', '', 'f6 c1', 'f2 c3', 'mix', '', 'f4', 'f5', 'f1 c2'];
+  const setT = (l, st) => { if (!l) return; l.classList.remove(...ALL); st && st.split(' ').forEach(c => c && l.classList.add(c)); };
+  const onScreen = el => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight && r.width > 0; };
+  // a letter doesn't just switch: it flickers through a few random looks first, then lands
+  const jump = (ls, final, delay) => {
+    const n = 4 + ((Math.random() * 6) | 0);
+    for (let j = 0; j < n; j++) setTimeout(() => { const r = rnd(); ls.forEach(l => setT(l, r)); }, delay + j * 75);
+    setTimeout(() => ls.forEach(l => setT(l, final)), delay + n * 75);
+  };
+  let ph = 0;
+  if (!RM) setInterval(() => {
+    if (document.hidden) return;
+    ph = (ph + 1) % SEQ.length; const ph_ = SEQ[ph]; curCls = ph_ === 'mix' ? '' : ph_;
+    document.querySelectorAll('[data-ty]').forEach(el => {
+      const live = onScreen(el);
+      const groups = el === wordEl ? L.map((l, i) => [l, R[i]]) : [...el.querySelectorAll('.l')].map(l => [l]);
+      shuffle(groups).forEach((g, k) => {
+        const fin = ph_ === 'mix' ? (Math.random() < .35 ? '' : rnd()) : ph_;
+        live ? jump(g, fin, k * Math.min(110, 1400 / groups.length)) : g.forEach(l => setT(l, fin));
+      });
+    });
+  }, 3200);
+  document.addEventListener('pointerover', e => {
+    const t = e.target.closest && e.target.closest('.l,.gw'); if (!t) return;
+    t.classList.add('inv'); clearTimeout(t._iv); t._iv = setTimeout(() => t.classList.remove('inv'), 700);
+  });
+
+  const cube = makeCases();
+
+  if (!window.gsap || !window.ScrollTrigger || RM) {
+    if (!RM && !window.gsap) console.warn('motion libs unavailable, static fallback');
+    Es.forEach(e => e.classList.add('on'));
+    startRipple(false); makeBg(false);
+    return;
+  }
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------- smooth scroll ---------- */
+  let lenis;
+  lenisRef = () => lenis;
+  if (window.Lenis) {
+    lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.9 });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]:not(.face)').forEach(a => a.addEventListener('click', e => {
+      const id = a.getAttribute('href'); if (id.length < 2) { e.preventDefault(); return; }
+      const t = document.querySelector(id); if (t) { e.preventDefault(); lenis.scrollTo(t, { duration: 1.6 }); }
+    }));
+  }
+
+  /* depth readout: the page is a dive */
+  const depthEl = $('#depth');
+  ScrollTrigger.create({ start: 0, end: 'max', onUpdate: s => {
+    const p = s.progress, d = p < .82 ? p / .82 * 32 : 32 - (p - .82) / .18 * 32;
+    depthEl.textContent = (p > .98 ? 0 : d).toFixed(1) + ' m';
+  }});
+
+  /* ---------- 1. hero: letters surface one by one ---------- */
+  gsap.set(L, { opacity: 0 });
+  gsap.set('#t1', { clipPath: 'inset(0 100% 0 0)' });
+  gsap.set('#heroLine', { scaleX: 0 });
+  // intro so the first frame isn't empty
+  gsap.timeline({ delay: .2 })
+    .to('#heroLine', { scaleX: 1, duration: 1, ease: 'expo.inOut' })
+    .to('#t1', { clipPath: 'inset(0 0% 0 0)', duration: .9, ease: 'steps(18)' }, '-=.3')
+    .to(shuffle(L).slice(0, 2), { opacity: 1, duration: .01, stagger: .18 }, '-=.2');
+
+  const order = shuffle(L.map((_, i) => i));
+  const htl = gsap.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=180%', pin: '#hero .pin', scrub: true } });
+  order.forEach((i, k) => htl.to(L[i], { opacity: 1, duration: .02 }, .1 + k * .1));
+  htl.to('#hero .ghostblock', { yPercent: -18, filter: 'blur(4px)', duration: 1 }, 0)
+     .to('#t2', { opacity: 0, duration: .1 }, .9)
+     .to('#word', { yPercent: -6, duration: .3 }, 1.15);
+
+  /* ---------- 2. about ---------- */
+  gsap.set(sayW, { opacity: 0 });
+  const atl = gsap.timeline({ scrollTrigger: { trigger: '#about', start: 'top top', end: '+=170%', pin: '#about .pin', scrub: true,
+    onUpdate: s => { const n = Math.round(gsap.utils.mapRange(.45, .95, 0, Es.length, s.progress)); Es.forEach((e, i) => e.classList.toggle('on', i < n)); } } });
+  atl.from('#about .hline.a', { scaleX: 0, duration: .2 }, 0)
+     .from('#about .list div', { xPercent: -8, opacity: 0, stagger: .04, duration: .15 }, 0);
+  sayW.forEach((w, k) => atl.to(w, { opacity: 1, duration: .02 }, .12 + k * .06));
+  atl.from('#about .hline.b', { scaleX: 0, duration: .3 }, .4)
+     .to('#about .list', { yPercent: -10, duration: 1 }, 0);
+
+  /* ---------- 3. vision: loud thoughts compose into one sentence ---------- */
+  (function () {
+    const sent = $('#vsent'), noise = $('#vnoise');
+    const parts = []; // split the sentence into words, keeping the blue key phrase
+    [...sent.childNodes].forEach(n => {
+      const key = n.nodeType === 1;
+      (n.textContent.trim().split(/\s+/)).forEach(w => { if (!w) return; const sp = document.createElement('span'); sp.className = 'vw' + (key ? ' key' : ''); sp.textContent = w; parts.push(sp); });
+    });
+    sent.setAttribute('aria-label', sent.textContent.replace(/\s+/g, ' ').trim()); sent.innerHTML = ''; parts.forEach(p => sent.appendChild(p));
+    const NOISE = ['what if?', 'why though?', 'another idea', 'research', 'wait.', 'does this work?', 'one more thing', 'figma', '3 am', 'not quite', 'try again', 'another tab', 'what about the user?', 'too many layers', 'coffee', 'focus', 'start over', 'okay, better', 'could be simpler', 'let me check', 'one last detail', 'almost', 'chaos'];
+    const FACES = ['', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6'];
+    const R = gsap.utils.random;
+    const nz = NOISE.map(t => { const e = document.createElement('span'); e.textContent = t; e.className = 'l ' + FACES[(Math.random() * FACES.length) | 0];
+      e.style.left = R(2, 80) + '%'; e.style.top = R(6, 88) + '%'; e.style.fontSize = R(14, 46) + 'px'; noise.appendChild(e);
+      return { e, r: R(-25, 25), dx: R(-120, 120), dy: R(-80, 80) }; });
+    const sc = parts.map(() => ({ x: R(-.42, .42) * innerWidth, y: R(-.38, .38) * innerHeight, r: R(-40, 40), s: R(.35, .8) }));
+    const ease = gsap.parseEase('power3.inOut');
+    function frame(p) {
+      const k = ease(gsap.utils.clamp(0, 1, (p - .08) / .62)), inv = 1 - k;
+      parts.forEach((w, i) => { const o = sc[i]; w.style.transform = `translate(${o.x * inv}px,${o.y * inv}px) rotate(${o.r * inv}deg) scale(${o.s + (1 - o.s) * k})`; });
+      const f = gsap.utils.clamp(0, 1, (p - .05) / .5);
+      nz.forEach(n => { n.e.style.opacity = (1 - f).toFixed(3); n.e.style.transform = `translate(${n.dx * f}px,${n.dy * f}px) rotate(${n.r * (1 - f * .5)}deg)`; n.e.style.filter = `blur(${(f * 6).toFixed(1)}px)`; });
+    }
+    frame(0);
+    ScrollTrigger.create({ trigger: '#vision', start: 'top top', end: '+=160%', pin: '#vision .pin', scrub: true, onUpdate: s => frame(s.progress) });
+    gsap.utils.toArray('.beliefs li').forEach(li => gsap.from(li.children, { y: 60, opacity: 0, duration: 1.1, stagger: .08, ease: 'expo.out', clearProps: 'all', scrollTrigger: { trigger: li, start: 'top 82%' } }));
+  })();
+  makeBg(true);
+
+  /* ---------- 4. work ---------- */
+  gsap.set(helpW, { opacity: 0 });
+  const wtl = gsap.timeline({ scrollTrigger: { trigger: '#work', start: 'top 70%', end: 'top 15%', scrub: true } });
+  helpW.forEach((w, k) => wtl.to(w, { opacity: 1, duration: .02 }, k * .12));
+  gsap.from('.wlist li', { yPercent: 60, opacity: 0, stagger: .12, duration: 1.1, ease: 'expo.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: '.wlist', start: 'top 85%' } });
+
+  /* ---------- 5. deep: page inverts below the thermocline ---------- */
+  ScrollTrigger.create({ trigger: '#deep', start: 'top 55%', end: 'bottom 45%', toggleClass: { targets: document.body, className: 'deep' } });
+  gsap.set(quietW, { opacity: 0 });
+  const dtl = gsap.timeline({ scrollTrigger: { trigger: '#deep', start: 'top 40%', end: 'bottom bottom', scrub: true } });
+  dtl.from('#deep .hline', { scaleX: 0, stagger: .1, duration: .3 }, 0);
+  quietW.forEach((w, k) => dtl.to(w, { opacity: 1, duration: .02 }, .2 + k * .12));
+  startSnow();
+
+  /* ---------- 6. contact: resurface, chaos → structure ---------- */
+  gsap.set(overW, { opacity: 0 }); gsap.set('#why', { opacity: 0 });
+  const ctl = gsap.timeline({ scrollTrigger: { trigger: '#contact', start: 'top 65%', end: 'top 5%', scrub: true } });
+  overW.forEach((w, k) => ctl.to(w, { opacity: 1, duration: .02 }, k * .1));
+  const swap = $('#swap'); let swapped = false, swapTimer;
+  const retype = (from, to) => {
+    clearInterval(swapTimer); let s = from;
+    swapTimer = setInterval(() => {
+      if (s.length && !to.startsWith(s)) s = s.slice(0, -1);
+      else if (s.length < to.length) s = to.slice(0, s.length + 1);
+      else return clearInterval(swapTimer);
+      swap.textContent = s; typeify(swap);
+    }, 55);
+  };
+  ScrollTrigger.create({ trigger: '#contact .foot', start: 'top 92%', onEnter: () => { if (!swapped) { swapped = true; gsap.to('#why', { opacity: 1, duration: .6, delay: .7 }); } },
+    onLeaveBack: () => { swapped = false; gsap.to('#why', { opacity: 0, duration: .3 }); } });
+
+
+  addEventListener('resize', () => { fit(); ScrollTrigger.refresh(); });
+  document.fonts && document.fonts.ready.then(() => { fit(); ScrollTrigger.refresh(); });
+
+  /* ================= helpers ================= */
+  // the background cube: spin it by dragging anywhere, click a side and it zooms in until that side is the page
+  function makeBg(live) {
+    const wrap = document.getElementById('bg3d'), bc = document.getElementById('bcube'), faceLbl = document.getElementById('bface');
+    const page = document.getElementById('bpage'), arts = [...page.querySelectorAll('article')];
+    const FACES = [...bc.querySelectorAll('.bface')], KEYS = FACES.map(f => f.dataset.p);
+    const ANG = { home: [0, 0], about: [0, -90], work: [0, -180], process: [0, 90], play: [-90, 0], hello: [90, 0] };
+    const COL = { home: ['#fafaf9', '#0b0b0b'], about: ['#fafaf9', '#0b0b0b'], work: ['#fafaf9', '#0b0b0b'], process: ['#0b0b0b', '#fafaf9'], play: ['#1238ff', '#ffffff'], hello: ['#1238ff', '#ffffff'] };
+    const NORM = { home: [0, 0, 1], about: [1, 0, 0], work: [0, 0, -1], process: [-1, 0, 0], play: [0, -1, 0], hello: [0, 1, 0] };
+    const CASES = [];
+    const st = { rx: -16, ry: 28, vx: 0, vy: 0, x: 0, y: 0, s: 1 };
+    let mode = 'rest', front = 'home', openKey = null;
+    const restPos = () => innerWidth <= 720 ? [innerWidth * .5, innerHeight * .55] : [innerWidth * .7, innerHeight * .55];
+    [st.x, st.y] = restPos();
+    addEventListener('resize', () => { if (mode === 'rest') [st.x, st.y] = restPos(); });
+    const scrollRot = () => live ? scrollY * .045 : 0;
+    const rad = d => d * Math.PI / 180;
+    function frontOf(rx, ry) {
+      const a = rad(rx), b = rad(ry); let best = null, bz = -9;
+      for (const k in NORM) { const [x, y, z] = NORM[k]; const z1 = -x * Math.sin(b) + z * Math.cos(b); const z2 = y * Math.sin(a) + z1 * Math.cos(a); if (z2 > bz) { bz = z2; best = k; } }
+      return best;
+    }
+    // drag anywhere that isn't something else you can use
+    const NOPE = 'a,button:not(.bface),input,textarea,.cube,.case,.bpage,.hdr,.ccap';
+    let down = null, moved = 0, lt = 0;
+    addEventListener('pointerdown', e => {
+      if (mode !== 'rest' || e.button > 0) return;
+      const t = e.target; if (t.closest && t.closest(NOPE)) return;
+      down = { x: e.clientX, y: e.clientY, lx: e.clientX, ly: e.clientY, face: document.elementsFromPoint(e.clientX, e.clientY).map(el => el.closest && el.closest('.bface')).find(Boolean) }; moved = 0; lt = e.timeStamp; st.vx = st.vy = 0;
+    });
+    // a lens under the cursor: each side carries an inverted copy of itself, clipped to a circle where the pointer meets that side
+    FACES.forEach(f => { const o = document.createElement('span'); o.className = 'inv'; o.setAttribute('aria-hidden', 'true'); o.innerHTML = f.innerHTML; f.appendChild(o); f._inv = o; f._r = 0; f._tx = 0; f._ty = 0; });
+    let cmx = -1e5, cmy = -1e5, ctype = 'mouse';
+    addEventListener('pointermove', e => { cmx = e.clientX; cmy = e.clientY; ctype = e.pointerType; }, { passive: true });
+    document.addEventListener('pointerleave', () => { cmx = cmy = -1e5; });
+    const rX = (p, a) => { const c = Math.cos(a), s_ = Math.sin(a); return [p[0], p[1] * c - p[2] * s_, p[1] * s_ + p[2] * c]; };
+    const rY = (p, a) => { const c = Math.cos(a), s_ = Math.sin(a); return [p[0] * c + p[2] * s_, p[1], -p[0] * s_ + p[2] * c]; };
+    const FROT = [p => p, p => rY(p, rad(90)), p => rY(p, rad(180)), p => rY(p, rad(-90)), p => rX(p, rad(90)), p => rX(p, rad(-90))];
+    function hitTest(rx, ry) {
+      const h = bc.offsetWidth / 2, D = 1800, sx = cmx - st.x, sy = cmy - st.y, A = rad(rx), B = rad(ry);
+      const W = (i, u, v) => { const p = rX(rY(FROT[i]([u, v, h]), B), A); return [p[0] * st.s, p[1] * st.s, p[2] * st.s]; };
+      let best = null;
+      for (let i = 0; i < 6; i++) {
+        const c = W(i, 0, 0), x1 = W(i, 1, 0), y1 = W(i, 0, 1);
+        const eu = [x1[0] - c[0], x1[1] - c[1], x1[2] - c[2]], ev = [y1[0] - c[0], y1[1] - c[1], y1[2] - c[2]];
+        const n = [eu[1] * ev[2] - eu[2] * ev[1], eu[2] * ev[0] - eu[0] * ev[2], eu[0] * ev[1] - eu[1] * ev[0]];
+        if (n[0] * (0 - c[0]) + n[1] * (0 - c[1]) + n[2] * (D - c[2]) <= 0) continue; // facing away
+        const dir = [sx, sy, -D], rhs = [-c[0], -c[1], D - c[2]];
+        // solve u*eu + v*ev - t*dir = rhs
+        const m = [[eu[0], ev[0], -dir[0]], [eu[1], ev[1], -dir[1]], [eu[2], ev[2], -dir[2]]];
+        const det = M => M[0][0] * (M[1][1] * M[2][2] - M[1][2] * M[2][1]) - M[0][1] * (M[1][0] * M[2][2] - M[1][2] * M[2][0]) + M[0][2] * (M[1][0] * M[2][1] - M[1][1] * M[2][0]);
+        const d0 = det(m); if (Math.abs(d0) < 1e-9) continue;
+        const col = (k) => m.map((row, r) => row.map((v, j) => j === k ? rhs[r] : v));
+        const u = det(col(0)) / d0, v = det(col(1)) / d0, t = det(col(2)) / d0;
+        if (Math.abs(u) <= h && Math.abs(v) <= h && t > 0 && (!best || t < best.t)) best = { i, u: u + h, v: v + h, t };
+      }
+      return best;
+    }
+    // hover helpers kept for click-through and cursor
+    let hov = null;
+    addEventListener('pointermove', e => {
+      if (!down) return; const dx = e.clientX - down.lx, dy = e.clientY - down.ly, dt = Math.max(8, e.timeStamp - lt);
+      moved = Math.max(moved, Math.hypot(e.clientX - down.x, e.clientY - down.y));
+      // on a phone only sideways swipes turn the cube; up and down stays normal page scrolling
+      const tch = e.pointerType === 'touch' && !down.face, k = e.pointerType === 'touch' ? .42 : .32;
+      if (moved > 5) { document.documentElement.classList.add('spin'); st.ry += dx * k; st.vx = dx * k / dt * 16; if (!tch) { st.rx -= dy * k; st.vy = -dy * k / dt * 16; } }
+      down.lx = e.clientX; down.ly = e.clientY; lt = e.timeStamp;
+    });
+    const up = () => { if (!down) return; const f = down.face; down = null; document.documentElement.classList.remove('spin'); if (moved <= 5 && f) go(f.dataset.p); };
+    // the browser cancels the pointer when a swipe turns into a page scroll: stop turning, never open a side
+    const cancel = () => { down = null; document.documentElement.classList.remove('spin'); };
+    addEventListener('pointerup', up); addEventListener('pointercancel', cancel);
+    FACES.forEach(f => f.addEventListener('click', e => { if (e.detail === 0) go(f.dataset.p); }));
+
+    function go(k) {
+      if (mode !== 'rest') return;
+      if (k === 'home') { const l = lenisRef(); l ? l.scrollTo(0, { duration: 1.8 }) : scrollTo({ top: 0, behavior: 'smooth' }); spinTo(k); return; }
+      openPage(k);
+    }
+    function target(k, folded) {
+      const [ax, ay] = ANG[k], so = folded ? 0 : scrollRot();
+      const ry = ay - so + Math.round((st.ry - (ay - so)) / 360) * 360, rx = ax + Math.round((st.rx - ax) / 360) * 360;
+      return { rx, ry };
+    }
+    function spinTo(k) { if (!window.gsap) return; const t = target(k); st.vx = st.vy = 0; gsap.to(st, { rx: t.rx, ry: t.ry, duration: 1, ease: 'power3.inOut' }); }
+    function openPage(k) {
+      openKey = k; const [pbg, pfg] = COL[k];
+      arts.forEach(a => a.classList.toggle('on', a.dataset.p === k));
+      page.style.setProperty('--pbg', pbg); page.style.setProperty('--pfg', pfg); page.style.backgroundColor = ''; page.style.color = '';
+      document.getElementById('pnum').textContent = String(KEYS.indexOf(k) + 1).padStart(2, '0') + ' / 06';
+      const show = () => { page.classList.add('on'); page.scrollTop = 0; document.getElementById('pclose').focus({ preventScroll: true });
+        if (k === 'about') setMode('office', true); else page.removeAttribute('data-mode');
+
+        const ls = letters(page.querySelector('article.on .pt'), page.querySelector('article.on .pt').textContent);
+        if (window.gsap && !RM) { gsap.set(ls, { opacity: 0 }); gsap.to(shuffle(ls), { opacity: 1, duration: .01, stagger: .045, delay: .1 }); gsap.from(page.querySelectorAll('article.on .pgrid'), { y: 40, opacity: 0, duration: 1, stagger: .12, ease: 'expo.out', delay: .2 }); } };
+      if (!window.gsap || RM) { if (CASES.includes(k)) { openKey = null; cube.open(k, null); return; } show(); return; }
+      st.ry += scrollRot(); mode = 'zoom'; st.vx = st.vy = 0; lenisRef() && lenisRef().stop();
+      const t = target(k, true);
+      const cover = Math.max(innerWidth, innerHeight) / bc.offsetWidth * 1.9;
+      gsap.timeline()
+        .to(st, { rx: t.rx, ry: t.ry, duration: .8, ease: 'power3.inOut' })
+        .to(st, { x: innerWidth / 2, y: innerHeight / 2, duration: .8, ease: 'power3.inOut' }, 0)
+        .to(st, { s: cover, duration: .75, ease: 'expo.in' })
+        .add(() => {
+          if (CASES.includes(k)) { // project sides open the full case study, then the cube quietly resets behind it
+            openKey = null; cube.open(k, null);
+            wrap.style.opacity = 0; st.s = 1; [st.x, st.y] = restPos(); st.ry -= scrollRot(); mode = 'rest';
+            requestAnimationFrame(() => requestAnimationFrame(() => { wrap.style.opacity = ''; }));
+            return;
+          }
+          show(); mode = 'open'; wrap.style.opacity = 0; });
+    }
+    function closePage() {
+      if (!openKey) return; const k = openKey; openKey = null;
+      if (!window.gsap || RM) { page.classList.remove('on'); mode = 'rest'; return; }
+      mode = 'zoom'; wrap.style.opacity = '';
+      const [rx0, ry0] = restPos();
+      gsap.timeline({ onComplete: () => { st.ry -= scrollRot(); mode = 'rest'; lenisRef() && lenisRef().start(); FACES[KEYS.indexOf(k)].focus({ preventScroll: true }); } })
+        .to(page, { opacity: 0, duration: .25, onComplete: () => { page.classList.remove('on'); page.style.opacity = ''; } })
+        .to(st, { s: 1, duration: .9, ease: 'expo.out' }, .05)
+        .to(st, { x: rx0, y: ry0, duration: 1, ease: 'power3.inOut' }, .15)
+        .to(st, { rx: st.rx - 16, ry: st.ry + 28, duration: 1.1, ease: 'power3.out' }, .2);
+    }
+    // about: two sides of the same person
+    const MODES = { office: ['#fafaf9', '#0b0b0b'], after: ['#0b0b0b', '#fafaf9'] };
+    function setMode(m, first) {
+      const art = page.querySelector('article[data-p="about"]'); if (!art) return;
+      page.dataset.mode = m; page.style.setProperty('--pbg', MODES[m][0]); page.style.setProperty('--pfg', MODES[m][1]);
+      if (window.gsap && !RM) gsap.to(page, { backgroundColor: MODES[m][0], color: MODES[m][1], duration: .7, ease: 'power2.out', overwrite: true });
+      else { page.style.backgroundColor = MODES[m][0]; page.style.color = MODES[m][1]; }
+      art.querySelectorAll('.mode').forEach(b => { const on = b.dataset.mode === m; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
+      art.querySelectorAll('.mpanel').forEach(p => {
+        const on = p.dataset.mode === m; p.hidden = !on;
+        if (on && window.gsap && !RM && !first) gsap.from(p.querySelectorAll('.pgrid'), { y: 30, opacity: 0, duration: .8, stagger: .08, ease: 'expo.out' });
+        if (on) p.querySelectorAll('.gbar i').forEach(i => { i.style.animation = 'none'; void i.offsetWidth; i.style.animation = ''; });
+      });
+    }
+    page.querySelectorAll('.mode').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+    document.getElementById('pclose').addEventListener('click', closePage);
+    addEventListener('keydown', e => { if (e.key === 'Escape') closePage(); });
+    page.querySelectorAll('[data-case]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const c = a.dataset.case;
+      page.classList.remove('on'); openKey = null; wrap.style.opacity = ''; st.s = 1; [st.x, st.y] = restPos(); if (mode !== 'rest') st.ry -= scrollRot(); mode = 'rest'; lenisRef() && lenisRef().start(); cube.open(c, null); }));
+
+    const caseEl = document.getElementById('case'); const visEl = document.getElementById('vision');
+    (function loop() {
+      requestAnimationFrame(loop);
+      if (mode === 'rest' && !down) {
+        st.ry += st.vx; st.rx += st.vy; st.vx *= .95; st.vy *= .95;
+        if (Math.abs(st.vx) < .02 && live && !RM) st.ry += .04; // idle drift
+      }
+      const vr = visEl.getBoundingClientRect();
+      const away = mode === 'rest' && (caseEl.classList.contains('on') || (vr.top < innerHeight * .5 && vr.bottom > innerHeight * .5));
+      wrap.classList.toggle('away', !!away);
+      const rx = st.rx, ry = st.ry + (mode === 'rest' ? scrollRot() : 0);
+      wrap.style.left = st.x + 'px'; wrap.style.top = st.y + 'px';
+      bc.style.transform = `scale(${st.s}) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      const f = frontOf(rx, ry); if (f !== front) { front = f; faceLbl.textContent = f; }
+      const blocked = (() => { const el = document.elementFromPoint(cmx, cmy); return el && el.closest && el.closest(NOPE); })();
+      const hit = mode === 'rest' && !wrap.classList.contains('away') && ctype !== 'touch' && !blocked && cmx > -1e4 ? hitTest(rx, ry) : null;
+      const hf = hit ? FACES[hit.i] : null;
+      if (hf !== hov) { hov = hf; document.documentElement.classList.toggle('overface', !!hov); }
+      const R = bc.offsetWidth * .16;
+      FACES.forEach(F => { const on = F === hf; if (on) { F._tx = hit.u; F._ty = hit.v; } F._r += ((on ? R : 0) - F._r) * .22;
+        F._inv.style.clipPath = F._r < .5 ? 'circle(0px at 50% 50%)' : `circle(${F._r.toFixed(1)}px at ${F._tx.toFixed(1)}px ${F._ty.toFixed(1)}px)`; });
+    })();
+  }
+
+  // project pages: open from wherever you clicked, close back into it
+  function makeCases() {
+    const DATA = {
+      garmin: { n: '01 / 04', t: 'Garmin Sense', dl: [['type', 'solo school project · one semester'], ['role', 'research, ux, ui and brand identity'], ['platform', 'Garmin watch + companion app concept'], ['tools', 'Figma, FigJam'], ['development', 'concept and interface design, not a real Garmin product']],
+        lead: 'A little more awareness. A little less pressure. A concept for bringing calm into the everyday through a Garmin smartwatch.', todo: '' },
+      medimate: { n: '02 / 04', t: 'MediMate', dl: [['type', 'solo school project · one semester'], ['role', 'research, brand identity, ux/ui, business plan'], ['platform', 'mobile app · light and dark mode'], ['tools', 'Figma']],
+        lead: 'Medication reminders without the guilt. A friendly digital companion designed to make everyday health routines feel a little easier.', todo: '' },
+      lingo: { n: '03 / 04', t: 'Spotify-Lingo', dl: [['type', 'team project · one semester'], ['team', '4 people'], ['my role', 'lead developer'], ['design', 'created by one of my teammates'], ['stack', 'React + Vite, Node.js + Express, Supabase, Jamendo API']],
+        lead: 'What if learning a language felt more like playing a game? Find a song, listen to it and guess the missing word.', todo: '' },
+      moodie: { n: '04 / 04', t: 'Moodie', dl: [['type', 'solo school project · one semester'], ['role', 'ux/ui and branding'], ['for', 'young people, parents and psychologists'], ['tools', 'Figma']],
+        lead: "Not everything is easy to say out loud. Moodie gives young people another way to communicate what they're feeling with the people they trust.", todo: '' }
+    };
+    const cs = document.getElementById('case'); let from = null;
+    const ins = r => `inset(${r.top}px ${innerWidth - r.right}px ${innerHeight - r.bottom}px ${r.left}px)`;
+    const mid = () => ({ top: innerHeight / 2 - 40, bottom: innerHeight / 2 + 40, left: innerWidth / 2 - 60, right: innerWidth / 2 + 60 });
+    function fillCase(k, d) {
+      document.getElementById('ccnum').textContent = d.n;
+      letters(document.getElementById('ctitle'), d.t);
+      document.getElementById('cdl').innerHTML = d.dl.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join('');
+      document.getElementById('clead').textContent = d.lead;
+      document.getElementById('ctodo').textContent = d.todo;
+      document.getElementById('cvis').className = 'vis cvis v-' + k;
+      const ex = document.getElementById('cextra'), tp = document.getElementById('cs-' + k);
+      ex.innerHTML = ''; if (tp) ex.appendChild(tp.content.cloneNode(true));
+      document.getElementById('cvis').hidden = !!tp;
+      const demo = ex.querySelector('#lingoDemo');
+      if (demo) demo.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+        const ok = b.hasAttribute('data-ok'); b.classList.add(ok ? 'ok' : 'no');
+        if (ok) { demo.querySelector('#lgap').textContent = b.dataset.w; demo.querySelector('#lmsg').textContent = 'nice. that one came from the same line.'; }
+        else demo.querySelector('#lmsg').textContent = 'not quite. the wrong ones come from the same song, so they sound right.';
+      }));
+      ex.querySelectorAll('[data-next]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const n = a.dataset.next;
+        if (!DATA[n]) return; fillCase(n, DATA[n]); cs.scrollTop = 0; const ls = [...document.querySelectorAll('#ctitle span')];
+        if (window.gsap && !RM) { gsap.set(ls, { opacity: 0 }); gsap.to(shuffle(ls), { opacity: 1, duration: .01, stagger: .05 }); } }));
+    }
+    // the breathing demo: 6.5 breaths a minute, runs only while it's on screen
+    (function breathe() {
+      requestAnimationFrame(breathe);
+      const orb = document.getElementById('orb'); if (!orb || !cs.classList.contains('on')) return;
+      const r = orb.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+      const cyc = 60 / 6.5, t = (performance.now() / 1000) % cyc, half = cyc / 2, inhale = t < half, p = inhale ? t / half : (t - half) / half;
+      const e = .5 - Math.cos(Math.PI * p) / 2, sc = RM ? .78 : (inhale ? .55 + .45 * e : 1 - .45 * e);
+      orb.style.transform = `scale(${sc})`;
+      document.getElementById('bbar').style.transform = `scaleX(${p})`;
+      const w = inhale ? 'breathe in' : 'breathe out', bw = document.getElementById('bword');
+      if (bw.textContent !== w) { bw.textContent = w; document.getElementById('orbt').textContent = inhale ? 'in' : 'out'; }
+    })();
+    function open(k, el) {
+      const d = DATA[k]; if (!d) return; fillCase(k, d); from = el || null;
+      cs.classList.add('on'); cs.scrollTop = 0; document.getElementById('cclose').focus({ preventScroll: true });
+      if (!window.gsap || RM) return;
+      lenisRef() && lenisRef().stop();
+      gsap.fromTo(cs, { clipPath: ins(el ? el.getBoundingClientRect() : mid()) }, { clipPath: 'inset(0px 0px 0px 0px)', duration: .9, ease: 'expo.inOut' });
+      const ls = [...document.querySelectorAll('#ctitle span')]; gsap.set(ls, { opacity: 0 }); gsap.to(shuffle(ls), { opacity: 1, duration: .01, stagger: .05, delay: .5 });
+    }
+    function close() {
+      if (!cs.classList.contains('on')) return;
+      const done = () => { cs.classList.remove('on'); lenisRef() && lenisRef().start(); from && from.focus && from.focus({ preventScroll: true }); };
+      if (!window.gsap || RM) { done(); return; }
+      const r = from && from.isConnected && from.getClientRects().length ? from.getBoundingClientRect() : mid();
+      gsap.to(cs, { clipPath: ins(r), duration: .7, ease: 'expo.inOut', onComplete: done });
+    }
+    document.getElementById('cclose').addEventListener('click', close);
+    addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    // the work list: a thumbnail follows the cursor, click to open
+    const thumb = document.getElementById('wthumb'); let tx = 0, ty = 0, cx = 0, cy = 0, live = false;
+    document.querySelectorAll('.wlist a').forEach(a => {
+      a.addEventListener('click', e => { e.preventDefault(); thumb.classList.remove('on'); open(a.dataset.case, a); });
+      a.addEventListener('pointerenter', () => { thumb.className = 'wthumb vis v-' + a.dataset.vis + ' on'; });
+      a.addEventListener('pointerleave', () => thumb.classList.remove('on'));
+    });
+    addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; if (!live) { cx = tx; cy = ty; live = true; } }, { passive: true });
+    (function loop() { requestAnimationFrame(loop); cx += (tx - cx) * .14; cy += (ty - cy) * .14; thumb.style.left = cx + 'px'; thumb.style.top = cy + 'px'; })();
+    return { open };
+  }
+
+  function startRipple(anim) {
+    const t = document.getElementById('turb'); if (!t || !anim) return;
+    let k = 0; (function loop() { k += .006; t.setAttribute('baseFrequency', (0.004 + Math.sin(k) * .0015).toFixed(4) + ' ' + (0.06 + Math.cos(k * 1.3) * .015).toFixed(4)); requestAnimationFrame(loop); })();
+  }
+
+  function startSea(getPx) {
+    const cv = document.getElementById('sea'), ctx = cv.getContext('2d');
+    const base = document.createElement('canvas'), b = base.getContext('2d');
+    const tiny = document.createElement('canvas'), tc = tiny.getContext('2d');
+    const BW = 640, BH = 400; base.width = BW; base.height = BH;
+    const bubbles = Array.from({ length: 90 }, () => ({ x: Math.random() * BW, y: Math.random() * BH, r: Math.random() * 1.8 + .4, v: Math.random() * .5 + .15 }));
+    let visible = true;
+    new IntersectionObserver(e => visible = e[0].isIntersecting).observe(cv);
+    function size() { const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); cv.width = Math.max(1, r.width * d); cv.height = Math.max(1, r.height * d); }
+    size(); addEventListener('resize', size);
+    function scene(t) {
+      const g = b.createLinearGradient(0, 0, 0, BH);
+      g.addColorStop(0, '#7cc4f2'); g.addColorStop(.18, '#2a7fc9'); g.addColorStop(.55, '#0b3b86'); g.addColorStop(1, '#020a1c');
+      b.fillStyle = g; b.fillRect(0, 0, BW, BH);
+      // snell's window: the bright disc of sky seen from below
+      const sx = BW * .58 + Math.sin(t * .2) * 8, sw = b.createRadialGradient(sx, -40, 10, sx, -40, 260);
+      sw.addColorStop(0, 'rgba(235,250,255,.95)'); sw.addColorStop(.35, 'rgba(170,225,255,.45)'); sw.addColorStop(1, 'rgba(120,200,255,0)');
+      b.fillStyle = sw; b.fillRect(0, 0, BW, BH);
+      // light shafts
+      b.globalCompositeOperation = 'lighter';
+      for (let i = 0; i < 9; i++) {
+        const x0 = sx + (i - 4) * 34 + Math.sin(t * .5 + i * 1.7) * 14, spread = 60 + i * 18, a = .05 + .04 * Math.sin(t * .8 + i);
+        const lg = b.createLinearGradient(0, 0, 0, BH); lg.addColorStop(0, `rgba(200,240,255,${a + .06})`); lg.addColorStop(1, 'rgba(200,240,255,0)');
+        b.fillStyle = lg; b.beginPath(); b.moveTo(x0 - 6, 0); b.lineTo(x0 + 6, 0); b.lineTo(x0 + (i - 4) * spread * .5 + 30, BH); b.lineTo(x0 + (i - 4) * spread * .5 - 30, BH); b.fill();
+      }
+      // caustic ripples along the surface
+      for (let i = 0; i < 70; i++) {
+        const x = (i * 97.3 + t * 18) % (BW + 40) - 20, y = 6 + ((i * 37) % 40) + Math.sin(t * 1.4 + i) * 3;
+        b.fillStyle = `rgba(230,250,255,${.10 + .08 * Math.sin(t * 2 + i)})`; b.beginPath(); b.ellipse(x, y, 14 + (i % 5) * 4, 2, Math.sin(i) * .4, 0, 7); b.fill();
+      }
+      b.globalCompositeOperation = 'source-over';
+      // rising bubbles
+      b.fillStyle = 'rgba(220,240,255,.55)';
+      bubbles.forEach(p => { p.y -= p.v; p.x += Math.sin(t * 2 + p.r * 9) * .2; if (p.y < -4) { p.y = BH + 4; p.x = Math.random() * BW; } b.beginPath(); b.arc(p.x, p.y, p.r, 0, 7); b.fill(); });
+      // diver silhouette suspended in the blue
+      const dx = BW * .3 + Math.sin(t * .3) * 10, dy = BH * .62 + Math.sin(t * .5) * 4;
+      b.save(); b.translate(dx, dy); b.rotate(-.18); b.fillStyle = 'rgba(2,10,28,.85)';
+      b.beginPath(); b.ellipse(0, 0, 34, 7, 0, 0, 7); b.fill();                // body
+      b.beginPath(); b.arc(38, -2, 6.5, 0, 7); b.fill();                        // head
+      b.fillRect(-14, -12, 26, 6);                                              // tank
+      const k = Math.sin(t * 2.2) * .35;                                        // fin kick
+      b.save(); b.translate(-32, 0); b.rotate(k); b.beginPath(); b.moveTo(0, -3); b.lineTo(-30, -9); b.lineTo(-30, 2); b.closePath(); b.fill(); b.restore();
+      b.save(); b.translate(-32, 2); b.rotate(-k); b.beginPath(); b.moveTo(0, 0); b.lineTo(-28, 4); b.lineTo(-26, 12); b.closePath(); b.fill(); b.restore();
+      b.restore();
+    }
+    let t0 = performance.now();
+    (function loop(now) {
+      requestAnimationFrame(loop);
+      if (!visible) return;
+      const t = (now - t0) / 1000; scene(t);
+      const p = getPx() * (cv.width / BW) / (devicePixelRatio > 1 ? 1.4 : 1), W2 = cv.width, H2 = cv.height;
+      if (p <= 1.2) { ctx.imageSmoothingEnabled = true; ctx.drawImage(base, 0, 0, W2, H2); return; }
+      const tw = Math.max(2, Math.round(W2 / p)), th = Math.max(2, Math.round(H2 / p));
+      tiny.width = tw; tiny.height = th; tc.imageSmoothingEnabled = true; tc.drawImage(base, 0, 0, tw, th);
+      ctx.imageSmoothingEnabled = false; ctx.drawImage(tiny, 0, 0, W2, H2);
+    })(t0);
+  }
+
+  function startSnow() {
+    const cv = document.getElementById('snow'), c = cv.getContext('2d');
+    let w, h; const P = Array.from({ length: 140 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.4 + .3, v: Math.random() * .0006 + .0002 }));
+    const size = () => { const d = Math.min(devicePixelRatio || 1, 2); w = cv.width = cv.clientWidth * d; h = cv.height = cv.clientHeight * d; };
+    size(); addEventListener('resize', size);
+    (function loop() { requestAnimationFrame(loop); if (!document.body.classList.contains('deep')) return; c.clearRect(0, 0, w, h);
+      P.forEach(p => { p.y += p.v; if (p.y > 1) p.y = 0; c.fillStyle = 'rgba(250,250,249,' + (.18 + p.r * .2) + ')'; c.beginPath(); c.arc(p.x * w, p.y * h, p.r * (devicePixelRatio || 1), 0, 7); c.fill(); }); })();
+  }
+})();
+</script>
+
+</body>
+</html>
