@@ -1419,12 +1419,12 @@ if(ios||saf){var h=document.documentElement;h.classList.add('noblend');var f=fun
       moodie: { n: '04 / 04', t: 'Moodie', dl: [['type', 'solo school project · one semester'], ['role', 'ux/ui and branding'], ['for', 'young people, parents and psychologists'], ['tools', 'Figma']],
         lead: "Not everything is easy to say out loud. Moodie gives young people another way to communicate what they're feeling with the people they trust.", todo: '' }
     };
-    const cs = document.getElementById('case'); let from = null;
+    const cs = document.getElementById('case'); let from = null, curT = '';
     const ins = r => `inset(${r.top}px ${innerWidth - r.right}px ${innerHeight - r.bottom}px ${r.left}px)`;
     const mid = () => ({ top: innerHeight / 2 - 40, bottom: innerHeight / 2 + 40, left: innerWidth / 2 - 60, right: innerWidth / 2 + 60 });
     function fillCase(k, d) {
       document.getElementById('ccnum').textContent = d.n;
-      letters(document.getElementById('ctitle'), d.t);
+      curT = d.t; letters(document.getElementById('ctitle'), d.t);
       document.getElementById('cdl').innerHTML = d.dl.map(([a, b]) => `<dt>${a}</dt><dd>${b}</dd>`).join('');
       document.getElementById('clead').textContent = d.lead;
       document.getElementById('ctodo').textContent = d.todo;
@@ -1439,7 +1439,8 @@ if(ios||saf){var h=document.documentElement;h.classList.add('noblend');var f=fun
         else demo.querySelector('#lmsg').textContent = 'not quite. the wrong ones come from the same song, so they sound right.';
       }));
       ex.querySelectorAll('[data-next]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const n = a.dataset.next;
-        if (!DATA[n]) return; fillCase(n, DATA[n]); cs.scrollTop = 0; const ls = [...document.querySelectorAll('#ctitle span')];
+        if (!DATA[n]) return; fillCase(n, DATA[n]); cs.scrollTop = 0;
+        const list = from && from.closest && from.closest('ul,ol'); if (list) from = list.querySelector(`[data-case="${n}"]`) || from; const ls = [...document.querySelectorAll('#ctitle span')];
         if (window.gsap && !RM) { gsap.set(ls, { opacity: 0 }); gsap.to(shuffle(ls), { opacity: 1, duration: .01, stagger: .05 }); } }));
     }
     // the breathing demo: 6.5 breaths a minute, runs only while it's on screen
@@ -1467,33 +1468,55 @@ if(ios||saf){var h=document.documentElement;h.classList.add('noblend');var f=fun
     }
     // picking a project from a list: everything else fades away, the title you clicked
     // travels up into place, then the rest of the project page rises in underneath it
-    function titleMove(el, txt) {
+    function titleRect(el) {
       const src = el.querySelector('.wt') || el; let r;
-      if (src === el) { const tn = [...el.childNodes].find(n => n.nodeType === 3 && n.textContent.trim()); if (!tn) return false; const rg = document.createRange(); rg.selectNodeContents(tn); r = rg.getBoundingClientRect(); }
+      if (src === el) { const tn = [...el.childNodes].find(n => n.nodeType === 3 && n.textContent.trim()); if (!tn) return null; const rg = document.createRange(); rg.selectNodeContents(tn); r = rg.getBoundingClientRect(); }
       else r = src.getBoundingClientRect();
-      if (!r.width) return false;
-      const sfs = parseFloat(getComputedStyle(src).fontSize), ttl = document.getElementById('ctitle');
-      const ghost = document.createElement('div'); ghost.className = 'tmove'; ghost.textContent = txt;
-      ghost.style.cssText = `left:${r.left}px;top:${r.top}px;font-size:${sfs}px`; document.body.appendChild(ghost);
-      const g0 = ghost.getBoundingClientRect(); ghost.style.top = (r.top + (r.top - g0.top)) + 'px';
-      const t = ttl.getBoundingClientRect(), tfs = parseFloat(getComputedStyle(ttl).fontSize), sc = tfs / sfs;
-      const rest = [...cs.children].filter(c => c !== ttl && c.id !== 'cclose');
-      gsap.set(cs, { clipPath: 'none', backgroundColor: 'rgba(250,250,249,0)' }); gsap.set(ttl, { opacity: 0 }); gsap.set(rest, { opacity: 0, y: 50 });
-      src.style.visibility = 'hidden';
-      const gr = ghost.getBoundingClientRect();
-      gsap.timeline({ onComplete: () => { ghost.remove(); src.style.visibility = ''; gsap.set(cs, { clearProps: 'backgroundColor,clipPath' }); } })
-        .to(cs, { backgroundColor: 'rgba(250,250,249,1)', duration: .45, ease: 'power2.out' })
-        .to(ghost, { x: t.left - gr.left, y: t.top - gr.top, scale: sc, duration: .95, ease: 'expo.inOut' }, .25)
-        .set(ttl, { opacity: 1 }).set(ghost, { opacity: 0 })
-        .to(rest, { opacity: 1, y: 0, duration: .9, stagger: .07, ease: 'expo.out', clearProps: 'opacity,transform' }, '-=.1');
+      if (!r.width || r.bottom < 0 || r.top > innerHeight) return null;
+      return { src, r, fs: parseFloat(getComputedStyle(src).fontSize) };
+    }
+    function makeGhost(txt, r, fs) { const g = document.createElement('div'); g.className = 'tmove'; g.textContent = txt; g.style.cssText = `left:${r.left}px;top:${r.top}px;font-size:${fs}px`; document.body.appendChild(g); return g; }
+    const rest = () => [...cs.children].filter(c => c.id !== 'ctitle' && c.id !== 'cclose');
+    function titleMove(el, txt) {
+      const s0 = titleRect(el); if (!s0) return false;
+      const ttl = document.getElementById('ctitle'), ghost = makeGhost(txt, s0.r, s0.fs);
+      const t = ttl.getBoundingClientRect(), sc = parseFloat(getComputedStyle(ttl).fontSize) / s0.fs, gr = ghost.getBoundingClientRect();
+      gsap.set(cs, { clipPath: 'none', backgroundColor: 'rgba(250,250,249,0)' }); gsap.set(ttl, { opacity: 0 }); gsap.set(rest(), { opacity: 0, y: 40 });
+      s0.src.style.visibility = 'hidden';
+      gsap.timeline({ onComplete: () => { ghost.remove(); s0.src.style.visibility = ''; gsap.set(cs, { clearProps: 'backgroundColor,clipPath' }); } })
+        .to(cs, { backgroundColor: 'rgba(250,250,249,1)', duration: .7, ease: 'power2.inOut' })
+        .to(ghost, { x: t.left - gr.left, y: t.top - gr.top, scale: sc, duration: 1.2, ease: 'power4.inOut' }, .2)
+        .to(ttl, { opacity: 1, duration: .45, ease: 'power1.out' }, '-=.15').to(ghost, { opacity: 0, duration: .45, ease: 'power1.out' }, '<')
+        .to(rest(), { opacity: 1, y: 0, duration: 1.2, stagger: .09, ease: 'power3.out', clearProps: 'opacity,transform' }, '-=.45');
+      return true;
+    }
+    // going back: the page sinks away, the title travels back down into the list, the list fades back in around it
+    function titleBack(el, txt, done) {
+      const s0 = titleRect(el); if (!s0) return false;
+      // scrolled down into the project? glide back up to the title first, fading the page as it goes
+      if (cs.scrollTop > 4) { gsap.to(rest(), { opacity: .15, duration: .5, ease: 'power1.out' });
+        gsap.to(cs, { scrollTop: 0, duration: Math.min(1, .45 + cs.scrollTop / 4000), ease: 'power3.inOut', onComplete: () => titleBack2(s0, txt, done) }); return true; }
+      return titleBack2(s0, txt, done);
+    }
+    function titleBack2(s0, txt, done) {
+      const ttl = document.getElementById('ctitle'), t = ttl.getBoundingClientRect(), sc = parseFloat(getComputedStyle(ttl).fontSize) / s0.fs;
+      const ghost = makeGhost(txt, s0.r, s0.fs), gr = ghost.getBoundingClientRect();
+      gsap.set(ghost, { x: t.left - gr.left, y: t.top - gr.top, scale: sc, opacity: 0 });
+      s0.src.style.visibility = 'hidden';
+      gsap.timeline({ onComplete: () => { ghost.remove(); s0.src.style.visibility = ''; gsap.set([ttl, ...rest()], { clearProps: 'opacity,transform' }); gsap.set(cs, { clearProps: 'backgroundColor,clipPath' }); done(); } })
+        .to(rest(), { opacity: 0, y: 30, duration: .55, stagger: { each: .04, from: 'end' }, ease: 'power2.in' })
+        .to(ghost, { opacity: 1, duration: .3, ease: 'power1.out' }, .25).to(ttl, { opacity: 0, duration: .3, ease: 'power1.out' }, '<')
+        .to(ghost, { x: 0, y: 0, scale: 1, duration: 1.2, ease: 'power4.inOut' }, .35)
+        .to(cs, { backgroundColor: 'rgba(250,250,249,0)', duration: .8, ease: 'power2.inOut' }, .75);
       return true;
     }
     function close() {
       if (!cs.classList.contains('on')) return;
       const done = () => { cs.classList.remove('on'); if (!document.getElementById('bpage').classList.contains('on')) lenisRef() && lenisRef().start(); from && from.focus && from.focus({ preventScroll: true }); };
       if (!window.gsap || RM) { done(); return; }
+      if (from && from.isConnected && titleBack(from, curT, done)) return;
       const r = from && from.isConnected && from.getClientRects().length ? from.getBoundingClientRect() : mid();
-      gsap.to(cs, { clipPath: ins(r), duration: .7, ease: 'expo.inOut', onComplete: done });
+      gsap.to(cs, { clipPath: ins(r), duration: .8, ease: 'power3.inOut', onComplete: done });
     }
     document.getElementById('cclose').addEventListener('click', close);
     addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
