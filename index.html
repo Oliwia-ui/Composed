@@ -325,11 +325,6 @@ body.deep .snow{opacity:1}
 .thint{display:inline-block;margin-top:8px;opacity:.55}
 .tl{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
 
-/* plain links next to the cube, for anyone who doesn't want to spin it */
-.tnav{grid-column:2;display:flex;gap:clamp(12px,1.6vw,26px);padding-left:14px}
-.tnav a{color:var(--ink);opacity:.6;transition:opacity .2s,color .2s}
-.tnav a:hover,.tnav a:focus-visible{opacity:1;color:var(--dot)}
-@media (max-width:720px){ .tnav{grid-column:1/-1;grid-row:2;padding:10px 0 0;gap:14px;font-size:13px} }
 /* work list: real previews and a clear "view case study" */
 .wthumb{background:#0b0b0b center/contain no-repeat!important;border-radius:6px}
 .wlist .wm b{display:block;margin-top:8px;font-weight:500;color:var(--dot)}
@@ -522,7 +517,6 @@ html:not(:has(.case.on,.bpage.on)) body{touch-action:pan-y}
 <header class="hdr">
   <a href="#hero">composed</a>
   <span class="sq" aria-hidden="true"></span>
-  <nav class="tnav" aria-label="Pages"><a href="#" data-go="work">work</a><a href="#" data-go="about">about</a><a href="#" data-go="process">process</a><a href="#" data-go="play">playground</a><a href="#" data-go="hello">contact</a></nav>
 </header>
 <div class="depth" id="depth" aria-hidden="true">0.0 m</div>
 <p class="bhint" id="bhint" aria-hidden="true"><span class="mo"><b>drag to rotate the cube</b><br>click a side to open it</span><span class="to">swipe the cube to turn it<br>tap a side to open it</span> · facing <b id="bface">home</b></p>
