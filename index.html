@@ -167,6 +167,7 @@ section{position:relative}
 .case{position:fixed;inset:0;z-index:70;background:var(--paper);overflow:auto;overscroll-behavior:contain;visibility:hidden;
   padding:calc(70px + env(safe-area-inset-top,0px)) var(--gutR) calc(40px + env(safe-area-inset-bottom,0px)) var(--gut)}
 .case.on{visibility:visible}
+.tmove{position:fixed;z-index:90;margin:0;pointer-events:none;white-space:nowrap;transform-origin:0 0;font-family:var(--display);font-weight:800;letter-spacing:-.075em;line-height:.8;color:var(--ink)}
 .case .close{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));left:var(--gut);z-index:2;background:var(--paper)!important;padding:6px 10px!important;margin-left:-10px;font:700 15px/1 var(--display);letter-spacing:-.04em;color:var(--blue);background:none;border:0;padding:6px 0;cursor:pointer}
 .case .close:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 .case .cnum{position:fixed;top:calc(18px + env(safe-area-inset-top,0px));right:var(--gutR);font:500 11px/1 var(--mono);color:var(--dot)}
@@ -1460,8 +1461,32 @@ if(ios||saf){var h=document.documentElement;h.classList.add('noblend');var f=fun
       cs.classList.add('on'); cs.scrollTop = 0; document.getElementById('cclose').focus({ preventScroll: true });
       if (!window.gsap || RM) return;
       lenisRef() && lenisRef().stop();
+      if (el && titleMove(el, d.t)) return;
       gsap.fromTo(cs, { clipPath: ins(el ? el.getBoundingClientRect() : mid()) }, { clipPath: 'inset(0px 0px 0px 0px)', duration: .9, ease: 'expo.inOut' });
       const ls = [...document.querySelectorAll('#ctitle span')]; gsap.set(ls, { opacity: 0 }); gsap.to(shuffle(ls), { opacity: 1, duration: .01, stagger: .05, delay: .5 });
+    }
+    // picking a project from a list: everything else fades away, the title you clicked
+    // travels up into place, then the rest of the project page rises in underneath it
+    function titleMove(el, txt) {
+      const src = el.querySelector('.wt') || el; let r;
+      if (src === el) { const tn = [...el.childNodes].find(n => n.nodeType === 3 && n.textContent.trim()); if (!tn) return false; const rg = document.createRange(); rg.selectNodeContents(tn); r = rg.getBoundingClientRect(); }
+      else r = src.getBoundingClientRect();
+      if (!r.width) return false;
+      const sfs = parseFloat(getComputedStyle(src).fontSize), ttl = document.getElementById('ctitle');
+      const ghost = document.createElement('div'); ghost.className = 'tmove'; ghost.textContent = txt;
+      ghost.style.cssText = `left:${r.left}px;top:${r.top}px;font-size:${sfs}px`; document.body.appendChild(ghost);
+      const g0 = ghost.getBoundingClientRect(); ghost.style.top = (r.top + (r.top - g0.top)) + 'px';
+      const t = ttl.getBoundingClientRect(), tfs = parseFloat(getComputedStyle(ttl).fontSize), sc = tfs / sfs;
+      const rest = [...cs.children].filter(c => c !== ttl && c.id !== 'cclose');
+      gsap.set(cs, { clipPath: 'none', backgroundColor: 'rgba(250,250,249,0)' }); gsap.set(ttl, { opacity: 0 }); gsap.set(rest, { opacity: 0, y: 50 });
+      src.style.visibility = 'hidden';
+      const gr = ghost.getBoundingClientRect();
+      gsap.timeline({ onComplete: () => { ghost.remove(); src.style.visibility = ''; gsap.set(cs, { clearProps: 'backgroundColor,clipPath' }); } })
+        .to(cs, { backgroundColor: 'rgba(250,250,249,1)', duration: .45, ease: 'power2.out' })
+        .to(ghost, { x: t.left - gr.left, y: t.top - gr.top, scale: sc, duration: .95, ease: 'expo.inOut' }, .25)
+        .set(ttl, { opacity: 1 }).set(ghost, { opacity: 0 })
+        .to(rest, { opacity: 1, y: 0, duration: .9, stagger: .07, ease: 'expo.out', clearProps: 'opacity,transform' }, '-=.1');
+      return true;
     }
     function close() {
       if (!cs.classList.contains('on')) return;
