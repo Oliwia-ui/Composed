@@ -412,6 +412,9 @@ html:not(:has(.case.on,.bpage.on)) body{touch-action:pan-y}
 @keyframes gfill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .goal p{font-size:15px;line-height:1.4;font-weight:500;margin:10px 0 0}
 .bpage .pt .l{color:inherit!important;-webkit-text-stroke:0!important}
+/* page titles: hovering a letter turns it blue instead of a black block */
+.bpage .pt .l.inv{background:none!important;color:var(--dot)!important}
+.bpage[data-mode="after"] .pt .l.inv{color:#7f95ff!important}
 @media (max-width:720px){ .modes{margin-left:0} }
 .bpage article{display:none}.bpage article.on{display:block}
 .bpage .pclose{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));left:var(--gut);z-index:2;font:700 15px/1 var(--display);letter-spacing:-.04em;color:inherit;background:none;border:0;padding:6px 0;cursor:pointer}
