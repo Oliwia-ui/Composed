@@ -324,6 +324,28 @@ body.deep .snow{opacity:1}
 @media (max-width:720px){ .tgroup ul{grid-template-columns:repeat(auto-fill,minmax(78px,1fr))} .tl span{font-size:9px;letter-spacing:-.03em;white-space:nowrap} }
 .thint{display:inline-block;margin-top:8px;opacity:.55}
 .tl{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+
+/* plain links next to the cube, for anyone who doesn't want to spin it */
+.tnav{grid-column:2;display:flex;gap:clamp(12px,1.6vw,26px);padding-left:14px}
+.tnav a{color:var(--ink);opacity:.6;transition:opacity .2s,color .2s}
+.tnav a:hover,.tnav a:focus-visible{opacity:1;color:var(--dot)}
+@media (max-width:720px){ .tnav{grid-column:1/-1;grid-row:2;padding:10px 0 0;gap:14px;font-size:13px} }
+/* work list: real previews and a clear "view case study" */
+.wthumb{background:#0b0b0b center/contain no-repeat!important;border-radius:6px}
+.wlist .wm b{display:block;margin-top:8px;font-weight:500;color:var(--dot)}
+@media (max-width:720px){ .wlist a{grid-template-columns:2.4em minmax(0,1fr)} .wlist .wm{display:block;grid-column:2;text-align:left;max-width:none} }
+/* playground: what each link opens */
+.ptype{display:inline-block;margin-left:8px;padding:2px 6px 3px;border:1px solid currentColor;border-radius:20px;font:500 9px/1 var(--mono);font-style:normal;letter-spacing:0;vertical-align:middle;opacity:.8}
+/* process: one project, start to finish */
+.trail{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:3vh}
+.trail li{list-style:none;border:1px solid currentColor;padding:14px;display:flex;flex-direction:column;gap:10px;min-height:220px}
+.trail em{font:500 10px/1 var(--mono);font-style:normal;color:var(--dot)}
+.trail b{font-weight:800;letter-spacing:-.05em;line-height:.95;font-size:clamp(20px,1.8vw,30px)}
+.trail big{font-weight:800;letter-spacing:-.07em;line-height:.8;font-size:clamp(56px,6vw,100px);color:var(--dot)}
+.trail span{font-size:14px;line-height:1.4;font-weight:500}
+.trail img{width:100%;max-width:150px;height:auto;border-radius:16px;margin-top:auto;align-self:flex-start}
+.trail-wrap{margin-top:7vh}.trail-wrap .cta a{font-size:clamp(20px,2vw,32px)}
+@media (max-width:720px){ .trail{grid-template-columns:1fr 1fr} .trail li{min-height:0} }
 /* ---------- each project in its own clothes: colours and type from the project itself ---------- */
 .case :is(.ctitle,h3,.big,.lead,.stat b,.flow b,.cnext b,.quote-end,.arch b,.demo .line,.bword,.tile b){font-family:var(--hfont)}
 .case[data-theme] .ctitle .l{font-family:inherit!important;font-style:normal!important;font-weight:inherit!important;font-stretch:100%!important;font-size:1em!important;letter-spacing:inherit!important;text-transform:none!important;color:inherit!important;-webkit-text-stroke:0!important;background:none!important}
@@ -418,7 +440,7 @@ html.overface,html.overface *{cursor:pointer}
 .bf5{transform:rotateX(-90deg) translateZ(calc(var(--b) / 2))}
 body.deep .bface{outline-color:#fafaf9}
 html.spin,html.spin *{cursor:grabbing!important}
-.bhint{position:fixed;z-index:50;right:var(--gutR);top:calc(18px + env(safe-area-inset-top,0px));font:500 10px/1.4 var(--mono);color:var(--ink);text-align:right;pointer-events:none;transition:color .6s}
+.bhint{position:fixed;z-index:50;right:var(--gutR);top:calc(48px + env(safe-area-inset-top,0px));font:500 11px/1.45 var(--mono);color:var(--ink);text-align:right;pointer-events:none;transition:color .6s}
 .bhint b{font-weight:500;color:var(--dot)}
 /* type over the cube inverts, like the cursor lens: main is drawn in inverse colours and blended with "difference",
    so on white it reads black, on the black sides white, on the blue sides yellow */
@@ -481,7 +503,7 @@ html:not(:has(.case.on,.bpage.on)) body{touch-action:pan-y}
 .bpage .sign{margin:3vh 0 0;font-style:italic;font-weight:400;font-size:clamp(28px,3vw,52px)}
 .bpage .todo{font:400 11px/1.5 var(--mono);opacity:.6}
 .bpage .pvis{margin-top:5vh;aspect-ratio:16/8;max-width:100%}
-@media (max-width:720px){ .bcube{--b:min(62vw,40vh)} .bpage .pt{margin-left:0;font-size:18vw} .bpage article[data-p="play"] .pt{font-size:14vw} .pgrid{grid-template-columns:1fr} .bhint{top:calc(40px + env(safe-area-inset-top,0px));font-size:9px} .bhint .mo{display:none} .bhint .to{display:inline} }
+@media (max-width:720px){ .bcube{--b:min(62vw,40vh)} .bpage .pt{margin-left:0;font-size:18vw} .bpage article[data-p="play"] .pt{font-size:14vw} .pgrid{grid-template-columns:1fr} .bhint{top:calc(70px + env(safe-area-inset-top,0px));font-size:10px} .bhint .mo{display:none} .bhint .to{display:inline} }
 .bhint .to{display:none}
 @media (prefers-reduced-motion:reduce){
   .refl{filter:blur(2px)}
@@ -500,9 +522,10 @@ html:not(:has(.case.on,.bpage.on)) body{touch-action:pan-y}
 <header class="hdr">
   <a href="#hero">composed</a>
   <span class="sq" aria-hidden="true"></span>
+  <nav class="tnav" aria-label="Pages"><a href="#" data-go="work">work</a><a href="#" data-go="about">about</a><a href="#" data-go="process">process</a><a href="#" data-go="play">playground</a><a href="#" data-go="hello">contact</a></nav>
 </header>
 <div class="depth" id="depth" aria-hidden="true">0.0 m</div>
-<p class="bhint" id="bhint" aria-hidden="true"><span class="mo">drag to explore<br>pick a side. see what's inside.</span><span class="to">swipe the cube to turn it<br>tap a side to open it</span> · facing <b id="bface">home</b></p>
+<p class="bhint" id="bhint" aria-hidden="true"><span class="mo"><b>drag to rotate the cube</b><br>click a side to open it</span><span class="to">swipe the cube to turn it<br>tap a side to open it</span> · facing <b id="bface">home</b></p>
 <div class="bg3d" id="bg3d">
   <div class="bcube" id="bcube" role="navigation" aria-label="Site cube: each side is a page">
     <button class="bface bf0" data-p="home" type="button"><span class="n"><span>01</span><span>home</span></span><span><span class="t">composed</span><span class="s">make it make sense.</span></span></button>
@@ -568,19 +591,19 @@ html:not(:has(.case.on,.bpage.on)) body{touch-action:pan-y}
       <p class="help" id="help" aria-label="a few ideas I got a little too invested in."></p>
       <p class="micro wintro">All built during one-semester school projects, mostly on my own. Every single one taught me something.</p>
       <ol class="wlist">
-        <li><a href="#" data-case="garmin" data-vis="garmin"><span class="wn">01</span><span class="wt">Garmin Sense</span><span class="wm">solo school project<br>research · ux/ui · brand identity<br><i>a concept for making stress support feel more human.</i></span></a></li>
-        <li><a href="#" data-case="medimate" data-vis="medimate"><span class="wn">02</span><span class="wt">MediMate</span><span class="wm">solo school project<br>research · branding · ux/ui · business plan<br><i>medication reminders without the guilt trip.</i></span></a></li>
-        <li><a href="#" data-case="lingo" data-vis="lingo"><span class="wn">03</span><span class="wt">Spotify-Lingo</span><span class="wm">team of 4 · lead developer<br>react · node.js · supabase<br><i>learning languages, one missing word at a time.</i></span></a></li>
-        <li><a href="#" data-case="moodie" data-vis="moodie"><span class="wn">04</span><span class="wt">Moodie</span><span class="wm">solo school project<br>ux/ui · branding<br><i>making difficult conversations a little easier.</i></span></a></li>
+        <li><a href="#" data-case="garmin" data-vis="garmin" data-thumb="img/g-breathe0.jpg" data-bg="#000"><span class="wn">01</span><span class="wt">Garmin Sense</span><span class="wm">solo school project<br>research · ux/ui · brand identity<br><i>a concept for making stress support feel more human.</i><b>view case study →</b></span></a></li>
+        <li><a href="#" data-case="medimate" data-vis="medimate" data-thumb="img/m-welcome0.jpg" data-bg="#13b8a7"><span class="wn">02</span><span class="wt">MediMate</span><span class="wm">solo school project<br>research · branding · ux/ui · business plan<br><i>medication reminders without the guilt trip.</i><b>view case study →</b></span></a></li>
+        <li><a href="#" data-case="lingo" data-vis="lingo" data-thumb="" data-bg="#121212"><span class="wn">03</span><span class="wt">Spotify-Lingo</span><span class="wm">team of 4 · lead developer<br>react · node.js · supabase<br><i>learning languages, one missing word at a time.</i><b>view case study →</b></span></a></li>
+        <li><a href="#" data-case="moodie" data-vis="moodie" data-thumb="img/o-mood.jpg" data-bg="#f8f4ef"><span class="wn">04</span><span class="wt">Moodie</span><span class="wm">solo school project<br>ux/ui · branding<br><i>making difficult conversations a little easier.</i><b>view case study →</b></span></a></li>
       </ol>
       <div class="plg">
         <p class="micro">playground · smaller things</p>
         <p class="micro pintro">Not everything needs a whole case study. Sometimes I just want to build something and see where it goes.</p>
         <ul>
-          <li><a href="https://klei-ceramics-studio.thomas-more-0656.chatgpt.site" target="_blank" rel="noopener">Klei ↗<span>ceramics studio · design to code<br>a school-provided design, brought to life in code.</span></a></li>
-          <li><a href="https://oliwia-ui.github.io/paw-talk/" target="_blank" rel="noopener">Paw-Talk ↗<span>my dogs, one home<br>vite · bootstrap · scss · live</span></a></li>
-          <li><a href="https://github.com/Oliwia-ui/dog-breeds-app" target="_blank" rel="noopener">Dog Breeds ↗<span>a little project about dogs<br>vue 3 · router · tanstack query</span></a></li>
-          <li><div>Taboo<span>my first website<br>research · design · illustration · animation<br>english · dutch · polish</span></div></li>
+          <li><a href="https://klei-ceramics-studio.thomas-more-0656.chatgpt.site" target="_blank" rel="noopener" aria-label="Klei, live site, opens in a new tab">Klei ↗<em class="ptype">live site</em><span>ceramics studio · design to code<br>a school-provided design, brought to life in code.</span></a></li>
+          <li><a href="https://oliwia-ui.github.io/paw-talk/" target="_blank" rel="noopener" aria-label="Paw-Talk, live site, opens in a new tab">Paw-Talk ↗<em class="ptype">live site</em><span>my dogs, one home<br>vite · bootstrap · scss · live</span></a></li>
+          <li><a href="https://github.com/Oliwia-ui/dog-breeds-app" target="_blank" rel="noopener" aria-label="Dog Breeds, code, opens in a new tab">Dog Breeds ↗<em class="ptype">code</em><span>a little project about dogs<br>vue 3 · router · tanstack query</span></a></li>
+          <li><div>Taboo<em class="ptype">study</em><span>my first website<br>research · design · illustration · animation<br>english · dutch · polish</span></div></li>
         </ul>
       </div>
     </div>
@@ -608,6 +631,7 @@ html:not(:has(.case.on,.bpage.on)) body{touch-action:pan-y}
       <div class="links">
         <p class="micro">[open to design internships · 2026]</p>
         <a href="mailto:oliwia.jasionek2000@outlook.com">email</a>
+        <p class="micro mail">oliwia.jasionek2000@outlook.com</p>
         <a href="https://www.linkedin.com/in/oliwia-jasionek-5440541a1/" target="_blank" rel="noopener">linkedin</a>
       </div>
     </div>
@@ -698,6 +722,14 @@ html:not(:has(.case.on,.bpage.on)) body{touch-action:pan-y}
         <li><div>build<span>05 · out of figma. into reality.<br><i>HTML, SCSS, JavaScript, React, Vue and GSAP. I enjoy seeing a design become something functional. And when something doesn't work, well, that's another problem to solve.</i></span></div></li>
         <li><div>question it again<span>06 · is it actually good?<br><i>I test, adjust, break things and improve them. I'm rarely completely satisfied with the first version. There is usually something I can make clearer, smoother or simpler.</i></span></div></li>
       </ul>
+      <div class="trail-wrap"><p class="k">in practice · Garmin Sense</p>
+        <ol class="trail">
+          <li><em>01 · research</em><big>45%</big><span>trust a smartwatch to detect their stress. So trust became part of the design, not just a tech problem.</span></li>
+          <li><em>02 · structure</em><b>detect → acknowledge → breathe → ground → return</b><span>Five steps, so the watch does the thinking when you can't.</span></li>
+          <li><em>03 · decision</em><b>one sense per card</b><span>5-4-3-2-1 is too much to hold in your head in a panic, so it became five small tasks.</span></li>
+          <li><em>04 · screen</em><span>the grounding screen, as designed.</span><img src="img/g-ground.jpg" alt="Garmin Sense grounding screen with five cards, one per sense" loading="lazy"></li>
+        </ol>
+        <p class="cta"><a href="#" data-case="garmin">see the full case study →</a></p></div>
       <p class="hl">I don't follow a process just to tick boxes. I use it to make sure the final result has a reason to exist.</p></div></div>
   </article>
 
@@ -707,10 +739,10 @@ html:not(:has(.case.on,.bpage.on)) body{touch-action:pan-y}
       <p class="lead">Not everything needs a whole case study.</p>
       <div class="body"><p>Sometimes I just want to build something and see where it goes.</p></div>
       <ul class="plist">
-        <li><a href="https://klei-ceramics-studio.thomas-more-0656.chatgpt.site" target="_blank" rel="noopener">Klei ↗<span>ceramics studio · design to code<br><i>a school-provided design, brought to life in code.</i></span></a></li>
-        <li><a href="https://oliwia-ui.github.io/paw-talk/" target="_blank" rel="noopener">Paw-Talk ↗<span>vite · bootstrap · scss · live<br><i>my dogs, one home.</i></span></a></li>
-        <li><a href="https://github.com/Oliwia-ui/dog-breeds-app" target="_blank" rel="noopener">Dog Breeds ↗<span>vue 3 · router · tanstack query<br><i>a little project about dogs.</i></span></a></li>
-        <li><div>Taboo<span>research · design · illustration · animation<br><i>my first website. english · dutch · polish.</i></span></div></li>
+        <li><a href="https://klei-ceramics-studio.thomas-more-0656.chatgpt.site" target="_blank" rel="noopener" aria-label="Klei, live site, opens in a new tab">Klei ↗<em class="ptype">live site</em><span>ceramics studio · design to code<br><i>a school-provided design, brought to life in code.</i></span></a></li>
+        <li><a href="https://oliwia-ui.github.io/paw-talk/" target="_blank" rel="noopener" aria-label="Paw-Talk, live site, opens in a new tab">Paw-Talk ↗<em class="ptype">live site</em><span>vite · bootstrap · scss · live<br><i>my dogs, one home.</i></span></a></li>
+        <li><a href="https://github.com/Oliwia-ui/dog-breeds-app" target="_blank" rel="noopener" aria-label="Dog Breeds, code, opens in a new tab">Dog Breeds ↗<em class="ptype">code</em><span>vue 3 · router · tanstack query<br><i>a little project about dogs.</i></span></a></li>
+        <li><div>Taboo<em class="ptype">study</em><span>research · design · illustration · animation<br><i>my first website. english · dutch · polish.</i></span></div></li>
       </ul></div></div>
   </article>
 
@@ -1392,6 +1424,7 @@ if(ios||saf){var h=document.documentElement;h.classList.add('noblend');var f=fun
     const cancel = () => { down = null; document.documentElement.classList.remove('spin'); };
     addEventListener('pointerup', up); addEventListener('pointercancel', cancel);
     FACES.forEach(f => f.addEventListener('click', e => { if (e.detail === 0) go(f.dataset.p); }));
+    document.querySelectorAll('[data-go]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); go(a.dataset.go); }));
 
     function go(k) {
       if (mode !== 'rest') return;
@@ -1616,7 +1649,7 @@ if(ios||saf){var h=document.documentElement;h.classList.add('noblend');var f=fun
     const thumb = document.getElementById('wthumb'); let tx = 0, ty = 0, cx = 0, cy = 0, live = false;
     document.querySelectorAll('.wlist a').forEach(a => {
       a.addEventListener('click', e => { e.preventDefault(); thumb.classList.remove('on'); open(a.dataset.case, a); });
-      a.addEventListener('pointerenter', () => { thumb.className = 'wthumb vis v-' + a.dataset.vis + ' on'; });
+      a.addEventListener('pointerenter', () => { thumb.className = 'wthumb vis ' + (a.dataset.thumb ? '' : 'v-' + a.dataset.vis) + ' on'; thumb.style.setProperty('background-color', a.dataset.bg, 'important'); thumb.style.backgroundImage = a.dataset.thumb ? `url(${a.dataset.thumb})` : ''; });
       a.addEventListener('pointerleave', () => thumb.classList.remove('on'));
     });
     addEventListener('pointermove', e => { tx = e.clientX; ty = e.clientY; if (!live) { cx = tx; cy = ty; live = true; } }, { passive: true });
