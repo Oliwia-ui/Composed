@@ -13,7 +13,7 @@ matchCanvas(page);
 backLink($('#pclose'), { index: '← back to home' });
 
 const title = page.querySelector('.pt');
-const ls = letters(title);
+const ls = letters(title, title.textContent, { plain: true });
 startTypeplay();
 aboutModes(page);
 tools();

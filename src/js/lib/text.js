@@ -12,9 +12,15 @@ export function slot(c, cls) {
   return [w, s];
 }
 
-export function letters(el, txt = el.textContent) {
-  if (!el.hasAttribute('aria-label')) el.setAttribute('aria-label', txt.trim());
+// plain: one span per letter, no hidden copy underneath (for titles that never change face)
+export function letters(el, txt = el.textContent, { plain = false } = {}) {
+  txt = txt.trim();
+  if (!el.hasAttribute('aria-label')) el.setAttribute('aria-label', txt);
   el.innerHTML = '';
+  if (plain) return [...txt].map(c => {
+    const s = document.createElement('span'); s.className = 'l'; s.setAttribute('aria-hidden', 'true');
+    s.textContent = c === ' ' ? '\u00a0' : c; el.appendChild(s); return s;
+  });
   return [...txt].map(c => {
     const [w, s] = slot(c === ' ' ? ' ' : c, state.cls && c !== ' ' ? state.cls : '');
     w.setAttribute('aria-hidden', 'true');
