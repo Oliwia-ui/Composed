@@ -579,7 +579,7 @@ html:not(:has(.case.on,.bpage.on)) body{touch-action:pan-y}
 
 
 <div class="bpage" id="bpage" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Page">
-  <button class="pclose" id="pclose" type="button">← back to the cube</button>
+  <button class="pclose" id="pclose" type="button">← back to home</button>
   <p class="pnum" id="pnum"></p>
 
   <article data-p="about">
@@ -1378,9 +1378,9 @@ if(ios||saf){var h=document.documentElement;h.classList.add('noblend');var f=fun
     }
     page.querySelectorAll('.mode').forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
     document.getElementById('pclose').addEventListener('click', closePage);
-    addEventListener('keydown', e => { if (e.key === 'Escape') closePage(); });
-    page.querySelectorAll('[data-case]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const c = a.dataset.case;
-      page.classList.remove('on'); openKey = null; wrap.style.opacity = ''; st.s = 1; [st.x, st.y] = restPos(); if (mode !== 'rest') st.ry -= scrollRot(); mode = 'rest'; lenisRef() && lenisRef().start(); cube.open(c, null); }));
+    addEventListener('keydown', e => { if (e.key === 'Escape' && !document.getElementById('case').classList.contains('on')) closePage(); });
+    // a project opened from a cube page opens on top of it, so "back" returns to that page
+    page.querySelectorAll('[data-case]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); cube.open(a.dataset.case, a); }));
 
     const caseEl = document.getElementById('case'); const visEl = document.getElementById('vision');
     (function loop() {
@@ -1455,6 +1455,8 @@ if(ios||saf){var h=document.documentElement;h.classList.add('noblend');var f=fun
     })();
     function open(k, el) {
       const d = DATA[k]; if (!d) return; fillCase(k, d); from = el || null;
+      const pg = document.getElementById('bpage'), onPage = pg.classList.contains('on');
+      document.getElementById('cclose').textContent = onPage ? (pg.querySelector('article.on[data-p="work"]') ? '← back to selected work' : '← back') : '← back to home';
       cs.classList.add('on'); cs.scrollTop = 0; document.getElementById('cclose').focus({ preventScroll: true });
       if (!window.gsap || RM) return;
       lenisRef() && lenisRef().stop();
@@ -1463,7 +1465,7 @@ if(ios||saf){var h=document.documentElement;h.classList.add('noblend');var f=fun
     }
     function close() {
       if (!cs.classList.contains('on')) return;
-      const done = () => { cs.classList.remove('on'); lenisRef() && lenisRef().start(); from && from.focus && from.focus({ preventScroll: true }); };
+      const done = () => { cs.classList.remove('on'); if (!document.getElementById('bpage').classList.contains('on')) lenisRef() && lenisRef().start(); from && from.focus && from.focus({ preventScroll: true }); };
       if (!window.gsap || RM) { done(); return; }
       const r = from && from.isConnected && from.getClientRects().length ? from.getBoundingClientRect() : mid();
       gsap.to(cs, { clipPath: ins(r), duration: .7, ease: 'expo.inOut', onComplete: done });
