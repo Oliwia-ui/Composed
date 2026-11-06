@@ -322,6 +322,8 @@ body.deep .snow{opacity:1}
 .tgroup:first-child .tl b{color:var(--dot)}
 .tgroup:first-child .tl:hover b{color:inherit}
 @media (max-width:720px){ .tgroup ul{grid-template-columns:repeat(auto-fill,minmax(78px,1fr))} .tl span{font-size:9px;letter-spacing:-.03em;white-space:nowrap} }
+.thint{display:inline-block;margin-top:8px;opacity:.55}
+.tl{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
 /* ---------- each project in its own clothes: colours and type from the project itself ---------- */
 .case :is(.ctitle,h3,.big,.lead,.stat b,.flow b,.cnext b,.quote-end,.arch b,.demo .line,.bword,.tile b){font-family:var(--hfont)}
 .case[data-theme] .ctitle .l{font-family:inherit!important;font-style:normal!important;font-weight:inherit!important;font-stretch:100%!important;font-size:1em!important;letter-spacing:inherit!important;text-transform:none!important;color:inherit!important;-webkit-text-stroke:0!important;background:none!important}
@@ -643,7 +645,7 @@ html:not(:has(.case.on,.bpage.on)) body{touch-action:pan-y}
         </div></div></div>
       <div class="pgrid"><p class="k">what I do</p>
         <ul class="plist"><li><div>research<span>surveys · interviews · personas · understanding people</span></div></li><li><div>structure<span>sitemaps · information architecture · user flows</span></div></li><li><div>design<span>wireframes · ux/ui · prototyping · design systems</span></div></li><li><div>development<span>html · scss · javascript · react · vue · gsap</span></div></li></ul></div>
-      <div class="pgrid"><p class="k">tools I use</p><div class="tools">
+      <div class="pgrid"><p class="k">tools I use<br><span class="thint">hover to remix.<br>click to shuffle.</span></p><div class="tools">
         <div class="tgroup"><p class="tg">design</p><ul><li class="tl"><em>01</em><b>Fi</b><span>figma</span></li><li class="tl"><em>02</em><b>Fj</b><span>figjam</span></li><li class="tl"><em>03</em><b>Ai</b><span>illustrator</span></li><li class="tl"><em>04</em><b>Ps</b><span>photoshop</span></li><li class="tl"><em>05</em><b>Ae</b><span>after effects</span></li></ul></div>
         <div class="tgroup"><p class="tg">front-end</p><ul><li class="tl"><em>06</em><b>Ht</b><span>html</span></li><li class="tl"><em>07</em><b>Sc</b><span>scss</span></li><li class="tl"><em>08</em><b>Js</b><span>javascript</span></li><li class="tl"><em>09</em><b>Re</b><span>react</span></li><li class="tl"><em>10</em><b>Vu</b><span>vue</span></li><li class="tl"><em>11</em><b>Gs</b><span>gsap</span></li><li class="tl"><em>12</em><b>Bs</b><span>bootstrap</span></li></ul></div>
         <div class="tgroup"><p class="tg">back-end</p><ul><li class="tl"><em>13</em><b>No</b><span>node.js</span></li><li class="tl"><em>14</em><b>Ex</b><span>express</span></li><li class="tl"><em>15</em><b>Sb</b><span>supabase</span></li></ul></div>
@@ -1167,6 +1169,35 @@ if(ios||saf){var h=document.documentElement;h.classList.add('noblend');var f=fun
   });
 
   const cube = makeCases();
+  // tools: tiles flip in like cards being dealt, symbols scramble before they settle,
+  // hovering remixes a symbol, clicking a tile shuffles its row
+  (function tools() {
+    const T = document.querySelector('.tools'); if (!T) return;
+    const tiles = [...T.querySelectorAll('.tl')], AZ = 'abcdefghijklmnopqrstuvwxyz';
+    tiles.forEach(t => { t._b = t.querySelector('b'); t._s = t._b.textContent; });
+    const scramble = (t, dur) => { if (RM) return; const t0 = performance.now(), fin = t._s; cancelAnimationFrame(t._raf);
+      (function f(now) { const p = (now - t0) / dur; if (p >= 1) { t._b.textContent = fin; return; }
+        t._b.textContent = [...fin].map((c, i) => p > (i + 1) / (fin.length + 1) ? c : (i ? AZ[Math.random() * 26 | 0] : AZ[Math.random() * 26 | 0].toUpperCase())).join('');
+        t._raf = requestAnimationFrame(f); })(t0); };
+    let played = false;
+    const play = () => { if (played || !window.gsap || RM) return; played = true;
+      gsap.fromTo(tiles, { opacity: 0, rotateX: -95, y: 40, transformPerspective: 700, transformOrigin: '50% 100%' },
+        { opacity: 1, rotateX: 0, y: 0, duration: .9, ease: 'back.out(1.7)', stagger: { each: .05, from: 'start' }, clearProps: 'transform,opacity' });
+      tiles.forEach((t, i) => setTimeout(() => scramble(t, 650), 120 + i * 50)); };
+    new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) play(); else if (!e.target.offsetParent) played = false; }),
+      { root: document.getElementById('bpage'), threshold: .15 }).observe(T);
+    document.getElementById('pclose').addEventListener('click', () => { played = false; });
+    tiles.forEach(t => {
+      t.addEventListener('pointerenter', () => scramble(t, 380));
+      t.addEventListener('click', () => {
+        const ul = t.parentElement, kids = [...ul.children], first = new Map(kids.map(k => [k, k.getBoundingClientRect()]));
+        shuffle(kids).forEach(k => ul.appendChild(k));
+        if (!window.gsap || RM) return;
+        kids.forEach(k => { const a = first.get(k), b = k.getBoundingClientRect();
+          gsap.fromTo(k, { x: a.left - b.left, y: a.top - b.top, rotate: (Math.random() - .5) * 14 }, { x: 0, y: 0, rotate: 0, duration: .75, ease: 'back.out(1.4)', clearProps: 'transform' }); scramble(k, 500); });
+      });
+    });
+  })();
 
   if (!window.gsap || !window.ScrollTrigger || RM) {
     if (!RM && !window.gsap) console.warn('motion libs unavailable, static fallback');
