@@ -309,6 +309,19 @@ body.deep .snow{opacity:1}
 #contact .copy span{display:block;margin-top:6px;font:500 11px/1.3 var(--mono);letter-spacing:0;color:var(--ghost)}
 
 
+
+/* tools: a little periodic table, so you can scan it */
+.tools{display:flex;flex-direction:column;gap:22px}
+.tgroup .tg{margin:0 0 8px;font:500 11px/1 var(--mono)}
+.tgroup ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.tl{position:relative;aspect-ratio:1;border:1px solid currentColor;padding:10px;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;transition:background .25s,color .25s,transform .35s cubic-bezier(.2,.7,.1,1)}
+.tl em{position:absolute;top:9px;left:10px;font:500 10px/1 var(--mono);font-style:normal;opacity:.6}
+.tl b{font-weight:800;letter-spacing:-.06em;line-height:.85;font-size:clamp(30px,2.8vw,48px)}
+.tl span{font:500 10px/1.2 var(--mono)}
+.tl:hover{background:var(--pfg,#0b0b0b);color:var(--pbg,#fafaf9);transform:translateY(-3px)}
+.tgroup:first-child .tl b{color:var(--dot)}
+.tgroup:first-child .tl:hover b{color:inherit}
+@media (max-width:720px){ .tgroup ul{grid-template-columns:repeat(auto-fill,minmax(78px,1fr))} .tl span{font-size:9px;letter-spacing:-.03em;white-space:nowrap} }
 /* ---------- each project in its own clothes: colours and type from the project itself ---------- */
 .case :is(.ctitle,h3,.big,.lead,.stat b,.flow b,.cnext b,.quote-end,.arch b,.demo .line,.bword,.tile b){font-family:var(--hfont)}
 .case[data-theme] .ctitle .l{font-family:inherit!important;font-style:normal!important;font-weight:inherit!important;font-stretch:100%!important;font-size:1em!important;letter-spacing:inherit!important;text-transform:none!important;color:inherit!important;-webkit-text-stroke:0!important;background:none!important}
@@ -630,8 +643,12 @@ html:not(:has(.case.on,.bpage.on)) body{touch-action:pan-y}
         </div></div></div>
       <div class="pgrid"><p class="k">what I do</p>
         <ul class="plist"><li><div>research<span>surveys · interviews · personas · understanding people</span></div></li><li><div>structure<span>sitemaps · information architecture · user flows</span></div></li><li><div>design<span>wireframes · ux/ui · prototyping · design systems</span></div></li><li><div>development<span>html · scss · javascript · react · vue · gsap</span></div></li></ul></div>
-      <div class="pgrid"><p class="k">tools I use</p>
-        <ul class="plist"><li><div>design<span>figma · figjam · illustrator · photoshop · after effects</span></div></li><li><div>front-end<span>html · scss · javascript · react · vue · gsap · bootstrap</span></div></li><li><div>back-end<span>node.js · express · supabase</span></div></li><li><div>workflow<span>vs code · github · vite</span></div></li></ul></div>
+      <div class="pgrid"><p class="k">tools I use</p><div class="tools">
+        <div class="tgroup"><p class="tg">design</p><ul><li class="tl"><em>01</em><b>Fi</b><span>figma</span></li><li class="tl"><em>02</em><b>Fj</b><span>figjam</span></li><li class="tl"><em>03</em><b>Ai</b><span>illustrator</span></li><li class="tl"><em>04</em><b>Ps</b><span>photoshop</span></li><li class="tl"><em>05</em><b>Ae</b><span>after effects</span></li></ul></div>
+        <div class="tgroup"><p class="tg">front-end</p><ul><li class="tl"><em>06</em><b>Ht</b><span>html</span></li><li class="tl"><em>07</em><b>Sc</b><span>scss</span></li><li class="tl"><em>08</em><b>Js</b><span>javascript</span></li><li class="tl"><em>09</em><b>Re</b><span>react</span></li><li class="tl"><em>10</em><b>Vu</b><span>vue</span></li><li class="tl"><em>11</em><b>Gs</b><span>gsap</span></li><li class="tl"><em>12</em><b>Bs</b><span>bootstrap</span></li></ul></div>
+        <div class="tgroup"><p class="tg">back-end</p><ul><li class="tl"><em>13</em><b>No</b><span>node.js</span></li><li class="tl"><em>14</em><b>Ex</b><span>express</span></li><li class="tl"><em>15</em><b>Sb</b><span>supabase</span></li></ul></div>
+        <div class="tgroup"><p class="tg">workflow</p><ul><li class="tl"><em>16</em><b>Vs</b><span>vs code</span></li><li class="tl"><em>17</em><b>Gh</b><span>github</span></li><li class="tl"><em>18</em><b>Vi</b><span>vite</span></li></ul></div>
+      </div></div>
       <div class="pgrid"><p class="k">right now</p>
         <ul class="plist"><li><div>looking for<span>a design internship · 2026</span></div></li><li><div>studying<span>international digital experience design</span></div></li><li><div>3 languages<span>english · dutch · polish</span></div></li><li><div>always<span>learning something new</span></div></li></ul></div>
     </div>
