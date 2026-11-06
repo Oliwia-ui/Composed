@@ -1,0 +1,6 @@
+// Reduced motion.
+@media (prefers-reduced-motion:reduce) {
+  .refl {
+    filter: blur(2px)
+  }
+}

@@ -1,0 +1,54 @@
+// Every page is its own HTML file now. The pages and case studies used to open
+// on top of the home page; here they sit in the normal flow and scroll like any page.
+@use '../abstracts' as *;
+
+// smooth hand-over between pages (Chrome, Edge, Safari 18.2+); other browsers just load the page
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(*) {
+  animation-duration: .9s;
+  animation-timing-function: cubic-bezier(.65, 0, .35, 1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: .5s;
+}
+
+.bpage.is-page,
+.case.is-page {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: visible;
+  overscroll-behavior: auto;
+  visibility: visible;
+}
+
+// colours of each cube side carried into its page
+.bpage {
+  &[data-p="process"] {
+    --pbg: #0b0b0b;
+    --pfg: #fafaf9;
+  }
+
+  &[data-p="play"],
+  &[data-p="hello"] {
+    --pbg: #1238ff;
+    --pfg: #ffffff;
+  }
+}
+
+// back buttons are real links now
+.bpage .pclose,
+.case .close {
+  text-decoration: none;
+}
+
+.plist a b {
+  font: inherit;
+}

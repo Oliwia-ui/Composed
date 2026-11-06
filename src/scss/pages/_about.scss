@@ -1,0 +1,132 @@
+// About: office hours / after hours.
+@use '../abstracts' as *;
+
+.modes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 820px;
+  margin: 5vh 0 0 calc(var(--cross) - var(--gut))
+}
+
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  font: inherit
+}
+
+.mode img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  outline: 1px solid transparent;
+  outline-offset: 4px;
+  transition: filter .6s ease, outline-color .4s, opacity .4s
+}
+
+.mode:not(.on) img {
+  opacity: .55
+}
+
+.mode:hover img,
+.mode:focus-visible img {
+  opacity: 1
+}
+
+.mode.on img {
+  outline-color: currentColor;
+  filter: none
+}
+
+.mode span {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px
+}
+
+.mode b {
+  font-weight: 800;
+  letter-spacing: -.05em;
+  font-size: clamp(22px, 2.4vw, 40px);
+  line-height: 1
+}
+
+.mode i {
+  font: 400 11px/1 var(--mono);
+  font-style: normal;
+  opacity: .7
+}
+
+.mode:focus-visible {
+  outline: 2px solid var(--dot);
+  outline-offset: 6px
+}
+
+.goal {
+  margin-top: 3vh;
+  max-width: 520px
+}
+
+.gbar {
+  height: 6px;
+  background: rgba(127, 149, 255, .2);
+  position: relative;
+  overflow: hidden
+}
+
+.gbar i {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #1238ff, #5b78ff);
+  transform-origin: left;
+  animation: gfill 2.4s cubic-bezier(.2, .7, .1, 1) both
+}
+
+@keyframes gfill {
+  from {
+    transform: scaleX(0)
+  }
+
+  to {
+    transform: scaleX(1)
+  }
+}
+
+.goal p {
+  font-size: 15px;
+  line-height: 1.4;
+  font-weight: 500;
+  margin: 10px 0 0
+}
+
+.bpage .pt .l {
+  color: inherit !important;
+  -webkit-text-stroke: 0 !important
+}
+
+/* page titles: hovering a letter turns it blue instead of a black block */
+.bpage .pt .l.inv {
+  background: none !important;
+  color: var(--dot) !important
+}
+
+.bpage[data-mode="after"] .pt .l.inv {
+  color: #7f95ff !important
+}
+
+@include phone {
+  .modes {
+    margin-left: 0
+  }
+}

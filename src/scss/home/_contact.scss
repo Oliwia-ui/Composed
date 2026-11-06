@@ -1,0 +1,119 @@
+// Home 6: contact and footer.
+/* ---------- 6. contact ---------- */
+#contact {
+  min-height: 100vh;
+  min-height: 100svh;
+  padding-block: 12vh 4vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between
+}
+
+#contact .top {
+  position: relative
+}
+
+#contact .ghost {
+  font-size: clamp(44px, 9vw, 170px);
+  padding-right: var(--gutR);
+  text-align: right
+}
+
+#contact .over {
+  position: absolute;
+  left: var(--gut);
+  top: 1.1em;
+  max-width: calc(var(--cross) + 18vw);
+  font-size: clamp(30px, 4.2vw, 80px);
+  font-weight: 800;
+  letter-spacing: -.07em;
+  line-height: .86;
+  color: var(--blue)
+}
+
+#contact .links {
+  margin-top: 2.4vh;
+  padding-left: calc(var(--cross) + 14px);
+  display: flex;
+  flex-direction: column;
+  gap: 2px
+}
+
+#contact .links .micro {
+  margin-bottom: 10px
+}
+
+#contact .links a {
+  font-weight: 800;
+  letter-spacing: -.06em;
+  font-size: clamp(30px, 3.6vw, 64px);
+  line-height: .95;
+  color: var(--ghost);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: .08em;
+  width: max-content;
+  transition: color .2s
+}
+
+#contact .links a:hover,
+#contact .links a:focus-visible {
+  color: var(--ink);
+  text-decoration-color: var(--dot)
+}
+
+#contact .foot {
+  display: flex;
+  justify-content: space-between;
+  padding-left: calc(var(--cross) - 14vw) !important;
+  align-items: flex-end;
+  gap: 16px;
+  padding-inline: var(--gut) var(--gutR);
+  flex-wrap: wrap
+}
+
+#contact .made {
+  font-weight: 800;
+  letter-spacing: -.06em;
+  font-size: clamp(24px, 2.8vw, 52px);
+  line-height: .92;
+  color: var(--ghost);
+  max-width: 24ch;
+  margin: 0
+}
+
+#contact .fin {
+  margin: 0 0 2vh;
+  max-width: 46ch
+}
+
+#contact .made .swap {
+  color: var(--ink)
+}
+
+#contact .made .swap .slt:last-child .l {
+  color: var(--dot)
+}
+
+#contact .why {
+  margin-top: 8px;
+  max-width: 380px
+}
+
+#contact .copy {
+  font-weight: 800;
+  letter-spacing: -.05em;
+  font-size: clamp(18px, 1.8vw, 32px);
+  line-height: 1;
+  color: var(--ink);
+  text-align: right;
+  margin: 0
+}
+
+#contact .copy span {
+  display: block;
+  margin-top: 6px;
+  font: 500 11px/1.3 var(--mono);
+  letter-spacing: 0;
+  color: var(--ghost)
+}

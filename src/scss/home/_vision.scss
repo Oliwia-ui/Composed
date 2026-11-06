@@ -1,0 +1,114 @@
+// Home 3: chaos composes into one sentence, then three beliefs.
+@use '../abstracts' as *;
+
+/* ---------- 3. vision: chaos composes into one sentence, then three beliefs ---------- */
+#vision .pin {
+  overflow: hidden
+}
+
+#vision .vlab {
+  position: absolute;
+  left: calc(var(--cross) + 14px);
+  top: 14vh;
+  margin: 0
+}
+
+#vision .vhint {
+  position: absolute;
+  right: var(--gutR);
+  bottom: 5vh;
+  margin: 0;
+  text-align: right
+}
+
+.vsent {
+  position: absolute;
+  left: calc(var(--cross) - 6vw);
+  right: var(--gutR);
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -.07em;
+  line-height: .9;
+  font-size: clamp(40px, 6.2vw, 120px);
+  color: var(--ink);
+  text-wrap: balance
+}
+
+.vsent .vw {
+  display: inline-block;
+  will-change: transform;
+  margin-right: .22em
+}
+
+.vsent .vw.key {
+  color: var(--dot)
+}
+
+.vnoise span {
+  position: absolute;
+  white-space: nowrap;
+  color: var(--ghost);
+  font-weight: 800;
+  letter-spacing: -.05em;
+  will-change: transform, opacity;
+  pointer-events: none;
+  user-select: none
+}
+
+.beliefs {
+  list-style: none;
+  margin: 0;
+  padding: 6vh var(--gutR) 18vh var(--gut)
+}
+
+.beliefs li {
+  display: grid;
+  grid-template-columns: calc(var(--cross) - var(--gut)) minmax(0, 1fr);
+  gap: 24px;
+  padding: 5vh 0;
+  border-top: 1px solid var(--line)
+}
+
+.beliefs li:last-child {
+  border-bottom: 1px solid var(--line)
+}
+
+.beliefs em {
+  font: 500 11px/1.4 var(--mono);
+  font-style: normal;
+  color: var(--dot)
+}
+
+.beliefs b {
+  display: block;
+  font-weight: 800;
+  letter-spacing: -.07em;
+  line-height: .88;
+  font-size: clamp(44px, 7vw, 130px)
+}
+
+.beliefs span {
+  display: block;
+  margin-top: 2.4vh;
+  max-width: 46ch;
+  font-size: clamp(16px, 1.3vw, 20px);
+  line-height: 1.45;
+  font-weight: 500
+}
+
+@include phone {
+  .vsent {
+    left: var(--gut)
+  }
+
+  .beliefs li {
+    grid-template-columns: 1fr;
+    gap: 10px
+  }
+
+  #vision .vlab {
+    left: var(--gut)
+  }
+}

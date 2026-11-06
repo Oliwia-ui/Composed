@@ -1,0 +1,147 @@
+// Case study: header, title, facts.
+@use '../abstracts' as *;
+
+/* the dive-in case view */
+.case {
+  --soft: #ececea;
+  --rule: #d3d3d1;
+  --strong: #0b0b0b;
+  --onstrong: #fafaf9;
+  --hfont: var(--display);
+  --bfont: var(--display);
+  font-family: var(--bfont);
+  color: var(--ink);
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: var(--paper);
+  overflow: auto;
+  overscroll-behavior: contain;
+  visibility: hidden;
+  padding: calc(70px + env(safe-area-inset-top, 0px)) var(--gutR) calc(40px + env(safe-area-inset-bottom, 0px)) var(--gut)
+}
+
+.case.on {
+  visibility: visible
+}
+
+.tmove {
+  position: fixed;
+  z-index: 90;
+  margin: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  transform-origin: 0 0;
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -.075em;
+  line-height: .8;
+  color: var(--ink)
+}
+
+.case .close {
+  position: fixed;
+  top: calc(14px + env(safe-area-inset-top, 0px));
+  left: var(--gut);
+  z-index: 2;
+  background: var(--paper) !important;
+  padding: 6px 10px !important;
+  margin-left: -10px;
+  font: 700 15px/1 var(--display);
+  letter-spacing: -.04em;
+  color: var(--blue);
+  background: none;
+  border: 0;
+  padding: 6px 0;
+  cursor: pointer
+}
+
+.case .close:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px
+}
+
+.case .cnum {
+  position: fixed;
+  top: calc(18px + env(safe-area-inset-top, 0px));
+  right: var(--gutR);
+  font: 500 11px/1 var(--mono);
+  color: var(--dot)
+}
+
+.case .ctitle {
+  font-weight: 800;
+  letter-spacing: -.075em;
+  line-height: .8;
+  font-size: clamp(44px, 8.6vw, 170px);
+  color: var(--blue);
+  white-space: nowrap;
+  margin-left: calc(var(--cross) - var(--gut) - .06em)
+}
+
+@include phone {
+  .case .ctitle {
+    margin-left: 0;
+    font-size: 12vw
+  }
+}
+
+.case .ctitle span {
+  display: inline-block
+}
+
+.case .cgrid {
+  display: grid;
+  grid-template-columns: var(--cross) 1fr;
+  gap: 24px;
+  margin-top: 4vh;
+  border-top: 1px solid var(--blue);
+  padding-top: 16px
+}
+
+.case dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 18px
+}
+
+.case dt {
+  font: 500 11px/1.4 var(--mono);
+  color: var(--dot)
+}
+
+.case dd {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -.03em;
+  font-size: 15px
+}
+
+.case .lead {
+  font-weight: 800;
+  letter-spacing: -.06em;
+  line-height: .95;
+  font-size: clamp(26px, 3vw, 52px);
+  color: var(--ink);
+  max-width: 22ch;
+  margin: 0
+}
+
+.case .cvis {
+  margin-top: 5vh;
+  margin-left: calc(var(--cross) - var(--gut));
+  aspect-ratio: 16/8;
+  max-width: 100%
+}
+
+.case .todo {
+  font: 400 11px/1.5 var(--mono);
+  color: var(--ink);
+  opacity: .6;
+  margin-top: 12px
+}
+
+.case .todo:empty {
+  display: none
+}

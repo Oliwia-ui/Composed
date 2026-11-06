@@ -1,0 +1,101 @@
+// Project visuals.
+/* project visuals, CSS stand-ins until screenshots go in */
+.vis {
+  position: relative;
+  overflow: hidden;
+  background: #e4e4e2
+}
+
+.vis.v-garmin {
+  background: radial-gradient(circle at 50% 50%, #0b0b0b 0 31%, transparent 31.5%), conic-gradient(from 200deg at 50% 50%, #1238ff 0 14%, #fafaf9 14% 62%, #3a3a3a 62% 100%), #0b0b0b
+}
+
+.vis.v-garmin::after {
+  content: "72";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font: 800 clamp(24px, 3.4vw, 64px)/1 var(--display);
+  letter-spacing: -.06em;
+  color: #eef1f6
+}
+
+.vis.v-moodie {
+  background: radial-gradient(60% 70% at 30% 35%, #bdbdbb 0, transparent 60%), radial-gradient(50% 60% at 70% 70%, #0b0b0b 0, transparent 65%), #eeeeec
+}
+
+.vis.v-moodie::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 14%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #1238ff 0 64%, rgba(255, 255, 255, .75) 64%)
+}
+
+.vis.v-pieter {
+  background: repeating-linear-gradient(0deg, #fafaf9 0 12px, #0b0b0b 12px 13px), #fafaf9
+}
+
+.vis.v-pieter::before {
+  content: "";
+  position: absolute;
+  right: 9%;
+  top: 12%;
+  width: 14px;
+  height: 14px;
+  background: #1238ff
+}
+
+.vis.v-medimate {
+  background: radial-gradient(circle at 30% 60%, #3fe6c8 0 18%, transparent 18.5%), radial-gradient(circle at 46% 60%, transparent 0 17%, #3fe6c8 17.5% 19%, transparent 19.5%), #16213a
+}
+
+.vis.v-medimate::after {
+  content: "take it easy.";
+  position: absolute;
+  right: 8%;
+  bottom: 10%;
+  font: 800 clamp(16px, 1.8vw, 30px)/1 var(--display);
+  letter-spacing: -.05em;
+  color: #eef6f5
+}
+
+.vis.v-lingo {
+  background: #0b0b0b
+}
+
+.vis.v-lingo::after {
+  content: "and I ____ you";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+  font: 800 clamp(20px, 2.6vw, 46px)/1 var(--display);
+  letter-spacing: -.05em;
+  color: #fafaf9
+}
+
+.vis.v-lingo::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  bottom: 14%;
+  width: 46%;
+  height: 6px;
+  background: linear-gradient(90deg, #1238ff 0 40%, #3a3a3a 40%)
+}
+
+.vis.v-pieter::after {
+  content: "P.";
+  position: absolute;
+  left: 6%;
+  bottom: 2%;
+  font: 900 clamp(48px, 8vw, 150px)/.8 var(--display);
+  letter-spacing: -.08em;
+  color: #0b0b0b
+}

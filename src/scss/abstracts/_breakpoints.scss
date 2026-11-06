@@ -1,0 +1,8 @@
+// One breakpoint: phone. Everything above it is the desktop layout.
+$phone: 720px;
+
+@mixin phone {
+  @media (max-width: $phone) {
+    @content;
+  }
+}

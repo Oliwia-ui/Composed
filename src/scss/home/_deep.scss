@@ -1,0 +1,77 @@
+// Home 5: the deep.
+/* ---------- 5. deep ---------- */
+#deep {
+  height: 170vh
+}
+
+#deep .inner {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden
+}
+
+#deep .c1 {
+  position: absolute;
+  left: calc(var(--cross) + 14px);
+  top: 30%;
+  width: min(230px, 40vw)
+}
+
+#deep .c2 {
+  position: absolute;
+  left: var(--gut);
+  top: calc(58% + 10px);
+  max-width: min(40ch, 40vw)
+}
+
+#deep .c3 {
+  position: absolute;
+  right: var(--gutR);
+  top: calc(72% + 10px)
+}
+
+#deep .hline.a {
+  top: 58%;
+  right: 38vw
+}
+
+#deep .hline.b {
+  top: 72%;
+  left: var(--cross)
+}
+
+#deep .quiet {
+  position: absolute;
+  left: calc(var(--cross) - 6vw);
+  right: var(--gutR);
+  bottom: 5vh;
+  font-weight: 800;
+  letter-spacing: -.075em;
+  line-height: .82;
+  font-size: clamp(44px, 9vw, 170px);
+  color: var(--ghost)
+}
+
+#deep .quiet .lit {
+  color: var(--blue)
+}
+
+#deep .quiet .lit:last-child .slt:last-child .l {
+  color: var(--dot)
+}
+
+.snow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .8s
+}
+
+body.deep .snow {
+  opacity: 1
+}

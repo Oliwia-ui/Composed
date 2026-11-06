@@ -1,0 +1,52 @@
+// Fixed chrome: logo, depth readout.
+/* ---------- fixed chrome ---------- */
+.hdr {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: var(--cross) 1fr auto;
+  align-items: center;
+  padding: calc(14px + env(safe-area-inset-top, 0px)) var(--gutR) 14px var(--gut);
+  font-weight: 700;
+  letter-spacing: -.04em;
+  font-size: 15px;
+  color: var(--ghost);
+  pointer-events: none
+}
+
+.hdr a {
+  pointer-events: auto;
+  text-decoration: none;
+  transition: color .2s
+}
+
+.hdr a:hover,
+.hdr a:focus-visible {
+  color: var(--ink)
+}
+
+.hdr .sq {
+  position: absolute;
+  left: calc(var(--cross) - 22px);
+  width: 11px;
+  height: 11px;
+  background: var(--dot);
+  transition: background .6s
+}
+
+.hdr nav {
+  display: flex;
+  gap: 14px
+}
+
+.depth {
+  position: fixed;
+  right: var(--gutR);
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  z-index: 50;
+  font: 500 11px/1 var(--mono);
+  color: var(--dot);
+  letter-spacing: .02em;
+  transition: color .6s
+}

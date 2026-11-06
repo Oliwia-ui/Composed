@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spotify-Lingo · Composed</title>
+<meta name="description" content="Spotify-Lingo, a case study by Oliwia Jasionek. What if learning a language felt more like playing a game? Find a song, listen to it and guess the missing word.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%231238ff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&family=Instrument+Serif:ital@0;1&family=Bodoni+Moda:ital,wght@1,900&family=Archivo:wdth,wght@62..125,800..900&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@500;700;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700&display=swap">
+<script>
+  // Safari can't blend the type over the cube reliably: flag it before the first paint
+  (function () { var u = navigator.userAgent, ios = /iP(hone|ad|od)/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1), saf = /Safari/.test(u) && !/Chrome|Chromium|Edg|OPR|Android/.test(u);
+    if (ios || saf) document.documentElement.classList.add('noblend'); })();
+</script>
+</head>
+<body>
+<div class="case is-page on" id="case" data-theme="lingo">
+  <a class="close" id="cclose" href="work.html">← back to selected work</a>
+  <p class="cnum" id="ccnum">03 / 04</p>
+  <h1 class="ctitle" id="ctitle" style="view-transition-name:t-lingo">Spotify-Lingo</h1>
+  <div class="cgrid">
+    <dl id="cdl"><dt>type</dt><dd>team project · one semester</dd><dt>team</dt><dd>4 people</dd><dt>my role</dt><dd>lead developer</dd><dt>design</dt><dd>created by one of my teammates</dd><dt>stack</dt><dd>React + Vite, Node.js + Express, Supabase, Jamendo API</dd></dl>
+    <div><p class="lead" id="clead">What if learning a language felt more like playing a game? Find a song, listen to it and guess the missing word.</p></div>
+  </div>
+  <div id="cextra">
+  <section class="cs">
+    <aside><p class="lab">01 · the idea</p><p class="hn">Music gets stuck in my head anyway. Might as well learn something from it.</p></aside>
+    <div>
+      <h3>Your favourite songs. A new way to learn.</h3>
+      <p>Spotify-Lingo turns music into a language-learning game. Search for a song, listen to a preview and follow along with the lyrics.</p>
+      <p>One word disappears. Three possible answers appear. Pick the right one and keep playing.</p>
+      <p>The idea is simple: you're not just memorising random vocabulary. You're learning words in a context you've already heard and enjoyed.</p>
+      <div class="demo" id="lingoDemo">
+        <small>try a round · fictional example, not real lyrics</small>
+        <p class="line">the city <span class="gap" id="lgap">____</span> when the lights go out</p>
+        <div class="opts"><button type="button" data-w="burns">burns</button><button type="button" data-w="sleeps" data-ok>sleeps</button><button type="button" data-w="window">window</button></div>
+        <small id="lmsg">pick a word</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">02 · how it's built</p><p class="hn">I like seeing the whole system, not just the screen. Especially when something breaks and I need to find out where.</p></aside>
+    <div>
+      <h3>Four parts. One working game.</h3>
+      <div class="arch">
+        <div><em>01 · browser</em><b>Browser</b><span>The player searches for music, listens to previews and plays the game.</span></div>
+        <div><em>02 · frontend</em><b>React + Vite</b><span>The interface, search experience, music player and game interactions.</span></div>
+        <div class="mine"><em>03 · backend · my part</em><b>Node + Express</b><span>Communicates with the music API, filters songs, handles the game logic and sends the relevant data back.</span></div>
+        <div><em>04 · music</em><b>Jamendo API</b><span>Provides the music and available previews and lyrics.</span></div>
+      </div>
+      <p class="arch-db">Behind the scenes: Supabase · database connected to the backend.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">03 · the logic</p><p class="hn">Random wrong answers make a boring game. I wanted the alternatives to actually make sense in the context of the song.</p></aside>
+    <div>
+      <h3>Building one round, step by step.</h3>
+      <ol class="beats">
+        <li><em>01 · find usable songs</em><span>The backend requests songs and checks whether lyrics are available. Songs without usable lyrics are filtered out. Users can also search by language.</span></li>
+        <li><em>02 · choose a line</em><span>A random line is selected, with at least four words so there's enough context to understand it.</span></li>
+        <li><em>03 · hide a word</em><span>One word longer than three letters is removed. I didn't want every answer to be something obvious like "the".</span></li>
+        <li><em>04 · make believable alternatives</em><span>Two incorrect answers are taken from the same song. This makes the options feel more connected to the actual lyrics.</span></li>
+        <li><em>05 · shuffle and play</em><span>All three answers are shuffled before the round is sent to the frontend.</span></li>
+      </ol>
+<pre class="code"><span class="c">// pick a line long enough to guess from</span>
+<span class="k">const</span> candidates = lines.filter(l =&gt; l.split(<span class="s">/\s+/</span>).length &gt;= <span class="s">4</span>);
+<span class="k">const</span> line = candidates[random(candidates.length)];
+
+<span class="c">// hide a word worth learning</span>
+<span class="k">const</span> learnable = words.filter(w =&gt; w.length &gt; <span class="s">3</span>);
+<span class="k">const</span> chosen = learnable[random(learnable.length)];
+
+<span class="c">// wrong answers come from the same song</span>
+<span class="k">const</span> options = [...wrongs, chosen].sort(() =&gt; Math.random() - <span class="s">0.5</span>);</pre>
+      <p class="src">a simplified piece of the actual game logic.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">04 · leading the team</p><p class="hn">Being the lead developer didn't mean doing everything myself. It meant making sure everything worked together.</p></aside>
+    <div>
+      <h3>Four people. Different tasks. One project.</h3>
+      <p>Spotify-Lingo was built by a team of four. One of my teammates created the design, while I took the lead on development.</p>
+      <p>I built the game logic and backend, oversaw the technical side and kept an eye on how everything connected.</p>
+      <p>Everyone had their own parts to build. I let the team work on those, checked what they had made and stepped in when something needed fixing or explaining.</p>
+      <p>A big part of my role was making sure we all understood how the data moved through the application. Because having four separate pieces of code isn't much use if they don't work together.</p>
+      <p class="big">Leading isn't about controlling every detail. It's about knowing when to <em>step in</em>, when to let people work and how to keep everyone moving in the same direction.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">05 · how it ended</p></aside>
+    <div><p>Passed, with positive feedback.</p>
+      <p>One of the projects where I got to focus on something I genuinely enjoy: taking an idea and figuring out how to make it work behind the scenes.</p></div>
+  </section>
+
+  <a class="cnext" href="moodie.html"><em>next · 04 / 04</em><b style="view-transition-name:t-moodie">Moodie →</b></a>
+  </div>
+</div>
+
+<script type="module" src="/src/js/case.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+// Home 1: hero.
+/* ---------- 1. hero ---------- */
+#hero .hline {
+  top: 20%;
+  left: var(--cross)
+}
+
+#hero .t1 {
+  position: absolute;
+  left: calc(var(--cross) + 14px);
+  top: calc(20% + 14px)
+}
+
+#hero .t2 {
+  position: absolute;
+  left: var(--gut);
+  bottom: calc(var(--wordH) + 4vh);
+  width: calc(var(--cross) - 40px)
+}
+
+#hero .ghostblock {
+  position: absolute;
+  left: var(--gut);
+  right: var(--gutR);
+  bottom: 6vh;
+  font-size: clamp(30px, 6vw, 116px)
+}
+
+#hero .ghostblock>span:first-child {
+  padding-left: calc(var(--cross) - 16px)
+}
+
+#hero .ghostblock>span:last-child {
+  padding-left: 4vw
+}
+
+#hero .ghostblock>span {
+  display: block;
+  white-space: nowrap
+}
+
+#hero .ghostblock .r {
+  text-align: right
+}
+
+.word {
+  position: absolute;
+  left: calc(var(--cross) - 10vw);
+  right: var(--gutR);
+  bottom: calc(6vh + .02em);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-weight: 800;
+  letter-spacing: -.075em;
+  line-height: .76;
+  color: var(--blue);
+  white-space: nowrap
+}
+
+.word span {
+  display: inline-block;
+  transition: color .6s
+}
+
+.refl {
+  bottom: auto;
+  top: calc(100% - 6vh + .04em);
+  transform: scaleY(-1);
+  transform-origin: top;
+  opacity: .38;
+  filter: url(#ripple) blur(1.5px)
+}
+
+.waterline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6vh;
+  height: 1px;
+  background: var(--line);
+  opacity: .5
+}

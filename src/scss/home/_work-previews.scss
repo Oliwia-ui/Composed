@@ -1,0 +1,28 @@
+// Home: work list previews.
+@use '../abstracts' as *;
+
+/* work list: real previews and a clear "view case study" */
+.wthumb {
+  background: #0b0b0b center/contain no-repeat !important;
+  border-radius: 6px
+}
+
+.wlist .wm b {
+  display: block;
+  margin-top: 8px;
+  font-weight: 500;
+  color: var(--dot)
+}
+
+@include phone {
+  .wlist a {
+    grid-template-columns: 2.4em minmax(0, 1fr)
+  }
+
+  .wlist .wm {
+    display: block;
+    grid-column: 2;
+    text-align: left;
+    max-width: none
+  }
+}

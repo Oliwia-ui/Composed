@@ -1,0 +1,176 @@
+// Home 4: selected work list and playground.
+@use '../abstracts' as *;
+
+/* ---------- 4. work: a typographic list ---------- */
+#work {
+  padding-block: 16vh 12vh
+}
+
+#work .wwrap {
+  position: relative;
+  padding-left: var(--gut);
+  padding-right: var(--gutR)
+}
+
+#work .ghost.wh {
+  font-size: clamp(30px, 5.2vw, 100px);
+  max-width: 62vw
+}
+
+#work .help {
+  margin: 5vh 0 0;
+  font-weight: 800;
+  letter-spacing: -.075em;
+  line-height: .86;
+  font-size: clamp(32px, 5vw, 96px);
+  max-width: 46vw;
+  color: var(--blue)
+}
+
+#work .help>span {
+  display: inline-block;
+  margin-right: .2em
+}
+
+.wlist {
+  list-style: none;
+  margin: 12vh 0 0 calc(var(--cross) - var(--gut));
+  padding: 0;
+  border-top: 1px solid var(--line)
+}
+
+.wlist li {
+  border-bottom: 1px solid var(--line)
+}
+
+.wlist a {
+  display: grid;
+  grid-template-columns: 3.2em minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 16px;
+  padding: 20px 0 16px;
+  text-decoration: none;
+  color: var(--ink)
+}
+
+.wlist .wn {
+  font: 500 11px/1 var(--mono);
+  color: var(--dot)
+}
+
+.wlist .wt {
+  color: #fff;
+  mix-blend-mode: difference;
+  font-weight: 800;
+  letter-spacing: -.065em;
+  line-height: .88;
+  font-size: clamp(44px, 7.4vw, 140px);
+  transition: transform .6s cubic-bezier(.2, .7, .1, 1)
+}
+
+.wlist .wm {
+  font: 500 11px/1.4 var(--mono);
+  text-align: right;
+  max-width: 32ch
+}
+
+.wlist .wm i {
+  display: block;
+  margin-top: 6px;
+  font-style: normal;
+  opacity: .6
+}
+
+#work .wintro {
+  margin: 2vh 0 0;
+  max-width: 42ch
+}
+
+.plg .pintro {
+  max-width: 52ch;
+  margin: 0
+}
+
+.wlist a:hover .wt,
+.wlist a:focus-visible .wt {
+  transform: translateX(2.4vw)
+}
+
+.wthumb,
+.wthumb.vis {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: min(24vw, 340px);
+  aspect-ratio: 4/3;
+  z-index: 30;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.85) rotate(-3deg);
+  transition: opacity .25s, transform .45s cubic-bezier(.2, .7, .1, 1)
+}
+
+.wthumb.on {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1) rotate(0)
+}
+
+.plg {
+  margin: 10vh 0 0 calc(var(--cross) - var(--gut));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px
+}
+
+.plg ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px
+}
+
+.plg a,
+.plg div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 800;
+  letter-spacing: -.05em;
+  font-size: clamp(22px, 2.2vw, 38px);
+  line-height: 1
+}
+
+.plg a:hover {
+  color: var(--dot)
+}
+
+.plg span {
+  font: 500 10px/1.3 var(--mono);
+  letter-spacing: 0
+}
+
+@include phone {
+  .plg {
+    margin-left: 0
+  }
+
+  .wlist {
+    margin-left: 0
+  }
+
+  .wlist .wm {
+    display: none
+  }
+
+  #work .help {
+    max-width: none
+  }
+
+  .wthumb {
+    display: none
+  }
+}

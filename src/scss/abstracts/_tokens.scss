@@ -1,0 +1,27 @@
+// Design tokens: colours, fonts and the grid line every page hangs off.
+/* Layout: asymmetric. One fixed hairline at 29vw splits the page into a narrow and a wide column; every scene leans off it, never centred. Black and white, blue only as a detail. */
+:root {
+  --paper: #fafaf9;
+  /* white */
+  --bgc: var(--paper);
+  /* current ground, used for inverted letters */
+  --ghost: #d3d3d1;
+  /* blurred grey type */
+  --ink: #0b0b0b;
+  /* black */
+  --blue: var(--ink);
+  /* display colour (kept as a name so the deep can flip it) */
+  --dot: #1238ff;
+  /* the detail colour: used small and rarely */
+  --deep: #0b0b0b;
+  /* below the thermocline: the page inverts */
+  --glow: #5b78ff;
+  /* detail colour on black */
+  --line: var(--ink);
+  --display: "Inter Tight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --cross: 29vw;
+  --gut: max(16px, env(safe-area-inset-left, 0px));
+  --gutR: max(16px, env(safe-area-inset-right, 0px));
+  color-scheme: light;
+}

@@ -1,0 +1,87 @@
+// Home 2: what I do + 'deeeeper'.
+/* ---------- 2. about ---------- */
+#about .hline.a {
+  top: 14%;
+  right: calc(100% - var(--cross) - 24vw)
+}
+
+#about .list {
+  position: absolute;
+  right: var(--gutR);
+  top: 12%;
+  text-align: right;
+  font-size: clamp(28px, 5.2vw, 96px)
+}
+
+#about .list div:nth-child(3n) {
+  padding-right: 2.2em
+}
+
+#about .say {
+  position: absolute;
+  left: var(--gut);
+  top: 22%;
+  width: min(56vw, 900px);
+  text-align: left;
+  font-weight: 800;
+  letter-spacing: -.07em;
+  line-height: .88;
+  font-size: clamp(30px, 4.2vw, 80px);
+  color: var(--blue)
+}
+
+#about .say>span {
+  display: inline-block;
+  margin-right: .22em
+}
+
+#about .note {
+  position: absolute;
+  left: calc(var(--cross) + 14px);
+  top: 58%;
+  width: 150px
+}
+
+#about .mask {
+  position: absolute;
+  left: calc(var(--cross) - clamp(110px, 12vw, 200px) - 14px);
+  bottom: 20vh;
+  width: clamp(110px, 12vw, 200px);
+  height: auto;
+  color: var(--dot);
+  transition: color .6s
+}
+
+#about .row {
+  position: absolute;
+  left: var(--gut);
+  right: var(--gutR);
+  bottom: 4vh;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-weight: 800;
+  letter-spacing: -.07em;
+  font-size: clamp(40px, 8vw, 150px);
+  line-height: .8
+}
+
+#about #deeper {
+  color: var(--blue)
+}
+
+#about .row .e {
+  color: var(--ghost);
+  filter: blur(1px);
+  transition: color .25s, filter .25s
+}
+
+#about .row .e.on {
+  color: var(--blue);
+  filter: none
+}
+
+#about .hline.b {
+  bottom: 2vh;
+  left: var(--cross)
+}

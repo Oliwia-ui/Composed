@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MediMate · Composed</title>
+<meta name="description" content="MediMate, a case study by Oliwia Jasionek. Medication reminders without the guilt. A friendly digital companion designed to make everyday health routines feel a little easier.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%231238ff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100..900&family=Instrument+Serif:ital@0;1&family=Bodoni+Moda:ital,wght@1,900&family=Archivo:wdth,wght@62..125,800..900&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@500;700;800&family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700&display=swap">
+<script>
+  // Safari can't blend the type over the cube reliably: flag it before the first paint
+  (function () { var u = navigator.userAgent, ios = /iP(hone|ad|od)/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1), saf = /Safari/.test(u) && !/Chrome|Chromium|Edg|OPR|Android/.test(u);
+    if (ios || saf) document.documentElement.classList.add('noblend'); })();
+</script>
+</head>
+<body>
+<div class="case is-page on" id="case" data-theme="medimate">
+  <a class="close" id="cclose" href="work.html">← back to selected work</a>
+  <p class="cnum" id="ccnum">02 / 04</p>
+  <h1 class="ctitle" id="ctitle" style="view-transition-name:t-medimate">MediMate</h1>
+  <div class="cgrid">
+    <dl id="cdl"><dt>type</dt><dd>solo school project · one semester</dd><dt>role</dt><dd>research, brand identity, ux/ui, business plan</dd><dt>platform</dt><dd>mobile app · light and dark mode</dd><dt>tools</dt><dd>Figma</dd></dl>
+    <div><p class="lead" id="clead">Medication reminders without the guilt. A friendly digital companion designed to make everyday health routines feel a little easier.</p></div>
+  </div>
+  <div id="cextra">
+  <section class="cs">
+    <aside><p class="lab">01 · the problem</p><p class="hn">I didn't want to make another app that tells people what they're doing wrong. Sometimes remembering one small thing is already difficult enough.</p></aside>
+    <div>
+      <h3>Remembering isn't always that simple.</h3>
+      <p>Around half of people with chronic conditions don't take their medication as prescribed (WHO, 2023). People forget doses, miss routines or stop taking medication altogether.</p>
+      <p>Existing medication apps can be useful, but some feel more like medical dashboards than something you'd actually enjoy opening every day.</p>
+      <p>A notification telling you to take your medication isn't necessarily helpful if it makes you feel guilty for forgetting yesterday.</p>
+      <p>I wanted to approach the problem differently. Less pressure, more support.</p>
+      <p class="big">A <em>companion</em> that helps, instead of another app telling you off.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">02 · Lisa's morning</p><p class="hn">Before I designed a single screen, I wanted to understand who would actually open this app and why.</p></aside>
+    <div>
+      <h3>Meet Lisa. She's already running late.</h3>
+      <ol class="beats">
+        <li><em>8:12 am</em><span>Lisa's alarm goes off for the third time. She's late for class, her medication is somewhere in her bag and she can't remember whether she took it yesterday. She leaves without it. Again.</span></li>
+        <li><em>that night</em><span>While scrolling in bed, she comes across a video: <q>Ever forgotten your medication and felt guilty about it? I made something for you.</q> She stops scrolling.</span></li>
+        <li><em>setup</em><span>She scans her medication box. MediMate fills in the name and dosage. Then it asks her to choose a reminder time that fits her actual routine.</span></li>
+        <li><em>next morning</em><span>A gentle reminder appears while she's brushing her teeth: <q>Time for your meds, Lisa. You've got this.</q> This time, she takes them.</span></li>
+        <li><em>day five</em><span>A little five-day streak. A small message: <q>You're doing better than you think.</q> It feels encouraging, not demanding.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">03 · first impression</p><p class="hn">I wanted the first screen to feel welcoming. Not like Lisa had just walked into a hospital.</p></aside>
+    <div>
+      <h3>A friendly first step.</h3>
+      <p>The introduction explains what MediMate can do without throwing everything at the user at once.</p>
+      <p>Medication reminders, an easy way to find a pharmacy, access to doctors and a symptom checker. Each feature gets its own moment.</p>
+      <div class="phones"><figure><img src="img/m-welcome0.jpg" alt="Welcome to MediMate: your friendly digital nurse, here to track meds, check in on how you feel and keep things simple" loading="lazy"><figcaption>welcome</figcaption></figure><figure><img src="img/m-welcome1.jpg" alt="Onboarding: medication reminder and management" loading="lazy"><figcaption>reminders</figcaption></figure><figure><img src="img/m-welcome2.jpg" alt="Onboarding: e-pharma made intuitively easy" loading="lazy"><figcaption>e-pharma</figcaption></figure><figure><img src="img/m-welcome3.jpg" alt="Onboarding: hassle-free doctor consultation" loading="lazy"><figcaption>doctor</figcaption></figure><figure><img src="img/m-welcome4.jpg" alt="Onboarding: AI-powered symptom checker" loading="lazy"><figcaption>symptom checker</figcaption></figure></div>
+      <p class="src">Real screens from the MediMate design · scroll sideways →</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">04 · the core flow</p><p class="hn">If someone has to type everything manually, I've probably made the process harder than it needs to be.</p></aside>
+    <div>
+      <h3>Scan it. Check it. You're done.</h3>
+      <p>Adding medication should be straightforward. Scan the QR code on the box and MediMate fills in the available medication information.</p>
+      <p>The user checks the details, chooses a time and sets up a reminder that works for their day.</p>
+      <p>When the reminder arrives, they can mark it as taken, skip it or move it to another time.</p>
+      <p>No unnecessary steps. No guilt-filled messages.</p>
+      <div class="phones"><figure><img src="img/m-add.jpg" alt="Add medication: scan or add manually" loading="lazy"><figcaption>add</figcaption></figure><figure><img src="img/m-scan.jpg" alt="Scan medication QR code" loading="lazy"><figcaption>scan</figcaption></figure><figure><img src="img/m-analyse.jpg" alt="Analyzing medication" loading="lazy"><figcaption>analysing</figcaption></figure><figure><img src="img/m-result.jpg" alt="Tamesta successfully analysed: high risk, sedative, once daily" loading="lazy"><figcaption>result</figcaption></figure><figure><img src="img/m-form.jpg" alt="New medication form with dosage, frequency, duration, meal timing and reminder" loading="lazy"><figcaption>details</figcaption></figure><figure><img src="img/m-remind.jpg" alt="Set medication reminder time picker" loading="lazy"><figcaption>reminder</figcaption></figure><figure><img src="img/m-take.jpg" alt="Reminder card for Tamesta with skip, reschedule and take" loading="lazy"><figcaption>take · skip · move</figcaption></figure></div>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">05 · more than reminders</p><p class="hn">Medication is only one part of someone's everyday health. I wanted the app to understand a little more than that.</p></aside>
+    <div>
+      <h3>A companion, not just an alarm.</h3>
+      <p>MediMate grew beyond medication reminders. Users can set personal goals, share relevant information and check in with how they're doing.</p>
+      <p>When they need professional help, they can also find a doctor nearby and book a consultation through the app.</p>
+      <div class="phones"><figure><img src="img/m-goal.jpg" alt="Health assessment: what is your primary goal for this app" loading="lazy"><figcaption>your goal</figcaption></figure><figure><img src="img/m-conditions.jpg" alt="Health assessment: do you have existing medical conditions" loading="lazy"><figcaption>conditions</figcaption></figure><figure><img src="img/m-sleep.jpg" alt="Health assessment: rate your sleep level" loading="lazy"><figcaption>sleep</figcaption></figure><figure><img src="img/m-score.jpg" alt="MediMate Score 88 after the health assessment" loading="lazy"><figcaption>your score</figcaption></figure><figure><img src="img/m-doctor.jpg" alt="Select a specialization before booking" loading="lazy"><figcaption>find a doctor</figcaption></figure><figure><img src="img/m-map.jpg" alt="Browse doctors by map" loading="lazy"><figcaption>near you</figcaption></figure><figure><img src="img/m-consult.jpg" alt="10:00 AM doctor consultation confirmed" loading="lazy"><figcaption>booked</figcaption></figure></div>
+      <p>I developed the brand identity around that idea of friendly support, including a light and dark mode, a design system and a custom icon set.</p>
+      <p>I also worked out the business side, with a free version and a MediMate Pro concept.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">06 · what I'd change</p><p class="hn">I was trying to make people feel better, then I gave them a number to judge themselves with.</p></aside>
+    <div>
+      <h3>I'd rethink the health score.</h3>
+      <p>After the health check, MediMate shows a score. On a good day, seeing 88 might feel encouraging. On a difficult day, it can feel like another thing you failed at.</p>
+      <p>The rest of the app was designed to be friendly and understanding, so the score doesn't completely fit that approach.</p>
+      <p>I'd replace it with something more personal and less judgemental. A little feedback, perhaps, but no grade for how well someone is doing.</p>
+      <p>I didn't fully realise how important that was until I worked on Garmin Sense.</p>
+    </div>
+  </section>
+
+  <section class="cs">
+    <aside><p class="lab">07 · how it ended</p></aside>
+    <div><p>Passed, with positive feedback.</p>
+      <p>From my concept brief:</p>
+      <p class="quote-end">"It's about creating a quiet kind of care. The kind I wish existed when I needed it most."</p></div>
+  </section>
+
+  <a class="cnext" href="spotify-lingo.html"><em>next · 03 / 04</em><b style="view-transition-name:t-lingo">Spotify-Lingo →</b></a>
+  </div>
+</div>
+
+<script type="module" src="/src/js/case.js"></script>
+</body>
+</html>

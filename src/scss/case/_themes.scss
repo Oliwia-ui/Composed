@@ -1,0 +1,327 @@
+// Each project in its own clothes: colours and type from the project itself.
+@use '../abstracts' as *;
+
+/* ---------- each project in its own clothes: colours and type from the project itself ---------- */
+.case :is(.ctitle, h3, .big, .lead, .stat b, .flow b, .cnext b, .quote-end, .arch b, .demo .line, .bword, .tile b) {
+  font-family: var(--hfont)
+}
+
+.case[data-theme] .ctitle .l {
+  font-family: inherit !important;
+  font-style: normal !important;
+  font-weight: inherit !important;
+  font-stretch: 100% !important;
+  font-size: 1em !important;
+  letter-spacing: inherit !important;
+  text-transform: none !important;
+  color: inherit !important;
+  -webkit-text-stroke: 0 !important;
+  background: none !important
+}
+
+.case[data-theme] .ctitle .l.inv {
+  color: var(--dot) !important
+}
+
+.case[data-theme="garmin"] {
+  --paper: #000;
+  --ink: #e6f1f6;
+  --blue: #fff;
+  --dot: #27afe7;
+  --ghost: #3d5560;
+  --line: #2b4a58;
+  --soft: #0c1820;
+  --rule: #1d3440;
+  --strong: #27afe7;
+  --onstrong: #001219;
+  --codebg: #0c1820;
+  --hfont: "Archivo", var(--display)
+}
+
+.case[data-theme="garmin"] .ctitle {
+  font-stretch: 88%;
+  letter-spacing: -.04em
+}
+
+.case[data-theme="garmin"] .orb i:not(.r) {
+  box-shadow: 0 0 80px 10px rgba(39, 175, 231, .45)
+}
+
+.case[data-theme="garmin"] .cs .big em,
+.case[data-theme="garmin"] .stat.key i::after {
+  color: var(--dot)
+}
+
+.case[data-theme="garmin"] .stat i::after {
+  background: #afd3e2
+}
+
+.case[data-theme="medimate"] {
+  --paper: #f4f8f8;
+  --ink: #1d2b36;
+  --blue: #1d2b36;
+  --dot: #13b8a7;
+  --ghost: #a9bdbf;
+  --line: #1d2b36;
+  --soft: #ddf5f2;
+  --rule: #d3e4e4;
+  --strong: #13b8a7;
+  --onstrong: #fff;
+  --codebg: #1d2b36;
+  --hfont: "Plus Jakarta Sans", var(--display);
+  --bfont: "Plus Jakarta Sans", var(--display)
+}
+
+.case[data-theme="medimate"] :is(.ctitle, h3, .big, .lead, .cnext b, .quote-end) {
+  letter-spacing: -.045em
+}
+
+.case[data-theme="medimate"] :is(.tree li, .tree h4, .demo, .arch, .code) {
+  border-radius: 14px
+}
+
+.case[data-theme="medimate"] .phones img,
+.case[data-theme="medimate"] .shot2 img {
+  border-radius: 30px;
+  box-shadow: 0 18px 40px -18px rgba(19, 184, 167, .45)
+}
+
+.case[data-theme="medimate"] .stat i,
+.case[data-theme="medimate"] .bbar {
+  border-radius: 9px
+}
+
+.case[data-theme="lingo"] {
+  --paper: #121212;
+  --ink: #ececec;
+  --blue: #fff;
+  --dot: #1db954;
+  --ghost: #4a4a4a;
+  --line: #3a3a3a;
+  --soft: #1f1f1f;
+  --rule: #2a2a2a;
+  --strong: #1db954;
+  --onstrong: #000;
+  --codebg: #000
+}
+
+.case[data-theme="lingo"] .demo {
+  border-radius: 12px;
+  background: #181818;
+  border-color: #2a2a2a
+}
+
+.case[data-theme="lingo"] .demo button {
+  border-radius: 500px;
+  border-color: #5a5a5a
+}
+
+.case[data-theme="lingo"] .demo button.ok {
+  background: var(--dot);
+  border-color: var(--dot);
+  color: #000
+}
+
+.case[data-theme="lingo"] .arch {
+  border-color: #2a2a2a;
+  border-radius: 12px;
+  overflow: hidden
+}
+
+.case[data-theme="lingo"] .arch div {
+  border-color: #2a2a2a
+}
+
+.case[data-theme="lingo"] .code .k {
+  color: var(--dot)
+}
+
+.case[data-theme="moodie"] {
+  --paper: #f8f4ef;
+  --ink: #3b2a20;
+  --blue: #3b2a20;
+  --dot: #e27844;
+  --ghost: #d6c7b8;
+  --line: #3b2a20;
+  --soft: #f0e5d8;
+  --rule: #e6d8c8;
+  --strong: #e27844;
+  --onstrong: #fff;
+  --codebg: #3b2a20;
+  --hfont: "Fredoka", var(--display);
+  --bfont: "Nunito", var(--display)
+}
+
+.case[data-theme="moodie"] :is(.ctitle, h3, .big, .lead, .cnext b, .quote-end) {
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: .95
+}
+
+.case[data-theme="moodie"] .phones img,
+.case[data-theme="moodie"] .shot2 img {
+  border-radius: 30px;
+  box-shadow: 0 0 0 6px #fff, 0 14px 34px -14px rgba(226, 120, 68, .4)
+}
+
+.case[data-theme="moodie"] :is(.logos, .tree li) {
+  border-radius: 18px
+}
+
+.case[data-theme] .cnext {
+  border-top-color: var(--line)
+}
+
+a:focus-visible {
+  outline: 2px solid var(--dot);
+  outline-offset: 3px
+}
+
+@include phone {
+  :root {
+    --cross: 34vw
+  }
+
+  .word {
+    left: var(--gut)
+  }
+
+  #hero .t2 {
+    display: none
+  }
+
+  .case .ctitle,
+  .case .cvis {
+    margin-left: 0
+  }
+
+  #contact .foot {
+    padding-left: var(--gut) !important
+  }
+
+  #deep .quiet {
+    left: var(--gut)
+  }
+
+  .hdr {
+    grid-template-columns: 1fr auto;
+    font-size: 13px
+  }
+
+  .hdr .mid {
+    display: none
+  }
+
+  #about .say {
+    width: auto;
+    left: var(--gut);
+    right: var(--gutR);
+    top: auto;
+    bottom: 13vh;
+    text-align: left;
+    font-size: clamp(22px, 6.4vw, 36px);
+    z-index: 2
+  }
+
+  #about .list {
+    top: 16%
+  }
+
+  #about .say>span {
+    margin: 0 .22em 0 0
+  }
+
+  #about .note {
+    display: none
+  }
+
+  #about .mask {
+    bottom: auto;
+    top: 64%;
+    left: auto;
+    right: var(--gutR)
+  }
+
+  #hero .ghostblock>span:first-child {
+    padding-left: 0
+  }
+
+  #work .head .ghost {
+    width: auto;
+    right: var(--gutR)
+  }
+
+  #work .head .blue {
+    top: 30vh
+  }
+
+  #deep .c2 {
+    display: none
+  }
+
+  :root {
+    --s: 58vw
+  }
+
+  #work .ghost.wh {
+    width: auto;
+    right: var(--gutR);
+    font-size: 9vw
+  }
+
+  #work .help {
+    top: auto;
+    bottom: 20vh;
+    left: var(--gut);
+    right: auto;
+    text-align: left;
+    max-width: none;
+    font-size: 8vw;
+    display: none
+  }
+
+  .stage {
+    top: 56%;
+    left: 54vw
+  }
+
+  .ccap {
+    left: var(--gut)
+  }
+
+  .hint {
+    right: var(--gutR)
+  }
+
+  .ccap {
+    max-width: none;
+    bottom: 7vh
+  }
+
+  .ccap .ttl {
+    font-size: 12vw
+  }
+
+  .hint {
+    bottom: auto;
+    top: 31vh;
+    width: 140px
+  }
+
+  .case .cgrid {
+    grid-template-columns: 1fr
+  }
+
+  #contact .over,
+  #contact .links {
+    left: var(--gut);
+    padding-left: var(--gut)
+  }
+
+  #contact .over {
+    position: relative;
+    left: 0;
+    top: 0;
+    margin-top: 3vh
+  }
+}
