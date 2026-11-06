@@ -35,8 +35,12 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 /* body is its own layer with a real background, so the inverted text has something to blend with (Safari ignores the page background for blending) */
 body{position:relative;z-index:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:var(--display);overflow-x:hidden;transition:background .6s ease,color .6s ease;-webkit-font-smoothing:antialiased}
-body.deep{background:var(--deep);--bgc:var(--deep);--line:#fafaf9;--blue:#fafaf9;--ghost:#262626;--ink:#bdbdbb;--dot:var(--glow)}
+body.deep{background:var(--deep);--bgc:var(--deep);--line:#fafaf9;--blue:#fafaf9;--ghost:#5a5a58;--ink:#bdbdbb;--dot:var(--glow)}
 a{color:inherit}
+/* never break a word across lines, and keep the last line from ending on one lonely word */
+.wd{display:inline-block;white-space:nowrap}
+#about .say,#work .help,#deep .quiet,#contact .over,.beliefs b,.beliefs span,.bpage .lead,.case .lead,.cs p,.cs .big,.cnext b,.bpage .hl,.vsent,#contact .made,.wlist .wm i,.plist span i{text-wrap:balance}
+.cs p,.bpage .body p,.beliefs span,#deep .micro{text-wrap:pretty}
 ::selection{background:var(--dot);color:#fff}
 
 /* ---------- fixed chrome ---------- */
@@ -1042,7 +1046,7 @@ if(ios||saf){var h=document.documentElement;h.classList.add('noblend');var f=fun
     const g = document.createElement('span'); g.className = 'gh'; g.setAttribute('aria-hidden', 'true'); g.textContent = c;
     const s = document.createElement('span'); s.className = 'l' + (cls ? ' ' + cls : ''); s.textContent = c; w.append(g, s); return [w, s]; };
   const letters = (el, txt) => { el.innerHTML = ''; return [...txt].map(c => { const [w, s] = slot(c === ' ' ? '\u00a0' : c, curCls && c !== ' ' ? curCls : ''); el.appendChild(w); return s; }); };
-  const words = (el, txt) => { el.innerHTML = ''; return txt.split(' ').map(w => { const s = document.createElement('span'); s.textContent = w; el.appendChild(s); el.appendChild(document.createTextNode(' ')); return s; }); };
+  const words = (el, txt) => { el.innerHTML = ''; return txt.split(' ').map(w => { const s = document.createElement('span'); s.className = 'wd'; s.textContent = w; el.appendChild(s); el.appendChild(document.createTextNode(' ')); return s; }); };
 
   /* ---------- build text ---------- */
   const W = 'composed';
