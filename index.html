@@ -376,6 +376,7 @@ html.spin,html.spin *{cursor:grabbing!important}
 .bhint b{font-weight:500;color:var(--dot)}
 /* type over the cube inverts, like the cursor lens: main is drawn in inverse colours and blended with "difference",
    so on white it reads black, on the black sides white, on the blue sides yellow */
+main{color:var(--ink)}
 html:not(.noblend) main{mix-blend-mode:difference}
 html:not(.noblend) body:not(.deep) main{--ink:#f4f4f4;--blue:#f4f4f4;--ghost:#2c2c2e;--dot:#edc700;--line:#f4f4f4;--bgc:#050506}
 html:not(.noblend) body:not(.deep) main .wthumb{filter:invert(1)}
